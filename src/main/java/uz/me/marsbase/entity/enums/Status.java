@@ -1,0 +1,8 @@
+package uz.me.marsbase.entity.enums;
+
+public enum Status {
+
+    NEW,
+    PROCESSING,
+    FINISHED;
+}
