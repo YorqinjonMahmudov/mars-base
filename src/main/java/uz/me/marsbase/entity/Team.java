@@ -1,18 +1,19 @@
 package uz.me.marsbase.entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import uz.me.marsbase.entity.abs.AbsEntity;
 
 @Getter
 @Setter
 @Builder
-public class Team {
-
-    private Integer id;
+@NoArgsConstructor
+@AllArgsConstructor
+public class Team extends AbsEntity {
 
     private String name;
 
-    private Integer teamLeaderId;
+    private Integer teamLeadId;
+
+    private boolean isActive;
 
 }

@@ -145,20 +145,19 @@
 <div class="background">
     <div class="shape"></div>
     <div class="shape"></div>
-</div>
+
 <form action="login" method="post"  width='90%'  >
     <h3>LogIn Here</h3>
 
     <!--suppress XmlInvalidId -->
     <label>Email</label>
-    <input type="text" placeholder="Email kiriting" name="email">
+    <input type="text" placeholder="Enter email" name="email">
 
     <!--suppress XmlInvalidId -->
-    <label>Parol</label>
-    <input type="password" placeholder="Parol kiriting" name="password">
+    <label>Password</label>
+    <input type="password" placeholder="Enter password" name="password">
 
-
-    <button type="submit"><Kir></Kir>ish</button>
+    <button type="submit">Login</button>
     <br>
     <%--    <h1>Name: <c:out value="${requestScope.get('apiResult')}"/></h1>--%>
 </form>

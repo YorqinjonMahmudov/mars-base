@@ -9,40 +9,32 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>H+ Sport</title>
+    <title>Mars Base</title>
     <link rel="stylesheet" href="css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
-<header id="home" class="header">
-    <nav class="nav" role="navigation">
-        <div class="container nav-elements">
-            <!-- branding -->
-            <ul class="navbar">
-                <li><a href="login">SIGN IN</a></li>
-
-            </ul>
-            <!-- navbar -->
-        </div>
-        <!-- container nav-elements -->
-    </nav>
-
-</header>
-
-
-
 <section id="registration" class="section">
     <div class="container tagline">
         <em>Register User</em><br/>
-        <em>{0}</em>
+<%--        <em>{0}</em>--%>
         <form action="addUser" method="post">
-            <label>Email</label> <input type="text" placeholder="Email kiriting" name="email"><br/>
-            <label>Password</label><input type="password" placeholder="Parol kiriting" name="password"><br/>
-            <label>Firstname</label><input type="text" placeholder="enter firstname" name="firstname"><br/>
-            <label>Lastname</label><input type="text" placeholder="enter lastname" name="lastname"><br/>
-            <label>BirthDate</label><input type="date" placeholder="enter birthdate" name="birthDate"><br/>
-            <label>BlockId</label><input type="number" placeholder="enter block id" name="blockId"><br/>
+            <label>Email</label> <label>
+            <input type="text" placeholder=" Enter Email " name="email">
+        </label><br/>
+            <label>Password</label><label>
+            <input type="password" placeholder="Enter password" name="password">
+        </label><br/>
+            <label>Firstname</label><label>
+            <input type="text" placeholder="enter firstname" name="firstname">
+        </label><br/>
+            <label>Lastname</label><label>
+            <input type="text" placeholder="enter lastname" name="lastname">
+        </label><br/>
+            <label>BlockId</label><label>
+            <input type="number" placeholder="enter block id" name="blockId">
+        </label><br/>
             <input type="submit" value="Submit" id="submit">
         </form>
     </div>

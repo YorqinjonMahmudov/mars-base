@@ -9,7 +9,7 @@ public class ConnectionSource {
     private static final String USERNAME = "postgres";
     private static final String PASSWORD = "1223";
 
-    public static Connection createConnection() {
+    public  Connection createConnection() {
         try {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {

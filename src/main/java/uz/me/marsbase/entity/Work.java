@@ -1,8 +1,7 @@
 package uz.me.marsbase.entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import uz.me.marsbase.entity.abs.AbsEntity;
 import uz.me.marsbase.entity.enums.Status;
 
 import java.util.Date;
@@ -10,9 +9,9 @@ import java.util.Date;
 @Getter
 @Setter
 @Builder
-public class Work {
-
-    private Integer id;
+@NoArgsConstructor
+@AllArgsConstructor
+public class Work extends AbsEntity {
 
     private String title;
 

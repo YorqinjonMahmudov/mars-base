@@ -1,13 +1,14 @@
 package uz.me.marsbase.entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import uz.me.marsbase.entity.abs.AbsEntity;
 
 @Getter
 @Setter
 @Builder
-public class Block {
+@AllArgsConstructor
+@NoArgsConstructor
+public class Block extends AbsEntity {
 
     private Integer id;
 

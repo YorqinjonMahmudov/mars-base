@@ -1,7 +1,8 @@
 package uz.me.marsbase.controller;
 
 
-import uz.me.marsbase.ConnectionSource;
+import uz.me.marsbase.dao.UserDAO;
+import uz.me.marsbase.dao.imp.UserDAOImpl;
 import uz.me.marsbase.entity.User;
 import uz.me.marsbase.entity.enums.Role;
 
@@ -11,17 +12,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.time.LocalDate;
+import java.util.List;
 
-@WebServlet(urlPatterns = {"/addUser"})
+@WebServlet(urlPatterns = {"/addUser", "/get/{email}", "/get-all-users", "/edit-user/{id}", "/delete-user/{id}"})
 public class UserController extends HttpServlet {
-    Connection connection = ConnectionSource.createConnection();
+
+    private static final UserDAO userDao = UserDAOImpl.getInstance();
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        List<User> users = userDao.findAll();
+        req.setAttribute("users", users);
+        req.getRequestDispatcher("user-info.jsp").forward(req, resp);
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        if (req.getRequestURI().contains("/get-all-users")) {
+            doGet(req, resp);
+            return;
+        }
 
         User user = User.builder()
                 .email(req.getParameter("email"))
@@ -29,32 +39,20 @@ public class UserController extends HttpServlet {
                 .lastName(req.getParameter("lastname"))
                 .role(Role.USER)
                 .password(req.getParameter("password"))
-                .birthDate(LocalDate.parse(req.getParameter("birthDate")))
                 .blockId(Integer.valueOf(req.getParameter("blockId")))
                 .build();
 
-        String query = "INSERT INTO users (email, first_name, last_name, password, birth_date, block_id)  VALUES(" +
-                " '" + user.getEmail()
-                + "', '" + user.getFirstName()
-                + "', '" + user.getLastName()
-                + "', '" + user.getPassword()
-                + "', '" + user.getBirthDate()
-                + "', " + user.getBlockId() + ");";
+        if (userDao.insert(user))
+            req.getRequestDispatcher("/get-all-users").forward(req, resp);
+        else
+            resp.sendRedirect("add-user.jsp");
 
-        try {
-            connection.createStatement().execute(query);
+    }
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        resp.sendRedirect("add-user.jsp");
-
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doPut(req, resp);
+        System.out.println(req.getMethod());
+        System.out.println();
     }
 }

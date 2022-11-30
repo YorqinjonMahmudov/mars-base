@@ -1,19 +1,15 @@
 package uz.me.marsbase.entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import uz.me.marsbase.entity.abs.AbsEntity;
 import uz.me.marsbase.entity.enums.Role;
-
-import java.time.LocalDate;
-import java.util.Date;
 
 @Getter
 @Setter
 @Builder
-public class User {
-
-    private Integer id;
+@NoArgsConstructor
+@AllArgsConstructor
+public class User extends AbsEntity {
 
     private String firstName;
 
@@ -22,8 +18,6 @@ public class User {
     private String email;
 
     private String password;
-
-    private LocalDate birthDate;
 
     private Role role;
 
