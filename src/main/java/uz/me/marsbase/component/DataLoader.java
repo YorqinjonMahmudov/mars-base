@@ -2,11 +2,11 @@ package uz.me.marsbase.component;
 
 import lombok.SneakyThrows;
 import uz.me.marsbase.ConnectionSource;
-import uz.me.marsbase.dao.imp.BlockDAOImpl;
-import uz.me.marsbase.dao.imp.UserDAOImpl;
-import uz.me.marsbase.entity.Block;
-import uz.me.marsbase.entity.User;
-import uz.me.marsbase.entity.enums.Role;
+import uz.me.marsbase.model.dao.imp.BlockDAOImpl;
+import uz.me.marsbase.model.dao.imp.UserDaoImpl;
+import uz.me.marsbase.model.entity.Block;
+import uz.me.marsbase.model.entity.User;
+import uz.me.marsbase.model.entity.enums.Role;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -48,7 +48,7 @@ public class DataLoader {
                 .email("admin@gmail.com")
                 .role(Role.ADMIN)
                 .build();
-        UserDAOImpl.getInstance().insert(admin);
+        UserDaoImpl.getInstance().insert(admin);
 
         User teamLid = User.builder()
                 .blockId(1)
@@ -59,7 +59,7 @@ public class DataLoader {
                 .role(Role.TEAM_LEADER)
                 .build();
 
-        UserDAOImpl.getInstance().insert(teamLid);
+        UserDaoImpl.getInstance().insert(teamLid);
 
     }
 

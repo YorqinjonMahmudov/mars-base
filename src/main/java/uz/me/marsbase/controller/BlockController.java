@@ -2,7 +2,7 @@ package uz.me.marsbase.controller;
 
 
 import uz.me.marsbase.ConnectionSource;
-import uz.me.marsbase.entity.Block;
+import uz.me.marsbase.model.entity.Block;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

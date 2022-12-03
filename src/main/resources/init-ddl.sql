@@ -13,8 +13,8 @@ CREATE TABLE block
 (
     id       SERIAL PRIMARY KEY,
     name     VARCHAR UNIQUE NOT NULL,
-    area     DOUBLE PRECISION,
-    location VARCHAR(50)
+    area     DOUBLE PRECISION DEFAULT 50,
+    location VARCHAR(50)    NOT NULL
 );
 
 
@@ -25,16 +25,16 @@ CREATE TABLE users
     last_name  VARCHAR(20) NOT NULL,
     email      VARCHAR(50) NOT NULL UNIQUE,
     password   VARCHAR(20) NOT NULL,
-    role       VARCHAR,
+    role       VARCHAR     NOT NULL,
     block_id   INTEGER     NOT NULL REFERENCES block (id)
 );
 
 
 CREATE TABLE team
 (
-    id             SERIAL PRIMARY KEY,
-    name           VARCHAR(20) NOT NULL UNIQUE,
-    is_active      BOOLEAN NOT NULL,
+    id           SERIAL PRIMARY KEY,
+    name         VARCHAR(20) NOT NULL UNIQUE,
+    is_active    BOOLEAN     NOT NULL,
     team_lead_id INTEGER     NOT NULL REFERENCES users (id)
 );
 
@@ -62,10 +62,10 @@ CREATE TABLE work
 
 CREATE TABLE report
 (
-    id             SERIAL PRIMARY KEY,
-    date           TIMESTAMP        NOT NULL ,
-    comments       VARCHAR(500),
-    team_id        INTEGER          NOT NULL REFERENCES team (id),
-    workId         INTEGER          NOT NULL REFERENCES work (id)
+    id       SERIAL PRIMARY KEY,
+    date     TIMESTAMP NOT NULL,
+    comments VARCHAR(500),
+    team_id  INTEGER   NOT NULL REFERENCES team (id),
+    workId   INTEGER   NOT NULL REFERENCES work (id)
 );
 

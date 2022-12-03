@@ -1,19 +1,40 @@
 package uz.me.marsbase.service;
 
-import uz.me.marsbase.dao.UserDAO;
-import uz.me.marsbase.dao.imp.UserDAOImpl;
-import uz.me.marsbase.entity.User;
+import uz.me.marsbase.mappers.UserMapper;
+import uz.me.marsbase.model.dao.UserDao;
+import uz.me.marsbase.model.dao.imp.UserDaoImpl;
+import uz.me.marsbase.model.dto.UserDTO;
+import uz.me.marsbase.model.entity.User;
+
+import java.util.List;
 
 public class UserServiceImpl implements UserService {
-    private static final UserDAO userDao = UserDAOImpl.getInstance();
+    private static final UserDao userDao = UserDaoImpl.getInstance();
+    private static final UserMapper userMapper = new UserMapper();
 
     @Override
-    public boolean isAuthenticated(String email, String password) {
+    public UserDTO isAuthenticated(String email, String password) {
         return userDao.isAuthenticated(email, password);
     }
 
     @Override
-    public User getUserByEmail(String email) {
-        return userDao.findByEmail(email).orElse(null);
+    public List<UserDTO> getUsers() {
+        return userMapper.toDto(userDao.findAll());
+
+    }
+
+    @Override
+    public UserDTO getUserByEmail(String email) {
+        return userMapper.toDto(userDao.findByEmail(email).orElse(null));
+    }
+
+    @Override
+    public UserDTO getUserById(Integer id) {
+        return userMapper.toDto(userDao.findById(id).orElse(null));
+    }
+
+    @Override
+    public boolean insert(User user) {
+        return userDao.insert(user);
     }
 }

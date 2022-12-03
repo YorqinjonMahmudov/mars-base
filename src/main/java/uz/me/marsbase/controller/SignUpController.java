@@ -2,8 +2,8 @@ package uz.me.marsbase.controller;
 
 
 import uz.me.marsbase.ConnectionSource;
-import uz.me.marsbase.entity.User;
-import uz.me.marsbase.entity.enums.Role;
+import uz.me.marsbase.model.entity.User;
+import uz.me.marsbase.model.entity.enums.Role;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 @WebServlet(name = "signUpController", urlPatterns = {"/signUp"})
 public class SignUpController extends HttpServlet {
