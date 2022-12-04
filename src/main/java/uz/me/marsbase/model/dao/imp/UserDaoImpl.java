@@ -29,6 +29,7 @@ public class UserDaoImpl implements UserDao {
     private static final String CHANGE_FROM_TEAM_LEAD_TO_USER = "UPDATE users SET role = ? WHERE id = ?;";
     private static final String CHANGE_PASSWORD = "UPDATE users SET password = ? WHERE id = ?;";
     private static final String UPDATE_USER = "UPDATE users SET email =?, first_name =?, last_name = ?, password = ?, block_id = ? WHERE id = ?;";
+    private static final String DELETE_USER = "DELETE FROM users WHERE id = ?;";
     private static UserDaoImpl userDaoImpl;
 
     private UserDaoImpl() {
@@ -59,7 +60,13 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean delete(int id) {
-        throw new MyException("User can not be deleted");
+        try (var ps = MyConnectionPool.getInstance().getConnection().prepareStatement(DELETE_USER)) {
+            putArgs(ps, Dao.INTEGER + id);
+            var execute = ps.execute();
+            return !execute;
+        } catch (SQLException e) {
+            return false;
+        }
     }
 
     @Override
@@ -202,7 +209,8 @@ public class UserDaoImpl implements UserDao {
                 Dao.STRING + user.getFirstName(),
                 Dao.STRING + user.getLastName(),
                 Dao.STRING + user.getPassword(),
-                Dao.INTEGER + user.getBlockId());
+                Dao.INTEGER + user.getBlockId(),
+                Dao.INTEGER + id);
     }
 
     private boolean existById(Connection connection, int id) throws SQLException {
@@ -210,7 +218,7 @@ public class UserDaoImpl implements UserDao {
         ResultSet resultSet = executePrepareStatement(ps, Dao.INTEGER + id);
 
         if (resultSet.next())
-            return resultSet.getInt("id") == 0;
+            return resultSet.getInt("id") != 0;
 
         return false;
     }

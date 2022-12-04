@@ -37,4 +37,14 @@ public class UserServiceImpl implements UserService {
     public boolean insert(User user) {
         return userDao.insert(user);
     }
+
+    @Override
+    public boolean update(Integer editingUserId, UserDTO userDTO) {
+        return userDao.update(editingUserId,userMapper.fromDto(userDTO));
+    }
+
+    @Override
+    public boolean delete(int deletingUserId) {
+        return userDao.delete(deletingUserId);
+    }
 }

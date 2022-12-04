@@ -1,9 +1,7 @@
 package uz.me.marsbase.command;
 
 
-import uz.me.marsbase.command.admin.AddUserCommand;
-import uz.me.marsbase.command.admin.AddUserFinishCommand;
-import uz.me.marsbase.command.admin.UserInfoCommand;
+import uz.me.marsbase.command.admin.user.*;
 import uz.me.marsbase.command.auth.LogOutCommand;
 import uz.me.marsbase.command.auth.SignInFinishCommand;
 import uz.me.marsbase.command.auth.SignInGetCommand;
@@ -18,7 +16,10 @@ public enum CommandType {
     DEFAULT(new DefaultCommand()),
     USERS_FOR_ADMIN(new UserInfoCommand()),
     ADD_USER(new AddUserCommand()),
-    ADD_USER_FINISH(new AddUserFinishCommand());
+    ADD_USER_FINISH(new AddUserFinishCommand()),
+    EDIT_USER(new EditUserCommand()),
+    FINISH_EDIT_USER(new FinishEditUserCommand()),
+    DELETE_USER(new DeleteUserCommand());
 
 //    REQUESTS(new RequestCommand()),
 //    ADD_REQUEST(new AddRequestCommand()),

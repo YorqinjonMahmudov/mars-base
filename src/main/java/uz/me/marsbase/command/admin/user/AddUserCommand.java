@@ -1,4 +1,4 @@
-package uz.me.marsbase.command.admin;
+package uz.me.marsbase.command.admin.user;
 
 import uz.me.marsbase.command.Command;
 import uz.me.marsbase.command.instanceHolder.InstanceHolder;

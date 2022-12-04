@@ -65,14 +65,9 @@
 <body>
 
 
-
-<%--<% if (request.)%>--%>
 <div id="mySidenav" class="sidenav">
     <a href="#" onclick="closeNav()"> <span onclick='closeNav()'>&times;</span> </a>
-<%--    <form  action="${pageContext.request.contextPath}/controller?command=${CommandType.FINISH_SIGN_IN}" method="post">--%>
-<%--        <button type="submit">User</button>--%>
-<%--    </form>--%>
-<a href="${pageContext.request.contextPath}/controller?command=${CommandType.USERS_FOR_ADMIN}">User</a>
+    <a href="${pageContext.request.contextPath}/controller?command=${CommandType.USERS_FOR_ADMIN}">User</a>
     <a href="../team-info.jsp">Team</a>
     <a href="../work-info.jsp">Work</a>
     <a href="../report-info.jsp">Report</a>

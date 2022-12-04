@@ -12,7 +12,12 @@ public interface UserService {
     List<UserDTO> getUsers();
 
     UserDTO getUserByEmail(String email);
+
     UserDTO getUserById(Integer id);
 
     boolean insert(User user);
+
+    boolean update(Integer editingUserId, UserDTO userDTO);
+
+    boolean delete(int deletingUserId);
 }

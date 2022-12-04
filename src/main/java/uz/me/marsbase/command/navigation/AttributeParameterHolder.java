@@ -14,6 +14,7 @@ public final class AttributeParameterHolder {
     public static final String SESSION_ATTRIBUTE_CURRENT_COMMAND = "current_command";
 
     public static final String BLOCKS = "blocks";
+    public static final String EDITING_USER = "editingUser";
 
 
     /**
