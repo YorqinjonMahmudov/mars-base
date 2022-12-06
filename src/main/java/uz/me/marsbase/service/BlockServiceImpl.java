@@ -3,7 +3,7 @@ package uz.me.marsbase.service;
 import uz.me.marsbase.mappers.BlockMapper;
 import uz.me.marsbase.model.dao.BlockDao;
 import uz.me.marsbase.model.dao.imp.BlockDAOImpl;
-import uz.me.marsbase.model.dto.BlockDTO;
+import uz.me.marsbase.payload.BlockDTO;
 import uz.me.marsbase.model.entity.Block;
 
 import java.util.List;

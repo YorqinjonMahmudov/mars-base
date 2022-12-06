@@ -24,9 +24,9 @@
                     <br>
                     <br>
                     <ol class="alert-danger">
-                        <c:if test="${sessionScope.invalid_form.firstName!=null}">
+                        <c:if test="${sessionScope.invalid_form.name!=null}">
                             <div class="text-danger">
-                                    ${sessionScope.invalid_form.firstName}
+                                    ${sessionScope.invalid_form.name}
                             </div>
                         </c:if>
                     </ol>
@@ -67,51 +67,28 @@
         </div>
 
         <div class="registerDiv" id="registerDiv">
-
             <br>
             <br>
             <br>
-
-            <form action="${pageContext.request.contextPath}/controller?command=${CommandType.ADD_USER_FINISH}"
+            <form action="${pageContext.request.contextPath}/controller?command=${CommandType.FINISH_ADD_TEAM}"
                   id="register_form"
                   class="signup-content" method="post">
-                <h1 class="signup-title"> Add User </h1>
+                <h1 class="signup-title"> Add Team </h1>
 
                 <div class="form-item">
                     <label for="firstName"></label>
                     <input type="text" class="form-control" id="firstName"
-                           name="${AttributeParameterHolder.PARAMETER_USER_FIRSTNAME}"
-                           placeholder=" First name ">
+                           name="${AttributeParameterHolder.PARAMETER_TEAM_NAME}"
+                           placeholder=" Team name ">
                 </div>
 
-                <div class="form-item">
-                    <label for="lastName"></label>
-                    <input type="text" class="form-control" id="lastName"
-                           name="${AttributeParameterHolder.PARAMETER_USER_LASTNAME}"
-                           placeholder=" Last name ">
-                </div>
-
-                <div class="form-item">
-                    <label for="phoneNumber"></label>
-                    <input type="text" class="form-control" id="phoneNumber"
-                           name="${AttributeParameterHolder.PARAMETER_USER_EMAIL}"
-                           placeholder="Email">
-                </div>
-
-                <div class="form-item">
-                    <label for="password"></label>
-                    <input type="password" class="form-control" id="password"
-                           name="${AttributeParameterHolder.PARAMETER_USER_PASSWORD}"
-                           placeholder=" Password ">
-                </div>
-
-                <select name="blockName"  class="form-select" size="1" aria-label="size 3 select example">
+                <select name="teamLeadEmail" class="form-select" size="1"
+                        aria-label="size 3 select example">
                     <option selected>Open this select menu</option>
 
-                    <c:forEach items="${sessionScope.blocks}" var="block">
-                        <option name="blockName" value="${block.name}"> ${block.name}</option>
+                    <c:forEach items="${sessionScope.users}" var="user">
+                        <option name="${AttributeParameterHolder.PARAMETER_TEAM_LEAD_EMAIL}" value="${user.email}"> ${user.email}</option>
                     </c:forEach>
-
                 </select>
 
 

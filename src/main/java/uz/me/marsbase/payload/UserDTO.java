@@ -1,4 +1,4 @@
-package uz.me.marsbase.model.dto;
+package uz.me.marsbase.payload;
 
 import lombok.*;
 import uz.me.marsbase.model.entity.enums.Role;

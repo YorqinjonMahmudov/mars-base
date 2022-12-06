@@ -14,14 +14,16 @@ public final class AttributeParameterHolder {
     public static final String SESSION_ATTRIBUTE_CURRENT_COMMAND = "current_command";
 
     public static final String BLOCKS = "blocks";
+    public static final String TEAMS = "teams";
     public static final String EDITING_USER = "editingUser";
+    public static final String EDITING_TEAM = "editingTeam";
 
 
     /**
      * SESSION_ATTRIBUTE_EDITING => session attribute for set as session attribute for knowing which is editing
      */
     public static final String SESSION_ATTRIBUTE_EDITING = "editing";
-    public static final String SESSION_ATTRIBUTE_CURRENT_USER = "current_user";
+    public static final String SESSION_ATTRIBUTE_CURRENT_USER = "currentUser";
 
     /**
      * SESSION_ATTR_PAGE => resultPage -> session attribute for return page of items as result
@@ -74,12 +76,13 @@ public final class AttributeParameterHolder {
     public static final String INVALID_REQUEST_TO = "request to name can not be blank";
 
     /**
-     * params of car
+     * params of team
      */
-    public static final String PARAMETER_CAR_MODEL = "carModel";
-    public static final String PARAMETER_CAR_NUMBER = "carNumber";
-    public static final String INVALID_CAR_NUMBER = "invalid car number";
-    public static final String INVALID_CAR_MODEL = "invalid car model";
+    public static final String PARAMETER_TEAM_NAME = "teamName";
+    public static final String PARAMETER_TEAM_LEAD_ID = "teamLeadId";
+    public static final String PARAMETER_TEAM_LEAD_EMAIL = "teamLeadEmail";
+    public static final String INVALID_TEAM_NAME = "invalid team name";
+    public static final String INVALID_TEAM_LEAD_ID = "invalid  TEAM_LEAD_ID";
 
     /**
      * params of user
@@ -99,7 +102,7 @@ public final class AttributeParameterHolder {
      * params of user
      */
     public static final String PARAMETER_BLOCK_NAME = "blockName";
-    public static final String PARAMETER_BLOCK_Id = "blockID";
+    public static final String PARAMETER_BLOCK_ID = "blockId";
     public static final String PARAMETER_BLOCK_LOCATION = "blockLocation";
     public static final String INVALID_BLOCK_NAME = "invalid block name";
 
@@ -126,7 +129,8 @@ public final class AttributeParameterHolder {
     public static final String INVALID_USER_MESSAGE = "user not found";
     public static final String INVALID_EMAIL_MESSAGE = "email is not valid";
     public static final String INVALID_PASSWORD_MESSAGE = "Password is not valid";
-    public static final String INVALID_DELETING_MESSAGE = "invalidDeleting";
+    public static final String INVALID_TEAM_NAME_MESSAGE = "invalidDeleting";
+    public static final String INVALID_TEAM_LEAD_EMAIL_MESSAGE = "invalidDeleting";
     public static final String REQ_ATTRIBUTE_USER_BLOCKED = "user_blocked";
     public static final String USER_BLOCKED_MESSAGE = "user is blocked";
     public static final String INVALID_CRUISE_REQUEST_ID = " Request id can not be blank";

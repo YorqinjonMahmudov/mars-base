@@ -3,10 +3,7 @@ package uz.me.marsbase.command.instanceHolder;
 
 import uz.me.marsbase.model.dao.*;
 import uz.me.marsbase.model.dao.imp.*;
-import uz.me.marsbase.service.BlockService;
-import uz.me.marsbase.service.BlockServiceImpl;
-import uz.me.marsbase.service.UserService;
-import uz.me.marsbase.service.UserServiceImpl;
+import uz.me.marsbase.service.*;
 import uz.me.marsbase.utils.encoder.PasswordEncoder;
 import uz.me.marsbase.utils.validator.PatternValidator;
 
@@ -20,6 +17,7 @@ public class InstanceHolder {
 
     private static final UserService userService = new UserServiceImpl();
     private static final BlockService blockService = new BlockServiceImpl();
+    private static final TeamService teamService = new  TeamServiceImpl();
 
     private static final PatternValidator patternValidator = new PatternValidator();
 
@@ -29,6 +27,7 @@ public class InstanceHolder {
             case "PasswordEncoder" -> (T) passwordEncoder;
             case "UserService" -> (T) userService;
             case "BlockService" -> (T) blockService;
+            case "TeamService" -> (T) teamService;
             case "ReportDao" -> (T) reportDao;
             case "TeamDao" -> (T) teamDao;
             case "WorkDao" -> (T) workDao;

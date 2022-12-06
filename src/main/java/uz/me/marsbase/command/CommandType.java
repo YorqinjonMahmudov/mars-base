@@ -1,6 +1,7 @@
 package uz.me.marsbase.command;
 
 
+import uz.me.marsbase.command.admin.team.*;
 import uz.me.marsbase.command.admin.user.*;
 import uz.me.marsbase.command.auth.LogOutCommand;
 import uz.me.marsbase.command.auth.SignInFinishCommand;
@@ -19,7 +20,13 @@ public enum CommandType {
     ADD_USER_FINISH(new AddUserFinishCommand()),
     EDIT_USER(new EditUserCommand()),
     FINISH_EDIT_USER(new FinishEditUserCommand()),
-    DELETE_USER(new DeleteUserCommand());
+    DELETE_USER(new DeleteUserCommand()),
+    TEAMS_FOR_ADMIN(new TeamsInfoCommand()),
+    ADD_TEAM(new AddTeamCommand()),
+    FINISH_ADD_TEAM(new FinishAddTeamCommand()),
+    EDIT_TEAM(new EditTeamCommand()),
+    FINISH_EDIT_TEAM(new FinishEditTeamCommand()),
+    DELETE_TEAM(new DeleteTeamCommand());
 
 //    REQUESTS(new RequestCommand()),
 //    ADD_REQUEST(new AddRequestCommand()),
@@ -47,7 +54,7 @@ public enum CommandType {
 //    DELETE_DRIVER(new DeleteDriverCommand()),
 //    EDIT_DRIVER(new EditDriverCommand());
 
-    private Command command;
+    private final Command command;
 
     CommandType(Command command) {
         this.command = command;
@@ -70,5 +77,6 @@ public enum CommandType {
 
         return DEFAULT;
     }
+
 
 }

@@ -21,8 +21,8 @@ public class AddUserCommand implements Command {
         String page = ADD_USER_PAGE_FOR_ADMIN;
         var type = REDIRECT;
         HttpSession session = request.getSession();
-        var blocks = blockService.getBlocks();
-        session.setAttribute(BLOCKS, blocks);
+        if (session.getAttribute(BLOCKS) == null)
+            session.setAttribute(BLOCKS, blockService.getBlocks());
         return new Router(page, type);
     }
 }

@@ -1,7 +1,7 @@
 package uz.me.marsbase.mappers;
 
 
-import uz.me.marsbase.model.dto.UserDTO;
+import uz.me.marsbase.payload.UserDTO;
 import uz.me.marsbase.model.entity.User;
 
 import java.util.List;

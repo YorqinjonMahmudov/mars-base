@@ -1,12 +1,18 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="uz.me.marsbase.model.entity.enums.Role" %>
+<%--
+  Created by IntelliJ IDEA.
+  User: user
+  Date: 11/28/2022
+  Time: 10:17 PM
+  To change this template use File | Settings | File Templates.
+--%>
 <%@page import="uz.me.marsbase.command.CommandType" %>
+<%@page import="uz.me.marsbase.model.entity.enums.Role" %>
 <%@page import="uz.me.marsbase.command.navigation.AttributeParameterHolder" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-
-<head title="User page for admin">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <title>Team info</title>
     <style>
         body {
             font-family: "Lato", sans-serif;
@@ -125,6 +131,7 @@
             }
         }
     </style>
+
 </head>
 <body>
 
@@ -136,9 +143,7 @@
     <a href="../report-info.jsp">Report</a>
 </div>
 
-<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; MENU</span>
-
-<c:if test="${sessionScope.currentUser.role.equals(Role.ADMIN) && sessionScope.editingUser!=null}">
+<c:if test="${sessionScope.currentUser.role.equals(Role.ADMIN) && sessionScope.editingTeam!=null}">
 
     <div class="container">
         <div class="row">
@@ -186,52 +191,29 @@
 
     <div class="registerDiv" id="registerDiv">
 
-        <h1 class="signup-title"> Edit User </h1>
+        <h1 class="signup-title"> Edit Team </h1>
 
-        <form id="register_form"
-              action="${pageContext.request.contextPath}/controller?command=${CommandType.FINISH_EDIT_USER}&editingUserId=${sessionScope.editing.id}"
+        <form id="register_form" align="center"
+              action="${pageContext.request.contextPath}/controller?command=${CommandType.FINISH_EDIT_TEAM}&editingTeamId=${sessionScope.editingTeam.id}"
               class="add-request-content" method="post">
 
             <div class="form-item">
-                <label for="editingUserFirstName"></label>
+                <label for="editingTeamFirstName"></label>
                 <input type="text" class="form-control"
-                       id="editingUserFirstName" name="${AttributeParameterHolder.PARAMETER_USER_FIRSTNAME}"
-                       property="${sessionScope.editingUser.firstName}"
-                       value="${sessionScope.editingUser.firstName}"
-                       placeholder=" firstName ">
-            </div>
-            <div class="form-item">
-                <label for="editingUserLastName"></label>
-                <input type="text" class="form-control"
-                       id="editingUserLastName" name="${AttributeParameterHolder.PARAMETER_USER_LASTNAME}"
-                       value="${sessionScope.editingUser.lastName}"
-                       placeholder=" lastName ">
-            </div>
-            <div class="form-item">
-                <label for="editingUserEmail"></label>
-                <input type="text" class="form-control"
-                       id="editingUserEmail" name="${AttributeParameterHolder.PARAMETER_USER_EMAIL}"
-                       value="${sessionScope.editingUser.email}"
-                       placeholder=" email ">
-            </div>
-
-            <div class="form-item">
-                <label for="editingUserPassword"></label>
-                <input type="text" class="form-control"
-                       id="editingUserPassword" name="${AttributeParameterHolder.PARAMETER_USER_PASSWORD}"
-                       value="${sessionScope.editingUser.password}"
-                       placeholder=" password ">
+                       id="editingTeamFirstName" name="${AttributeParameterHolder.PARAMETER_TEAM_NAME}"
+                       property="${sessionScope.editingTeam.name}"
+                       value="${sessionScope.editingTeam.name}"
+                       placeholder=" Team name ">
             </div>
 
             <div>
-                <select name="blockName" class="form-select" size="${sessionScope.blocks.size()}"
+                <select name="teamLeadEmail" class="form-select" size="1"
                         aria-label="size 3 select example">
-                    <option selected>Open this select menu</option>
+                    <option selected>${sessionScope.editingTeam.teamLeadEmail}</option>
 
-                    <c:forEach items="${sessionScope.blocks}" var="block">
-                        <option name="blockName" value="${block.name}"> ${block.name}</option>
+                    <c:forEach items="${sessionScope.users}" var="user">
+                        <option name="teamLeadEmail" value="${user.email}"> ${user.email}</option>
                     </c:forEach>
-
                 </select>
             </div>
 
@@ -241,7 +223,7 @@
             </div>
 
             <div class="form-item">
-                <a href="${pageContext.request.contextPath}/controller?command=${CommandType.USERS_FOR_ADMIN}"
+                <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAMS_FOR_ADMIN}"
                    class="btn btn-block btn-danger">Cancel</a>
             </div>
 
@@ -250,54 +232,52 @@
 
 </c:if>
 
-<h1 align="center"> List of Users</h1>
 
-<table>
-    <tr>
-        <th>first name</th>
-        <th>last name</th>
-        <th>email</th>
-        <th>password</th>
-        <th>role</th>
-        <th>block id</th>
-        <th colspan="2">action</th>
-    </tr>
+<c:choose>
+    <c:when test="${sessionScope.currentUser.role.equals(Role.ADMIN)}">
 
-    <c:forEach items="${sessionScope.users}" var="user">
-        <tr class="trHover">
-            <td class="column-1"><span> ${user.firstName} </span></td>
-            <td class="column-1"><span> ${user.lastName} </span></td>
-            <td class="column-1"><span> ${user.email} </span></td>
-            <td class="column-1"><span> ${user.password} </span></td>
-            <td class="column-1"><span> ${user.role} </span></td>
-            <td class="column-1"><span> ${user.blockId} </span></td>
+        <table>
+            <tr>
+                <th>team name</th>
+                <th>team leader email</th>
+                <th>active</th>
+                <th colspan="2">action</th>
+            </tr>
 
-            <td class="column-row">
-                <a class="btn btn-outline-primary"
-                   href="${pageContext.request.contextPath}/controller?command=${CommandType.EDIT_USER}&editingUserId=${user.id}">
-                    EDIT</a>
-            </td>
-            <td class="column-row">
-                <a href=${pageContext.request.contextPath}/controller?command=${CommandType.DELETE_USER}&deletingUserId=${user.id}>
-                    Delete</a>
-            </td>
-        </tr>
-    </c:forEach>
-    >
-</table>
-<br>
+            <c:forEach items="${sessionScope.teams}" var="team">
+                <tr class="trHover">
+                    <td class="column-1"><span> ${team.name} </span></td>
+                    <td class="column-1"><span> ${team.teamLeadEmail} </span></td>
+                    <td class="column-1"><span> ${team.active} </span></td>
 
-<form align="center" method="post"
-      action="${pageContext.request.contextPath}/controller?command=${CommandType.ADD_USER}">
-    <button>
-        ADD USER
-    </button>
+                    <td class="column-row">
+                        <a class="btn btn-outline-primary"
+                           href="${pageContext.request.contextPath}/controller?command=${CommandType.EDIT_TEAM}&editingTeamId=${team.id}">
+                            EDIT</a>
+                    </td>
+                    <td class="column-row">
+                        <a href=${pageContext.request.contextPath}/controller?command=${CommandType.DELETE_TEAM}&deletingTeamId=${team.id}>
+                            Delete</a>
+                    </td>
+                </tr>
+            </c:forEach>
+            >
+        </table>
+        <br>
 
-</form>
-
+        <form align="center" method="post"
+              action="${pageContext.request.contextPath}/controller?command=${CommandType.ADD_TEAM}">
+            <button>
+                ADD TEAM
+            </button>
+        </form>
+    </c:when>
+    <c:otherwise>
+        You have no permission to this page
+    </c:otherwise>
+</c:choose>
 
 <script>
-
     function openNav() {
         document.getElementById("mySidenav").style.width = "250px";
     }
@@ -306,6 +286,5 @@
         document.getElementById("mySidenav").style.width = "0";
     }
 </script>
-
 </body>
 </html>

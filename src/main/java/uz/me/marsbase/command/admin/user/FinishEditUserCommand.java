@@ -2,10 +2,8 @@ package uz.me.marsbase.command.admin.user;
 
 import uz.me.marsbase.command.Command;
 import uz.me.marsbase.command.instanceHolder.InstanceHolder;
-import uz.me.marsbase.command.navigation.PageNavigation;
-import uz.me.marsbase.model.dto.BlockDTO;
-import uz.me.marsbase.model.dto.UserDTO;
-import uz.me.marsbase.model.entity.enums.Role;
+import uz.me.marsbase.payload.BlockDTO;
+import uz.me.marsbase.payload.UserDTO;
 import uz.me.marsbase.router.Router;
 import uz.me.marsbase.service.BlockService;
 import uz.me.marsbase.service.UserService;
@@ -25,7 +23,6 @@ public class FinishEditUserCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) {
-        String page = USER_PAGE_FOR_ADMIN;
         var session = request.getSession();
         FormValidator validator = new AddUserValidator();
         var parameterMap = request.getParameterMap();
@@ -45,6 +42,6 @@ public class FinishEditUserCommand implements Command {
         } else
             session.setAttribute(REQ_ATTRIBUTE_FORM_INVALID, validationResult);
 
-        return new Router(page, REDIRECT);
+        return new Router(USER_PAGE_FOR_ADMIN, REDIRECT);
     }
 }

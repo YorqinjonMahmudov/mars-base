@@ -1,7 +1,7 @@
 package uz.me.marsbase.mappers;
 
 
-import uz.me.marsbase.model.dto.BlockDTO;
+import uz.me.marsbase.payload.BlockDTO;
 import uz.me.marsbase.model.entity.Block;
 
 import java.util.List;

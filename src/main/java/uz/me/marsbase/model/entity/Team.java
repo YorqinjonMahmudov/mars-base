@@ -16,4 +16,10 @@ public class Team extends AbsEntity {
 
     private boolean isActive;
 
+    public Team(Integer id, String name, Integer teamLeadId, boolean isActive) {
+        super(id);
+        this.name = name;
+        this.teamLeadId = teamLeadId;
+        this.isActive = isActive;
+    }
 }

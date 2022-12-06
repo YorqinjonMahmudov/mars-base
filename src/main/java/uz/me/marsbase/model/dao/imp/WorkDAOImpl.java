@@ -1,16 +1,13 @@
 package uz.me.marsbase.model.dao.imp;
 
 import uz.me.marsbase.connection.MyConnectionPool;
+import uz.me.marsbase.exception.MyException;
 import uz.me.marsbase.model.dao.Dao;
 import uz.me.marsbase.model.dao.WorkDao;
 import uz.me.marsbase.model.entity.Work;
 import uz.me.marsbase.model.entity.enums.Status;
-import uz.me.marsbase.exception.MyException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +33,8 @@ public class WorkDAOImpl implements WorkDao {
 
     @Override
     public boolean insert(Work work) {
-        try (PreparedStatement ps = MyConnectionPool.getInstance().getConnection().prepareStatement(INSERT)) {
+        try (Connection connection = MyConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = connection.prepareStatement(INSERT)) {
             return executeUpdatePrepareStatement(ps,
                     Dao.STRING + work.getTitle(),
                     Dao.STRING + work.getDescription(),
@@ -59,10 +57,8 @@ public class WorkDAOImpl implements WorkDao {
 
     @Override
     public Optional<Work> findById(int id) {
-        try (PreparedStatement ps = MyConnectionPool
-                .getInstance()
-                .getConnection()
-                .prepareStatement(FIND_BY_ID)) {
+        try (Connection connection = MyConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = connection.prepareStatement(FIND_BY_ID)) {
             return getOptionalWork(executePrepareStatement(ps, Dao.INTEGER + id));
         } catch (SQLException e) {
             throw new MyException(e.getMessage());
@@ -72,13 +68,12 @@ public class WorkDAOImpl implements WorkDao {
     @Override
     public List<Work> findAll() {
 
-        try {
-            Connection connection = MyConnectionPool.getInstance().getConnection();
+        try (Connection connection = MyConnectionPool.getInstance().getConnection();
+             Statement statement = connection.createStatement();
+        ) {
             List<Work> list = new ArrayList<>();
 
-            PreparedStatement ps = null;
-            ps = connection.prepareStatement(FIND_ALL);
-            ResultSet resultSet = executePrepareStatement(ps);
+            ResultSet resultSet = statement.executeQuery(FIND_ALL);
 
             while (resultSet.next())
                 list.add(getWorkFromResultSet(resultSet));
@@ -92,8 +87,8 @@ public class WorkDAOImpl implements WorkDao {
 
     @Override
     public boolean update(int id, Work work) {
-        try {
-            return checkAndUpdateWork(MyConnectionPool.getInstance().getConnection(), id, work);
+        try (Connection connection = MyConnectionPool.getInstance().getConnection()) {
+            return checkAndUpdateWork(connection, id, work);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -237,7 +232,8 @@ public class WorkDAOImpl implements WorkDao {
     }
 
     private boolean setStatusTo(int workId, Status status) {
-        try (PreparedStatement ps = MyConnectionPool.getInstance().getConnection().prepareStatement(SET_STATUS_TO)) {
+        try (Connection connection = MyConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = connection.prepareStatement(SET_STATUS_TO)) {
             return executeUpdatePrepareStatement(ps, Dao.INTEGER + workId, Dao.STRING + status.name());
         } catch (SQLException e) {
             throw new MyException(e.getMessage());
@@ -245,13 +241,14 @@ public class WorkDAOImpl implements WorkDao {
     }
 
     private boolean existById(Connection connection, int id) throws SQLException {
-        PreparedStatement ps = connection.prepareStatement(FIND_BY_ID);
-        ResultSet resultSet = executePrepareStatement(ps, Dao.INTEGER + id);
+        try (PreparedStatement ps = connection.prepareStatement(FIND_BY_ID);) {
+            ResultSet resultSet = executePrepareStatement(ps, Dao.INTEGER + id);
 
-        if (resultSet.next())
-            return resultSet.getInt("id") == 0;
+            if (resultSet.next())
+                return resultSet.getInt("id") == 0;
 
-        return false;
+            return false;
+        }
     }
 
     private boolean checkAndUpdateWork(Connection connection, int id, Work work) throws SQLException {
@@ -259,17 +256,17 @@ public class WorkDAOImpl implements WorkDao {
             return false;
 
 //        todo check exist block
-
-        PreparedStatement ps = connection.prepareStatement(UPDATE_WORK);
-        return executeUpdatePrepareStatement(ps,
-                Dao.STRING + work.getTitle(),
-                Dao.STRING + work.getDescription(),
-                Dao.INTEGER + work.getStar(),
-                Dao.DOUBLE + work.getRequiredMoney(),
-                Dao.DATE + work.getStartDate(),
-                Dao.DATE + work.getFinishDate(),
-                Dao.INTEGER + work.getBlockId(),
-                Dao.INTEGER + work.getTeamId());
+        try (PreparedStatement ps = connection.prepareStatement(UPDATE_WORK);) {
+            return executeUpdatePrepareStatement(ps,
+                    Dao.STRING + work.getTitle(),
+                    Dao.STRING + work.getDescription(),
+                    Dao.INTEGER + work.getStar(),
+                    Dao.DOUBLE + work.getRequiredMoney(),
+                    Dao.DATE + work.getStartDate(),
+                    Dao.DATE + work.getFinishDate(),
+                    Dao.INTEGER + work.getBlockId(),
+                    Dao.INTEGER + work.getTeamId());
+        }
     }
 
 }

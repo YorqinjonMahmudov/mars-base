@@ -22,9 +22,7 @@ public class AddUserValidator implements FormValidator {
 
         if (parameters.get(PARAMETER_EMAIL) == null
                 || !validator.validEmail(parameters.get(PARAMETER_EMAIL)[0])
-        ) {
-            validationResult.put(PARAMETER_EMAIL, INVALID_EMAIL_MESSAGE);
-        }
+        ) validationResult.put(PARAMETER_EMAIL, INVALID_EMAIL_MESSAGE);
 
         if (parameters.get(PARAMETER_PASSWORD) == null
                 || parameters.get(PARAMETER_PASSWORD).length == 0

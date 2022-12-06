@@ -1,6 +1,6 @@
 package uz.me.marsbase.service;
 
-import uz.me.marsbase.model.dto.UserDTO;
+import uz.me.marsbase.payload.UserDTO;
 import uz.me.marsbase.model.entity.User;
 
 import java.util.List;
@@ -20,4 +20,6 @@ public interface UserService {
     boolean update(Integer editingUserId, UserDTO userDTO);
 
     boolean delete(int deletingUserId);
+
+    boolean makeTeamLead(int userId);
 }

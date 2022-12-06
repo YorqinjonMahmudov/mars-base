@@ -5,14 +5,11 @@ import uz.me.marsbase.exception.MyException;
 import uz.me.marsbase.mappers.UserMapper;
 import uz.me.marsbase.model.dao.Dao;
 import uz.me.marsbase.model.dao.UserDao;
-import uz.me.marsbase.model.dto.UserDTO;
 import uz.me.marsbase.model.entity.User;
 import uz.me.marsbase.model.entity.enums.Role;
+import uz.me.marsbase.payload.UserDTO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -43,7 +40,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean insert(User user) {
-        try (PreparedStatement ps = MyConnectionPool.getInstance().getConnection().prepareStatement(INSERT)) {
+        try (Connection connection = MyConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = connection.prepareStatement(INSERT)) {
             if (findByEmail(user.getEmail()).isPresent())
                 return false;
             return executeUpdatePrepareStatement(ps,
@@ -60,7 +58,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean delete(int id) {
-        try (var ps = MyConnectionPool.getInstance().getConnection().prepareStatement(DELETE_USER)) {
+        try (Connection connection = MyConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = connection.prepareStatement(DELETE_USER)) {
             putArgs(ps, Dao.INTEGER + id);
             var execute = ps.execute();
             return !execute;
@@ -71,10 +70,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Optional<User> findById(int id) {
-        try (PreparedStatement ps = MyConnectionPool
-                .getInstance()
-                .getConnection()
-                .prepareStatement(FIND_BY_ID)) {
+        try (Connection connection = MyConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = connection.prepareStatement(FIND_BY_ID)) {
             return getOptionalUser(executePrepareStatement(ps, Dao.INTEGER + id));
         } catch (SQLException e) {
             throw new MyException(e.getMessage());
@@ -83,13 +80,13 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> findAll() {
+        try (Connection connection = MyConnectionPool.getInstance().getConnection();
+             Statement statement = connection.createStatement()
+        ) {
 
-        try {
-            Connection connection = MyConnectionPool.getInstance().getConnection();
             List<User> list = new ArrayList<>();
 
-            PreparedStatement ps = connection.prepareStatement(FIND_ALL);
-            ResultSet resultSet = executePrepareStatement(ps);
+            ResultSet resultSet = statement.executeQuery(FIND_ALL);
 
             while (resultSet.next()) {
                 list.add(getUserFromResultSet(resultSet));
@@ -113,10 +110,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean updatePassword(int id, String password) {
-        try (PreparedStatement ps = MyConnectionPool
-                .getInstance()
-                .getConnection()
-                .prepareStatement(CHANGE_PASSWORD)) {
+        try (Connection connection = MyConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = connection.prepareStatement(CHANGE_PASSWORD)) {
             return executeUpdatePrepareStatement(ps, Dao.INTEGER + id, Dao.STRING + password);
         } catch (SQLException e) {
             throw new MyException(e.getMessage());
@@ -125,16 +120,22 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean makeTeamLead(int userId) {
-        try (PreparedStatement ps = MyConnectionPool.getInstance().getConnection().prepareStatement(MAKE_TEAM_LEAD)) {
-            return executeUpdatePrepareStatement(ps, Dao.INTEGER + userId, Dao.STRING + Role.TEAM_LEADER.name());
-        } catch (SQLException e) {
-            throw new MyException(e.getMessage());
+        var optionalUser = findById(userId);
+        if (optionalUser.isPresent() && optionalUser.get().getRole().equals(Role.USER)) {
+            try (Connection connection = MyConnectionPool.getInstance().getConnection();
+                 PreparedStatement ps = connection.prepareStatement(MAKE_TEAM_LEAD)) {
+                return executeUpdatePrepareStatement(ps, Dao.INTEGER + userId, Dao.STRING + Role.TEAM_LEADER.name());
+            } catch (SQLException e) {
+                throw new MyException(e.getMessage());
+            }
         }
+        return true;
     }
 
     @Override
     public boolean changeFromTeamLeadToUser(int userId) {
-        try (PreparedStatement ps = MyConnectionPool.getInstance().getConnection().prepareStatement(CHANGE_FROM_TEAM_LEAD_TO_USER)) {
+        try (Connection connection = MyConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = connection.prepareStatement(CHANGE_FROM_TEAM_LEAD_TO_USER)) {
             return executeUpdatePrepareStatement(ps, Dao.INTEGER + userId, Dao.STRING + Role.USER.name());
         } catch (SQLException e) {
             throw new MyException(e.getMessage());
@@ -143,7 +144,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Optional<User> findByEmail(String email) {
-        try (PreparedStatement ps = MyConnectionPool.getInstance().getConnection().prepareStatement(FIND_BY_EMAIL)) {
+        try (Connection connection = MyConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = connection.prepareStatement(FIND_BY_EMAIL)) {
             return getOptionalUser(executePrepareStatement(ps, Dao.STRING + email));
         } catch (SQLException e) {
             throw new MyException(e.getMessage());
@@ -203,24 +205,25 @@ public class UserDaoImpl implements UserDao {
 
 //        todo check exist block
 
-        PreparedStatement ps = connection.prepareStatement(UPDATE_USER);
-        return executeUpdatePrepareStatement(ps,
-                Dao.STRING + user.getEmail(),
-                Dao.STRING + user.getFirstName(),
-                Dao.STRING + user.getLastName(),
-                Dao.STRING + user.getPassword(),
-                Dao.INTEGER + user.getBlockId(),
-                Dao.INTEGER + id);
+        try (PreparedStatement ps = connection.prepareStatement(UPDATE_USER)) {
+            return executeUpdatePrepareStatement(ps,
+                    Dao.STRING + user.getEmail(),
+                    Dao.STRING + user.getFirstName(),
+                    Dao.STRING + user.getLastName(),
+                    Dao.STRING + user.getPassword(),
+                    Dao.INTEGER + user.getBlockId(),
+                    Dao.INTEGER + id);
+        }
     }
 
     private boolean existById(Connection connection, int id) throws SQLException {
-        PreparedStatement ps = connection.prepareStatement(FIND_BY_ID);
-        ResultSet resultSet = executePrepareStatement(ps, Dao.INTEGER + id);
 
-        if (resultSet.next())
-            return resultSet.getInt("id") != 0;
-
-        return false;
+        try (PreparedStatement ps = connection.prepareStatement(FIND_BY_ID)) {
+            ResultSet resultSet = executePrepareStatement(ps, Dao.INTEGER + id);
+            if (resultSet.next())
+                return resultSet.getInt("id") != 0;
+            return false;
+        }
     }
 
 }

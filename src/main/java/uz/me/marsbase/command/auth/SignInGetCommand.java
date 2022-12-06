@@ -1,6 +1,5 @@
 package uz.me.marsbase.command.auth;
 
-
 import uz.me.marsbase.command.Command;
 import uz.me.marsbase.router.Router;
 

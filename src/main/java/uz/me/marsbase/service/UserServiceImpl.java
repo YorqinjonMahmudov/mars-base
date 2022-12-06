@@ -3,7 +3,7 @@ package uz.me.marsbase.service;
 import uz.me.marsbase.mappers.UserMapper;
 import uz.me.marsbase.model.dao.UserDao;
 import uz.me.marsbase.model.dao.imp.UserDaoImpl;
-import uz.me.marsbase.model.dto.UserDTO;
+import uz.me.marsbase.payload.UserDTO;
 import uz.me.marsbase.model.entity.User;
 
 import java.util.List;
@@ -46,5 +46,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean delete(int deletingUserId) {
         return userDao.delete(deletingUserId);
+    }
+
+    @Override
+    public boolean makeTeamLead(int userId) {
+       return userDao.makeTeamLead(userId);
     }
 }

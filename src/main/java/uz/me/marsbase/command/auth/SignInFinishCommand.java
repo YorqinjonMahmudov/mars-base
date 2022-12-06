@@ -3,7 +3,7 @@ package uz.me.marsbase.command.auth;
 
 import uz.me.marsbase.command.Command;
 import uz.me.marsbase.command.instanceHolder.InstanceHolder;
-import uz.me.marsbase.model.dto.UserDTO;
+import uz.me.marsbase.payload.UserDTO;
 import uz.me.marsbase.model.entity.enums.Role;
 import uz.me.marsbase.router.Router;
 import uz.me.marsbase.service.UserService;
