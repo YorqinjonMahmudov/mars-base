@@ -12,7 +12,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Team info</title>
+    <title>Work info</title>
     <style>
         body {
             font-family: "Lato", sans-serif;
@@ -236,50 +236,69 @@
 <c:choose>
     <c:when test="${sessionScope.currentUser.role.equals(Role.ADMIN)}">
 
+        <h1 align="center">Work details</h1>
         <table>
             <tr>
+                <th>title</th>
+                <th>description</th>
+                <th>required money</th>
+                <th>status</th>
+                <th>start date</th>
+                <th>finish date</th>
+                <th>star</th>
                 <th>team name</th>
-                <th>team leader email</th>
-                <th>active</th>
-                <th colspan="2">action</th>
+                <th>block name</th>
             </tr>
 
-            <c:forEach items="${sessionScope.teams}" var="team">
-                <tr class="trHover">
-                    <a href="${pageContext.request.contextPath}/controller?command=${CommandType.EDIT_TEAM}&teamId=${team.id}">
+            <tr class="trHover">
+                <td class="column-1"> ${sessionScope.currentWork.title} </td>
+                <td class="column-1"> ${sessionScope.currentWork.description} </td>
+                <td class="column-1"> ${sessionScope.currentWork.requiredMoney} </td>
+                <td class="column-1"> ${sessionScope.currentWork.status} </td>
+                <td class="column-1"> ${sessionScope.currentWork.startDate} </td>
+                <td class="column-1"> ${sessionScope.currentWork.finishDate} </td>
+                <td class="column-1"> ${sessionScope.currentWork.star} </td>
+                <td class="column-1"> ${sessionScope.currentWork.teamName} </td>
+                <td class="column-1"> ${sessionScope.currentWork.blockName} </td>
+                    <%--                    <td class="column-1"><span> <a--%>
+                    <%--                            href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAM_MEMBERS_ADMIN}&teamId=${team.id}"> ${currentWork.teamName}</a> </span>--%>
+                    <%--                    </td>--%>
+                    <%--                    <td class="column-1"><span>  <a--%>
+                    <%--                            href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAM_MEMBERS_ADMIN}&teamId=${team.id}"> ${currentWork.blockName}</a> </span>--%>
+                    <%--                    </td>--%>
 
-                        <td class="column-1"><span><a
-                                href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAM_MEMBERS_ADMIN}&teamId=${team.id}"> ${team.name}</a> </span>
-                        </td>
-                        <td class="column-1"><span> <a
-                                href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAM_MEMBERS_ADMIN}&teamId=${team.id}"> ${team.teamLeadEmail}</a> </span>
-                        </td>
-                        <td class="column-1"><span>  <a
-                                href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAM_MEMBERS_ADMIN}&teamId=${team.id}"> ${team.active}</a> </span>
-                        </td>
-                        <td class="column-row">
-                            <a class="btn btn-outline-primary"
-                               href="${pageContext.request.contextPath}/controller?command=${CommandType.EDIT_TEAM}&editingTeamId=${team.id}">
-                                EDIT</a>
-                        </td>
-                        <td class="column-row">
-                            <a href=${pageContext.request.contextPath}/controller?command=${CommandType.DELETE_TEAM}&deletingTeamId=${team.id}>
-                                Delete</a>
-                        </td>
-                    </a>
-                </tr>
 
-            </c:forEach>
-            >
+            </tr>
+
         </table>
         <br>
+        <br>
 
-        <form align="center" method="post"
-              action="${pageContext.request.contextPath}/controller?command=${CommandType.ADD_TEAM}">
-            <button>
-                ADD TEAM
-            </button>
-        </form>
+        <c:if test="${sessionScope.currentWorkReport==null}  && ${sessionScope.currentUser.role.equals(Role.TEAM_LEADER)}">
+            <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAM_MEMBERS_ADMIN}&teamId=${team.id}"> Add Report</a>
+        </c:if>
+        <c:if test="${sessionScope.currentWorkReport!=null}">
+
+            <table>
+                <tr>
+                    <th>work id</th>
+                    <th>reported date</th>
+                    <th>comments</th>
+                    <th>team name</th>
+                </tr>
+
+                <tr class="trHover">
+                    <td class="column-1"> ${sessionScope.currentWorkReport.workId} </td>
+                    <td class="column-1"> ${sessionScope.currentWorkReport.reportedDate} </td>
+                    <td class="column-1"> ${sessionScope.currentWorkReport.comments} </td>
+                    <td class="column-1"> ${sessionScope.currentWorkReport.teamName} </td>
+                </tr>
+
+            </table>
+
+        </c:if>
+
+
     </c:when>
     <c:otherwise>
         You have no permission to this page

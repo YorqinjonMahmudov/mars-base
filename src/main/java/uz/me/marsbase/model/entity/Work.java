@@ -4,6 +4,7 @@ import lombok.*;
 import uz.me.marsbase.model.entity.abs.AbsEntity;
 import uz.me.marsbase.model.entity.enums.Status;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -21,9 +22,9 @@ public class Work extends AbsEntity {
 
     private Status status;
 
-    private Date startDate;
+    private LocalDate startDate;
 
-    private Date finishDate;
+    private LocalDate finishDate;
 
     private Integer star;
 

@@ -2,9 +2,9 @@ package uz.me.marsbase.model.dao;
 
 import uz.me.marsbase.model.entity.abs.AbsEntity;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,8 +27,8 @@ public interface Dao<T extends AbsEntity> {
             else if (arg.startsWith(STRING)) ps.setString(++index, arg.substring(9));
             else if (arg.startsWith(DOUBLE)) ps.setDouble(++index, Double.parseDouble(arg.substring(9)));
             else if (arg.startsWith(BOOLEAN)) ps.setBoolean(++index, Boolean.parseBoolean(arg.substring(10)));
-            else if (arg.startsWith(TIMESTAMP))
-                ps.setTimestamp(++index, Timestamp.valueOf(arg.substring(TIMESTAMP.length(), TIMESTAMP.length() + DATE.length()) + " " + arg.substring(TIMESTAMP.length() + DATE.length() + 1)));
+            else if (arg.startsWith(DATE))
+                ps.setDate(++index, Date.valueOf(arg.substring(10)));
         }
         return ps;
     }
@@ -42,4 +42,5 @@ public interface Dao<T extends AbsEntity> {
     List<T> findAll();
 
     boolean update(int id, T t);
+
 }

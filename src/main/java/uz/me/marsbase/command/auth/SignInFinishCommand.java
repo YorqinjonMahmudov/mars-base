@@ -54,7 +54,7 @@ public class SignInFinishCommand implements Command {
                 session.setAttribute(REQ_ATTRIBUTE_USER_INVALID, INVALID_USER_MESSAGE);
             }
         } else {
-            session.setAttribute(REQ_ATTRIBUTE_FORM_INVALID, validationResult);
+            session.setAttribute(INVALID_FORM, validationResult);
         }
 
         return new Router(page, type);

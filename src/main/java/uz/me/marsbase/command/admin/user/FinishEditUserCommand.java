@@ -40,7 +40,7 @@ public class FinishEditUserCommand implements Command {
                 session.setAttribute(USERS,userService.getUsers());
             }
         } else
-            session.setAttribute(REQ_ATTRIBUTE_FORM_INVALID, validationResult);
+            session.setAttribute(INVALID_FORM, validationResult);
 
         return new Router(USER_PAGE_FOR_ADMIN, REDIRECT);
     }

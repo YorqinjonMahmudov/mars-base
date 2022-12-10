@@ -2,8 +2,9 @@ package uz.me.marsbase.component;
 
 import lombok.SneakyThrows;
 import uz.me.marsbase.ConnectionSource;
-import uz.me.marsbase.model.dao.imp.BlockDAOImpl;
-import uz.me.marsbase.model.dao.imp.UserDaoImpl;
+import uz.me.marsbase.command.instanceHolder.InstanceHolder;
+import uz.me.marsbase.model.dao.BlockDao;
+import uz.me.marsbase.model.dao.UserDao;
 import uz.me.marsbase.model.entity.Block;
 import uz.me.marsbase.model.entity.User;
 import uz.me.marsbase.model.entity.enums.Role;
@@ -38,7 +39,8 @@ public class DataLoader {
                 .area(123456789)
                 .build();
 
-        BlockDAOImpl.getInstance().insert(block);
+        BlockDao blockDao = InstanceHolder.getInstance(BlockDao.class);
+        blockDao.insert(block);
 
         User admin = User.builder()
                 .blockId(1)
@@ -48,9 +50,10 @@ public class DataLoader {
                 .email("admin@gmail.com")
                 .role(Role.ADMIN)
                 .build();
-        UserDaoImpl.getInstance().insert(admin);
+        UserDao userDao = InstanceHolder.getInstance(UserDao.class);
+        userDao.insert(admin);
 
-        User teamLid = User.builder()
+        User teamLead = User.builder()
                 .blockId(1)
                 .firstName("John")
                 .lastName("Hopkins")
@@ -59,7 +62,7 @@ public class DataLoader {
                 .role(Role.TEAM_LEADER)
                 .build();
 
-        UserDaoImpl.getInstance().insert(teamLid);
+        userDao.insert(teamLead);
 
     }
 

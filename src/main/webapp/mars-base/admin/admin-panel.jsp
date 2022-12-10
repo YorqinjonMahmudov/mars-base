@@ -67,7 +67,7 @@
     <a href="#" onclick="closeNav()"> <span onclick='closeNav()'>&times;</span> </a>
     <a href="${pageContext.request.contextPath}/controller?command=${CommandType.USERS_FOR_ADMIN}">User</a>
     <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAMS_FOR_ADMIN}">Team</a>
-    <a href="../work-info.jsp">Work</a>
+    <a href="${pageContext.request.contextPath}/controller?command=${CommandType.WORK_PAGE_FOR_ADMIN}">Work</a>
     <a href="../report-info.jsp">Report</a>
 </div>
 

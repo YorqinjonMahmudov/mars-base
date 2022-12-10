@@ -3,6 +3,10 @@ package uz.me.marsbase.command;
 
 import uz.me.marsbase.command.admin.team.*;
 import uz.me.marsbase.command.admin.user.*;
+import uz.me.marsbase.command.admin.work.AddWorkCommand;
+import uz.me.marsbase.command.admin.work.FinishAddWorkCommand;
+import uz.me.marsbase.command.admin.work.WorkInfoCommand;
+import uz.me.marsbase.command.admin.work.WorkViewCommand;
 import uz.me.marsbase.command.auth.LogOutCommand;
 import uz.me.marsbase.command.auth.SignInFinishCommand;
 import uz.me.marsbase.command.auth.SignInGetCommand;
@@ -22,11 +26,18 @@ public enum CommandType {
     FINISH_EDIT_USER(new FinishEditUserCommand()),
     DELETE_USER(new DeleteUserCommand()),
     TEAMS_FOR_ADMIN(new TeamsInfoCommand()),
+    TEAM_MEMBERS_ADMIN(new TeamMembersCommand()),
     ADD_TEAM(new AddTeamCommand()),
     FINISH_ADD_TEAM(new FinishAddTeamCommand()),
     EDIT_TEAM(new EditTeamCommand()),
     FINISH_EDIT_TEAM(new FinishEditTeamCommand()),
-    DELETE_TEAM(new DeleteTeamCommand());
+    DELETE_TEAM(new DeleteTeamCommand()),
+    DELETE_USER_FROM_TEAM(new DeleteUserFromTeamCommand()),
+    ADD_USER_TO_TEAM(new FinishAddUserToTeamCommand()),
+    WORK_PAGE_FOR_ADMIN(new WorkViewCommand()),
+    WORK_INFO_WITH_REPORT(new WorkInfoCommand()),
+    ADD_WORK(new AddWorkCommand()),
+    FINISH_ADD_WORK(new FinishAddWorkCommand());
 
 //    REQUESTS(new RequestCommand()),
 //    ADD_REQUEST(new AddRequestCommand()),

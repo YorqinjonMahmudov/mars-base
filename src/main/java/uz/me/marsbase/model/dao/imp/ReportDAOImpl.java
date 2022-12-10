@@ -1,11 +1,13 @@
 package uz.me.marsbase.model.dao.imp;
 
 import uz.me.marsbase.connection.MyConnectionPool;
+import uz.me.marsbase.exception.MyException;
 import uz.me.marsbase.model.dao.Dao;
 import uz.me.marsbase.model.dao.ReportDao;
 import uz.me.marsbase.model.entity.Report;
-import uz.me.marsbase.exception.MyException;
+import uz.me.marsbase.payload.ReportDTO;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,10 +17,10 @@ import java.util.Optional;
 
 public class ReportDAOImpl implements ReportDao {
 
-    private static final String INSERT = "INSERT INTO report (workId, date, team_id ) VALUES(?,?,?);";
+    private static final String INSERT = "INSERT INTO report (work_id, date, team_id ) VALUES(?,?,?);";
     private static final String FIND_BY_ID = "SELECT id, workId, date, team_id FROM report WHERE id = ?;";
     private static final String FIND_ALL = "SELECT id, workId, date, team_id FROM report;";
-    private static final String FIND_BY_TEAM_ID = "SELECT id, workId, date, team_id FROM report WHERE team_id = ?;";
+    private static final String FIND_BY_WORK_ID_FOR_DTO = "SELECT r.id id, r.work_id workId, r.date reportedDate, comments, t.name teamName FROM report r JOIN team t on t.id = r.team_id WHERE work_id = ?;";
     private static final String FIND_BY_WORK_ID = "SELECT id, workId, date, team_id FROM report WHERE work_id = ?;";
     private static final String UPDATE = "UPDATE report SET date = ?, comments = ? WHERE id = ?;";
     private static ReportDAOImpl reportDAOImpl;
@@ -103,18 +105,32 @@ public class ReportDAOImpl implements ReportDao {
         return report;
     }
 
-    @Override
-    public List<Report> findByTeamId(Integer teamId) {
-        return getReports(FIND_BY_TEAM_ID);
+    private ReportDTO mapRsToReportDTO(ResultSet rs) throws SQLException {
+        ReportDTO reportDTO = new ReportDTO();
+        reportDTO.setId(rs.getInt("id"));
+        reportDTO.setReportedDate(rs.getDate("reportedDate"));
+        reportDTO.setComments(rs.getString("comments"));
+        reportDTO.setWorkId(rs.getInt("workId"));
+        reportDTO.setTeamName(rs.getString("teamName"));
+        return reportDTO;
     }
 
     @Override
-    public Optional<Report> findByWorkId(Integer teamId) {
-        return getReport(teamId, FIND_BY_WORK_ID);
+    public Optional<ReportDTO> findByWorkId(Integer workId) {
+        try (Connection connection = MyConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = connection.prepareStatement(FIND_BY_WORK_ID_FOR_DTO)) {
+            ResultSet resultSet = putArgs(ps, Dao.INTEGER + workId).executeQuery();
+            if (resultSet.next())
+                return Optional.of(mapRsToReportDTO(resultSet));
+            return Optional.empty();
+        } catch (SQLException e) {
+            throw new MyException(e.getMessage());
+        }
     }
 
     private Optional<Report> getReport(Integer teamId, String sql) {
-        try (PreparedStatement ps = MyConnectionPool.getInstance().getConnection().prepareStatement(sql)) {
+        try (Connection connection = MyConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
             ResultSet rs = putArgs(ps, Dao.INTEGER + teamId).executeQuery();
             Report report;
             if (rs.next() && (report = mapRsToReport(rs)).getId() != null)

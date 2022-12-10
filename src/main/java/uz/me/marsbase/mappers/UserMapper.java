@@ -1,12 +1,20 @@
 package uz.me.marsbase.mappers;
 
 
-import uz.me.marsbase.payload.UserDTO;
 import uz.me.marsbase.model.entity.User;
+import uz.me.marsbase.payload.UserDTO;
 
 import java.util.List;
 
 public class UserMapper implements BaseMapper<User, UserDTO> {
+
+    private static UserMapper userMapper;
+
+    public static UserMapper getInstance() {
+        if (userMapper == null)
+            userMapper = new UserMapper();
+        return userMapper;
+    }
 
     @Override
     public UserDTO toDto(User user) {

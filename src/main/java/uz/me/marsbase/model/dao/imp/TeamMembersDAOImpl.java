@@ -15,13 +15,14 @@ import java.util.Optional;
 public class TeamMembersDAOImpl implements TeamMembersDao {
     private static TeamMembersDAOImpl teamMemberDao;
     private static final UserDaoImpl userDAO = UserDaoImpl.getInstance();
-    private static final String INSERT = "INSERT INTO team_member(team_id, user_id)VALUES( ?, ?);";
+    private static final String INSERT = "INSERT INTO team_member(team_id, user_id ) VALUES ( ?, ?);";
     private static final String FIND_BY_ID = "SELECT id, team_id, user_id FROM team_member WHERE id=?;";
     private static final String FIND_ALL = "SELECT id, team_id, user_id FROM team_member;";
-
+    private static final String FIND_BY_TEAM_ID_AND_USER_ID = "SELECT id, team_id, user_id FROM team_member where team_id = ? AND user_id = ? LIMIT 1 ;";
     private static final String FIND_ALL_USERS_BY_TEAM_LEAD_ID = "SELECT u.id, u.email, u.first_name, u.last_name, u.role,u.password,u.block_id\nFROM team_member tm\n         JOIN team t on t.id = tm.team_id\n         JOIN users u on u.id = tm.user_id\nWHERE t.team_lead_id =?;";
     private static final String FIND_ALL_USERS_BY_TEAM_ID = "SELECT u.id, u.email, u.first_name, u.last_name, u.role,u.password,u.block_id\nFROM team_member tm\n         JOIN team t on t.id = tm.team_id \n         JOIN users u on u.id = tm.user_id \nWHERE tm.team_id =?;";
     private static final String DELETE_BY_ID = "DELETE FROM team_member where id=?;";
+    private static final String DELETE_USER_FROM_TEAM_BY_ID = "DELETE FROM team_member where user_id=? AND team_id = ?;";
 
 
     private TeamMembersDAOImpl() {
@@ -38,11 +39,13 @@ public class TeamMembersDAOImpl implements TeamMembersDao {
     public boolean insert(TeamMember teamMember) throws MyException {
         try (Connection connection = MyConnectionPool.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement(INSERT)) {
-            return Dao.setPSArgs(
-                            ps,
-                            Dao.INTEGER + teamMember.getTeamId(),
-                            Dao.INTEGER + teamMember.getUserId())
-                    .execute();
+            if (existByTeamIdAndUserId(teamMember.getTeamId(), teamMember.getUserId()))
+                return true;
+            var psArgs = Dao.setPSArgs(ps,
+                    Dao.INTEGER + teamMember.getTeamId(),
+                    Dao.INTEGER + teamMember.getUserId());
+            return psArgs
+                    .executeUpdate() > 0;
         } catch (SQLException e) {
             throw new MyException(e.getMessage());
         }
@@ -89,7 +92,6 @@ public class TeamMembersDAOImpl implements TeamMembersDao {
         return false;
     }
 
-
     @Override
     public List<User> findTeamMembersByTeamId(Integer teamId) {
         try (Connection connection = MyConnectionPool.getInstance().getConnection();
@@ -102,11 +104,30 @@ public class TeamMembersDAOImpl implements TeamMembersDao {
     }
 
     @Override
-    public List<User> findTeamMembersByTeamLeaderId(Integer teamLeadId) {
+    public List<User> findTeamMembersByTeamLeaderId(Integer teamLeaderId) {
         try (Connection connection = MyConnectionPool.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement(FIND_ALL_USERS_BY_TEAM_LEAD_ID)) {
-            ResultSet resultSet = executePrepareStatement(ps, Dao.INTEGER + teamLeadId);
+            ResultSet resultSet = executePrepareStatement(ps, Dao.INTEGER + teamLeaderId);
             return getUsersFromResultSet(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean deleteIUser(int deletingUserId, int teamId) {
+        return executeUpdate(DELETE_USER_FROM_TEAM_BY_ID,
+                Dao.INTEGER + deletingUserId,
+                Dao.INTEGER + teamId);
+    }
+
+    boolean existByTeamIdAndUserId(int teamId, int userId) {
+        try (Connection connection = MyConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = connection.prepareStatement(FIND_BY_TEAM_ID_AND_USER_ID)) {
+            var resultSet = executePrepareStatement(ps,
+                    Dao.INTEGER + teamId,
+                    Dao.INTEGER + userId);
+            return resultSet.next();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

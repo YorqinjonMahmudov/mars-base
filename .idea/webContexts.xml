@@ -7,9 +7,12 @@
         <entry key="file://$PROJECT_DIR$/src/main/webapp/index.html" value="file://$PROJECT_DIR$/src/main/webapp" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/index.jsp" value="file://$PROJECT_DIR$/src/main/webapp" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/mars-base/admin/add-team.jsp" value="file://$PROJECT_DIR$/src/main/webapp/mars-base/admin" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/mars-base/admin/add-user.jsp" value="file://$PROJECT_DIR$/src/main/webapp/mars-base/admin" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/mars-base/admin/admin-panel.jsp" value="file://$PROJECT_DIR$/src/main/webapp/mars-base/admin" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/mars-base/admin/team-info.jsp" value="file://$PROJECT_DIR$/src/main/webapp/mars-base/admin" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/mars-base/admin/user-info.jsp" value="file://$PROJECT_DIR$/src/main/webapp/mars-base/admin" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/mars-base/admin/work-info.jsp" value="file://$PROJECT_DIR$/src/main/webapp/mars-base/admin" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/mars-base/team-members-info.jsp" value="file://$PROJECT_DIR$/src/main/webapp/mars-base" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/sign-in.jsp" value="file://$PROJECT_DIR$/src/main/webapp" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/user-info.jsp" value="file://$PROJECT_DIR$/src/main/webapp" />
       </map>

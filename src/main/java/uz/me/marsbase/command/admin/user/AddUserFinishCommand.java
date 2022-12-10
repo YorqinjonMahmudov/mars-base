@@ -2,9 +2,9 @@ package uz.me.marsbase.command.admin.user;
 
 import uz.me.marsbase.command.Command;
 import uz.me.marsbase.command.instanceHolder.InstanceHolder;
-import uz.me.marsbase.payload.UserDTO;
 import uz.me.marsbase.model.entity.User;
 import uz.me.marsbase.model.entity.enums.Role;
+import uz.me.marsbase.payload.UserDTO;
 import uz.me.marsbase.router.Router;
 import uz.me.marsbase.service.BlockService;
 import uz.me.marsbase.service.UserService;
@@ -54,12 +54,12 @@ public class AddUserFinishCommand implements Command {
                 page = ADD_USER_PAGE_FOR_ADMIN;
                 type = FORWARD;
             } else {
-                List<UserDTO> users = (List<UserDTO>) session.getAttribute(USERS);
-                session.setAttribute(USERS, userService.getUsers());
+                List<UserDTO> users = userService.getUsers();
+                session.setAttribute(USERS, users);
             }
 
         } else {
-            session.setAttribute(REQ_ATTRIBUTE_FORM_INVALID, validated);
+            session.setAttribute(INVALID_FORM, validated);
         }
         return new Router(page, type);
     }

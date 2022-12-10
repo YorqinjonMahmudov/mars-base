@@ -1,17 +1,17 @@
 package uz.me.marsbase.model.dao;
 
 import uz.me.marsbase.model.entity.Work;
+import uz.me.marsbase.payload.WorkDTO;
+import uz.me.marsbase.payload.WorkViewDTO;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface WorkDao extends Dao<Work> {
 
-    /**
-     * Find an Work by name.
-     *
-     * @param title Item name.
-     * @return Item obj if exists, otherwise Optional.empty().
-     */
+    List<WorkViewDTO> findAllForView();
+
+
     List<Work> findByTitle(String title);
 
 
@@ -29,4 +29,5 @@ public interface WorkDao extends Dao<Work> {
     boolean setStatusToFinished(Integer id);
 
 
+    Optional<WorkDTO> getWorkDTOById(Integer id);
 }

@@ -1,0 +1,24 @@
+package uz.me.marsbase.service;
+
+import uz.me.marsbase.model.entity.Work;
+import uz.me.marsbase.payload.WorkDTO;
+import uz.me.marsbase.payload.WorkViewDTO;
+
+import java.util.List;
+
+public interface WorkService {
+
+    List<WorkViewDTO> getWorks();
+
+    WorkDTO findById(Integer id);
+
+    List<WorkViewDTO> getByTeamName(String teamName);
+
+    List<WorkViewDTO> getByBlockName(String teamName);
+
+    boolean insert(Work work);
+
+    boolean update(Integer editingWorkId, Work work);
+
+    boolean delete(int deletingWorkId);
+}

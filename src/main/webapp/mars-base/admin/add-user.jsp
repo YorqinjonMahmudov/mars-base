@@ -16,119 +16,166 @@
 
 <c:choose>
 
-    <c:when test="${sessionScope.currentUser.role.equals(Role.ADMIN) }">
+    <c:when test="${sessionScope.currentUser.role.equals(Role.ADMIN)}">
+        <c:if test="${sessionScope.teamId==null}">
 
-        <div class="container">
-            <div class="row">
-                <div class="col text-center">
-                    <br>
-                    <br>
-                    <ol class="alert-danger">
-                        <c:if test="${sessionScope.invalid_form.firstName!=null}">
-                            <div class="text-danger">
-                                    ${sessionScope.invalid_form.firstName}
-                            </div>
-                        </c:if>
-                    </ol>
+            <div class="container">
+                <div class="row">
+                    <div class="col text-center">
+                        <br>
+                        <br>
+                        <ol class="alert-danger">
+                            <c:if test="${sessionScope.invalid_form.firstName!=null}">
+                                <div class="text-danger">
+                                        ${sessionScope.invalid_form.firstName}
+                                </div>
+                            </c:if>
+                        </ol>
 
-                    <ol class="alert-danger">
-                        <c:if test="${sessionScope.invalid_form.lastName!=null}">
-                            <div class="text-danger">
-                                    ${sessionScope.invalid_form.lastName}
-                            </div>
-                        </c:if>
-                    </ol>
-                    <ol class="alert-danger">
-                        <c:if test="${sessionScope.invalid_form.email!=null}">
-                            <div class="text-danger">
-                                    ${sessionScope.invalid_form.email}
-                            </div>
-                        </c:if>
-                    </ol>
-                    <ol class="alert-danger">
-                        <c:if test="${sessionScope.invalid_form.role!=null}">
-                            <div class="text-danger">
-                                    ${sessionScope.invalid_form.role}
-                            </div>
-                        </c:if>
-                    </ol>
-                    <ol class="alert-danger">
-                        <c:if test="${sessionScope.invalid_form.password!=null}">
-                            <div class="text-danger">
-                                    ${sessionScope.invalid_form.password}
-                            </div>
-                        </c:if>
-                    </ol>
-                    <br>
-                    <br>
+                        <ol class="alert-danger">
+                            <c:if test="${sessionScope.invalid_form.lastName!=null}">
+                                <div class="text-danger">
+                                        ${sessionScope.invalid_form.lastName}
+                                </div>
+                            </c:if>
+                        </ol>
+                        <ol class="alert-danger">
+                            <c:if test="${sessionScope.invalid_form.email!=null}">
+                                <div class="text-danger">
+                                        ${sessionScope.invalid_form.email}
+                                </div>
+                            </c:if>
+                        </ol>
+                        <ol class="alert-danger">
+                            <c:if test="${sessionScope.invalid_form.role!=null}">
+                                <div class="text-danger">
+                                        ${sessionScope.invalid_form.role}
+                                </div>
+                            </c:if>
+                        </ol>
+                        <ol class="alert-danger">
+                            <c:if test="${sessionScope.invalid_form.password!=null}">
+                                <div class="text-danger">
+                                        ${sessionScope.invalid_form.password}
+                                </div>
+                            </c:if>
+                        </ol>
+                        <br>
+                        <br>
 
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="registerDiv" id="registerDiv">
+            <div class="registerDiv" id="registerDiv">
 
-            <br>
-            <br>
-            <br>
+                <br>
+                <br>
+                <br>
 
-            <form action="${pageContext.request.contextPath}/controller?command=${CommandType.ADD_USER_FINISH}"
-                  id="register_form"
-                  class="signup-content" method="post">
-                <h1 class="signup-title"> Add User </h1>
+                <form action="${pageContext.request.contextPath}/controller?command=${CommandType.ADD_USER_FINISH}"
+                      id="register_form"
+                      class="signup-content" method="post">
+                    <h1 class="signup-title"> Add User </h1>
 
-                <div class="form-item">
-                    <label for="firstName"></label>
-                    <input type="text" class="form-control" id="firstName"
-                           name="${AttributeParameterHolder.PARAMETER_USER_FIRSTNAME}"
-                           placeholder=" First name ">
+                    <div class="form-item">
+                        <label for="firstName"></label>
+                        <input type="text" class="form-control" id="firstName"
+                               name="${AttributeParameterHolder.PARAMETER_USER_FIRSTNAME}"
+                               placeholder=" First name ">
+                    </div>
+
+                    <div class="form-item">
+                        <label for="lastName"></label>
+                        <input type="text" class="form-control" id="lastName"
+                               name="${AttributeParameterHolder.PARAMETER_USER_LASTNAME}"
+                               placeholder=" Last name ">
+                    </div>
+
+                    <div class="form-item">
+                        <label for="phoneNumber"></label>
+                        <input type="text" class="form-control" id="phoneNumber"
+                               name="${AttributeParameterHolder.PARAMETER_USER_EMAIL}"
+                               placeholder="Email">
+                    </div>
+
+                    <div class="form-item">
+                        <label for="password"></label>
+                        <input type="password" class="form-control" id="password"
+                               name="${AttributeParameterHolder.PARAMETER_USER_PASSWORD}"
+                               placeholder=" Password ">
+                    </div>
+
+                    <select name="blockName" class="form-select" size="1" aria-label="size 3 select example">
+                        <option selected>Open this select menu</option>
+
+                        <c:forEach items="${sessionScope.blocks}" var="block">
+                            <option name="blockName" value="${block.name}"> ${block.name}</option>
+                        </c:forEach>
+
+                    </select>
+
+                    <div class="form-item">
+                        <button type="submit" class="btn btn-block btn-primary">Add User</button>
+                    </div>
+                </form>
+            </div>
+        </c:if>
+        <c:if test="${sessionScope.teamId!=null}">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col text-center">
+                        <ol class="alert-danger">
+                            <c:if test="${sessionScope.invalid_form.email!=null}">
+                                <div class="text-danger">
+                                        ${sessionScope.invalid_form.email}
+                                </div>
+                            </c:if>
+                        </ol>
+                        <br>
+                        <br>
+
+                    </div>
                 </div>
+            </div>
 
-                <div class="form-item">
-                    <label for="lastName"></label>
-                    <input type="text" class="form-control" id="lastName"
-                           name="${AttributeParameterHolder.PARAMETER_USER_LASTNAME}"
-                           placeholder=" Last name ">
-                </div>
+            <div class="registerDiv" id="registerDiv">
 
-                <div class="form-item">
-                    <label for="phoneNumber"></label>
-                    <input type="text" class="form-control" id="phoneNumber"
-                           name="${AttributeParameterHolder.PARAMETER_USER_EMAIL}"
-                           placeholder="Email">
-                </div>
+                <br>
+                <br>
+                <br>
 
-                <div class="form-item">
-                    <label for="password"></label>
-                    <input type="password" class="form-control" id="password"
-                           name="${AttributeParameterHolder.PARAMETER_USER_PASSWORD}"
-                           placeholder=" Password ">
-                </div>
-
-                <select name="blockName"  class="form-select" size="1" aria-label="size 3 select example">
-                    <option selected>Open this select menu</option>
-
-                    <c:forEach items="${sessionScope.blocks}" var="block">
-                        <option name="blockName" value="${block.name}"> ${block.name}</option>
-                    </c:forEach>
-
-                </select>
+                <form action="${pageContext.request.contextPath}/controller?command=${CommandType.ADD_USER_TO_TEAM}"
+                      id="add_user_to_team_form"
+                      class="signup-content" method="post">
+                    <h1 class="signup-title"> Add User </h1>
 
 
-                <div class="form-item">
-                    <button type="submit" class="btn btn-block btn-primary">Add User</button>
-                </div>
-            </form>
-        </div>
+                    <select name="email" class="form-select" size="1" aria-label="size 3 select example">
+                        <option selected>Open this select menu</option>
+
+                        <c:forEach items="${sessionScope.users}" var="user">
+                            <option name="email" value="${user.email}"> ${user.email}</option>
+                        </c:forEach>
+
+                    </select>
+
+                    <div class="form-item">
+                        <button type="submit" class="btn btn-block btn-primary">Add User</button>
+                    </div>
+                </form>
+            </div>
+
+        </c:if>
 
     </c:when>
+
 
     <c:otherwise>
         You have no permission to this page
     </c:otherwise>
-
 </c:choose>
-
 
 </body>
 </html>

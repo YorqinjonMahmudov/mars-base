@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface TeamMembersDao extends Dao<TeamMember> {
 
-    List<User> findTeamMembersByTeamId(Integer lotId);
+    List<User> findTeamMembersByTeamId(Integer teamId);
 
-    List<User> findTeamMembersByTeamLeaderId(Integer ownerId);
+    List<User> findTeamMembersByTeamLeaderId(Integer teamLeaderId);
+
+    boolean deleteIUser(int deletingUserId, int teamId);
 }

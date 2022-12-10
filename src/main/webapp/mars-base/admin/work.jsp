@@ -12,7 +12,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Team info</title>
+    <title>Work info</title>
     <style>
         body {
             font-family: "Lato", sans-serif;
@@ -69,10 +69,10 @@
             font-family: sans-serif;
         }
 
-        body {
-            background: url("../../images/mars-user.jpg");
-            background-size: cover;
-        }
+        /*body {*/
+        /*    background: url("../../images/mars-user.jpg");*/
+        /*    background-size: cover;*/
+        /*}*/
 
         table {
             margin: 50px 0px 0px 100px;
@@ -83,7 +83,7 @@
         table, tr, th, td {
             padding: 10px 10px;
             text-align: center;
-            color: #fff;
+            color: black;
         }
 
 
@@ -238,46 +238,29 @@
 
         <table>
             <tr>
+                <th>title</th>
                 <th>team name</th>
-                <th>team leader email</th>
-                <th>active</th>
-                <th colspan="2">action</th>
+                <th>block name</th>
             </tr>
 
-            <c:forEach items="${sessionScope.teams}" var="team">
+            <c:forEach items="${sessionScope.workViews}" var="currentWork">
                 <tr class="trHover">
-                    <a href="${pageContext.request.contextPath}/controller?command=${CommandType.EDIT_TEAM}&teamId=${team.id}">
-
-                        <td class="column-1"><span><a
-                                href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAM_MEMBERS_ADMIN}&teamId=${team.id}"> ${team.name}</a> </span>
-                        </td>
-                        <td class="column-1"><span> <a
-                                href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAM_MEMBERS_ADMIN}&teamId=${team.id}"> ${team.teamLeadEmail}</a> </span>
-                        </td>
-                        <td class="column-1"><span>  <a
-                                href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAM_MEMBERS_ADMIN}&teamId=${team.id}"> ${team.active}</a> </span>
-                        </td>
-                        <td class="column-row">
-                            <a class="btn btn-outline-primary"
-                               href="${pageContext.request.contextPath}/controller?command=${CommandType.EDIT_TEAM}&editingTeamId=${team.id}">
-                                EDIT</a>
-                        </td>
-                        <td class="column-row">
-                            <a href=${pageContext.request.contextPath}/controller?command=${CommandType.DELETE_TEAM}&deletingTeamId=${team.id}>
-                                Delete</a>
-                        </td>
-                    </a>
+                    <td class="column-1"><span><a
+                            href="${pageContext.request.contextPath}/controller?command=${CommandType.WORK_INFO_WITH_REPORT}&currentWorkId=${currentWork.id}"> ${currentWork.title}</a> </span>
+                    </td>
+                    <td class="column-1">${currentWork.teamName} </td>
+                    <td class="column-1">${currentWork.blockName} </td>
                 </tr>
 
             </c:forEach>
-            >
+
         </table>
         <br>
 
         <form align="center" method="post"
-              action="${pageContext.request.contextPath}/controller?command=${CommandType.ADD_TEAM}">
+              action="${pageContext.request.contextPath}/controller?command=${CommandType.ADD_WORK}">
             <button>
-                ADD TEAM
+                ADD WORK
             </button>
         </form>
     </c:when>
