@@ -11,79 +11,59 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        body {
-            font-family: "Lato", sans-serif;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
         }
 
-        .sidenav {
-            height: 100%;
-            width: 0;
-            position: fixed;
-            z-index: 1;
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 96vh;
+            background: #000;
+            overflow: hidden;
+        }
+
+        ul {
+            text-align: center;
+        }
+
+        li {
+            position: relative;
+            padding: 10px 10px;
+            list-style: none;
+            transition: 0.5s;
+            z-index: 100000;
+        }
+
+        a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 22px;
             top: 0;
             left: 0;
-            background-color: #111;
-            overflow-x: hidden;
-            transition: 0.5s;
-            padding-top: 60px;
-        }
-
-        .sidenav a {
-            padding: 8px 8px 8px 32px;
-            text-decoration: none;
-            font-size: 25px;
-            color: #818181;
-            display: block;
             transition: 0.3s;
         }
 
-        .sidenav a:hover {
-            color: #f1f1f1;
-        }
-
-        .sidenav .closebtn {
-            position: absolute;
-            top: 0;
-            right: 25px;
-            font-size: 36px;
-            margin-left: 50px;
-        }
-
-        @media screen and (max-height: 450px) {
-            .sidenav {
-                padding-top: 15px;
-            }
-
-            .sidenav a {
-                font-size: 18px;
-            }
+        li:hover a {
+            font-size: 30px;
         }
     </style>
 </head>
 <body>
 
-
-<div id="mySidenav" class="sidenav">
-    <a href="#" onclick="closeNav()"> <span onclick='closeNav()'>&times;</span> </a>
-    <a href="${pageContext.request.contextPath}/controller?command=${CommandType.USERS_FOR_ADMIN}">User</a>
-    <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAMS_FOR_ADMIN}">Team</a>
-    <a href="${pageContext.request.contextPath}/controller?command=${CommandType.WORK_PAGE_FOR_ADMIN}">Work</a>
-    <a href="../report-info.jsp">Report</a>
-</div>
-
-<h2>Admin panel </h2>
-<p>Click on the element below to open the side navigation menu.</p>
-<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; MENU</span>
-
-<script>
-    function openNav() {
-        document.getElementById("mySidenav").style.width = "250px";
-    }
-
-    function closeNav() {
-        document.getElementById("mySidenav").style.width = "0";
-    }
-</script>
+<ul>
+    <li class="user"><a
+            href="${pageContext.request.contextPath}/controller?command=${CommandType.USERS_FOR_ADMIN}">User</a></li>
+    <li class="team"><a
+            href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAMS_FOR_ADMIN}">Team</a></li>
+    <li class="work"><a href="${pageContext.request.contextPath}/controller?command=${CommandType.WORK_PAGE_FOR_ADMIN}">Work</a>
+    </li>
+</ul>
 
 </body>
 </html>

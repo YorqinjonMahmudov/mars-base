@@ -22,8 +22,7 @@ public class EditUserCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        if (session.getAttribute(BLOCKS) == null)
-            session.setAttribute(BLOCKS, blockService.getBlocks());
+        session.setAttribute(BLOCKS, blockService.getBlocks());
         Integer editingUserId = Integer.valueOf(request.getParameter("editingUserId"));
         var editingUser = userService.getUserById(editingUserId);
         session.setAttribute(EDITING_USER, editingUser);

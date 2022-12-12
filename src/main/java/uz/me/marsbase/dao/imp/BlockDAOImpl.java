@@ -1,8 +1,8 @@
-package uz.me.marsbase.model.dao.imp;
+package uz.me.marsbase.dao.imp;
 
 import uz.me.marsbase.connection.MyConnectionPool;
-import uz.me.marsbase.model.dao.BlockDao;
-import uz.me.marsbase.model.dao.Dao;
+import uz.me.marsbase.dao.Dao;
+import uz.me.marsbase.dao.BlockDao;
 import uz.me.marsbase.model.entity.Block;
 import uz.me.marsbase.exception.MyException;
 

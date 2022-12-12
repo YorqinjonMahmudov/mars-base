@@ -52,6 +52,7 @@
             margin-left: 50px;
         }
 
+
         @media screen and (max-height: 450px) {
             .sidenav {
                 padding-top: 15px;
@@ -75,7 +76,7 @@
         }
 
         table {
-            margin: 50px 0px 0px 100px;
+            margin: 50px 0 0 100px;
             width: 80%;
             backdrop-filter: blur(20px);
         }
@@ -84,6 +85,11 @@
             padding: 10px 10px;
             text-align: center;
             color: #fff;
+        }
+
+        table a {
+            color: #fff;
+            text-decoration: none;
         }
 
 
@@ -121,6 +127,90 @@
             margin-left: 50px;
         }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+
+        .modal {
+            position: absolute;
+            z-index: 1000;
+            width: 500px;
+            height: 500px;
+            background: #fff;
+            border: 1px solid #000;
+            top: 100px;
+            left: 500px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            padding: 30px 0 0 0;
+            box-shadow: 0px 0px 20px #000;
+        }
+
+        .registerDiv {
+            width: 100%;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-top: 50px;
+            width: 100%;
+        }
+
+        .form-item {
+            width: 70%;
+            margin: 5px;
+        }
+
+        .form-item input {
+            width: 100%;
+            padding: 10px 20px;
+        }
+
+        .select {
+            width: 70%;
+        }
+
+        .select select {
+            width: 100%;
+            padding: 10px 20px;
+            outline: none;
+        }
+
+        .buttons {
+            display: flex;
+            margin-top: 10px;
+        }
+
+        .buttons button {
+            padding: 10px 25px;
+            background: #ff0;
+            margin-left: 50px;;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .buttons .cancel {
+            padding: 6px 20px;
+            border-radius: 5px;
+            background: red;
+            color: #fff;
+        }
+
+        .buttons .cancel a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+
         @media screen and (max-height: 450px) {
             .sidenav {
                 padding-top: 15px;
@@ -139,9 +229,11 @@
     <a href="#" onclick="closeNav()"> <span onclick='closeNav()'>&times;</span> </a>
     <a href="${pageContext.request.contextPath}/controller?command=${CommandType.USERS_FOR_ADMIN}">User</a>
     <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAMS_FOR_ADMIN}">Team</a>
-    <a href="../work-info.jsp">Work</a>
-    <a href="../report-info.jsp">Report</a>
+    <a href="${pageContext.request.contextPath}/controller?command=${CommandType.WORK_PAGE_FOR_ADMIN}">Work</a>
 </div>
+
+<span style="font-size:30px;cursor:pointer; color: #fff" onclick="openNav()">&#9776; MENU</span>
+
 
 <c:if test="${sessionScope.currentUser.role.equals(Role.ADMIN) && sessionScope.editingTeam!=null}">
 
@@ -189,45 +281,46 @@
         </div>
     </div>
 
-    <div class="registerDiv" id="registerDiv">
+    <div class="modal">
+        <div class="registerDiv" id="registerDiv">
 
-        <h1 class="signup-title"> Edit Team </h1>
+            <h1 class="edit-title"> Edit Team </h1>
 
-        <form id="register_form" align="center"
-              action="${pageContext.request.contextPath}/controller?command=${CommandType.FINISH_EDIT_TEAM}&editingTeamId=${sessionScope.editingTeam.id}"
-              class="add-request-content" method="post">
+            <form id="register_form" align="center"
+                  action="${pageContext.request.contextPath}/controller?command=${CommandType.FINISH_EDIT_TEAM}&editingTeamId=${sessionScope.editingTeam.id}"
+                  class="add-request-content" method="post">
 
-            <div class="form-item">
-                <label for="editingTeamFirstName"></label>
-                <input type="text" class="form-control"
-                       id="editingTeamFirstName" name="${AttributeParameterHolder.PARAMETER_TEAM_NAME}"
-                       property="${sessionScope.editingTeam.name}"
-                       value="${sessionScope.editingTeam.name}"
-                       placeholder=" Team name ">
-            </div>
+                <div class="form-item">
+                    <label for="editingTeamName"> </label>
+                    <input type="text" class="form-control"
+                           id="editingTeamName" name="${AttributeParameterHolder.PARAMETER_TEAM_NAME}"
+                           property="${sessionScope.editingTeam.name}"
+                           value="${sessionScope.editingTeam.name}"
+                           placeholder=" Team name ">
+                </div>
 
-            <div>
-                <select name="teamLeadEmail" class="form-select" size="1"
-                        aria-label="size 3 select example">
-                    <option selected>${sessionScope.editingTeam.teamLeadEmail}</option>
+                <div class="select">
+                    <select name="teamLeadEmail" class="form-select" size="1">
+                        <option selected>${sessionScope.editingTeam.teamLeadEmail}</option>
 
-                    <c:forEach items="${sessionScope.users}" var="user">
-                        <option name="teamLeadEmail" value="${user.email}"> ${user.email}</option>
-                    </c:forEach>
-                </select>
-            </div>
+                        <c:forEach items="${sessionScope.users}" var="user">
+                            <option name="teamLeadEmail" value="${user.email}"> ${user.email}</option>
+                        </c:forEach>
+                    </select>
+                </div>
 
 
-            <div class="form-item">
-                <button type="submit" class="btn btn-block btn-primary">Edit</button>
-            </div>
+                <div class="form-item">
+                    <button type="submit" class="btn btn-block btn-primary">Edit</button>
+                </div>
 
-            <div class="form-item">
-                <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAMS_FOR_ADMIN}"
-                   class="btn btn-block btn-danger">Cancel</a>
-            </div>
+                <div class="form-item">
+                    <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAMS_FOR_ADMIN}"
+                       class="btn btn-block btn-danger">Cancel</a>
+                </div>
 
-        </form>
+            </form>
+        </div>
     </div>
 
 </c:if>
@@ -246,31 +339,28 @@
 
             <c:forEach items="${sessionScope.teams}" var="team">
                 <tr class="trHover">
-                    <a href="${pageContext.request.contextPath}/controller?command=${CommandType.EDIT_TEAM}&teamId=${team.id}">
 
-                        <td class="column-1"><span><a
-                                href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAM_MEMBERS_ADMIN}&teamId=${team.id}"> ${team.name}</a> </span>
-                        </td>
-                        <td class="column-1"><span> <a
-                                href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAM_MEMBERS_ADMIN}&teamId=${team.id}"> ${team.teamLeadEmail}</a> </span>
-                        </td>
-                        <td class="column-1"><span>  <a
-                                href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAM_MEMBERS_ADMIN}&teamId=${team.id}"> ${team.active}</a> </span>
-                        </td>
-                        <td class="column-row">
-                            <a class="btn btn-outline-primary"
-                               href="${pageContext.request.contextPath}/controller?command=${CommandType.EDIT_TEAM}&editingTeamId=${team.id}">
-                                EDIT</a>
-                        </td>
-                        <td class="column-row">
-                            <a href=${pageContext.request.contextPath}/controller?command=${CommandType.DELETE_TEAM}&deletingTeamId=${team.id}>
-                                Delete</a>
-                        </td>
-                    </a>
+                    <td class="column-1"><span><a
+                            href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAM_MEMBERS_ADMIN}&teamId=${team.id}"> ${team.name}</a> </span>
+                    </td>
+                    <td class="column-1"> ${team.teamLeadEmail}
+                    </td>
+                    <td class="column-1"> ${team.active}
+                    </td>
+                    <td class="column-row">
+                        <a class="btn btn-outline-primary"
+                           href="${pageContext.request.contextPath}/controller?command=${CommandType.EDIT_TEAM}&editingTeamId=${team.id}"
+                           style="color: yellow">
+                            EDIT</a>
+                    </td>
+                    <td class="column-row">
+                        <a href=${pageContext.request.contextPath}/controller?command=${CommandType.DELETE_TEAM}&deletingTeamId=${team.id}
+                           style="color: red">
+                            Delete</a>
+                    </td>
                 </tr>
 
             </c:forEach>
-            >
         </table>
         <br>
 

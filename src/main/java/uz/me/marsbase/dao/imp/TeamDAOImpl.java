@@ -1,10 +1,10 @@
-package uz.me.marsbase.model.dao.imp;
+package uz.me.marsbase.dao.imp;
 
 import uz.me.marsbase.connection.MyConnectionPool;
 import uz.me.marsbase.exception.MyException;
-import uz.me.marsbase.model.dao.Dao;
-import uz.me.marsbase.model.dao.TeamDao;
-import uz.me.marsbase.model.dao.UserDao;
+import uz.me.marsbase.dao.Dao;
+import uz.me.marsbase.dao.TeamDao;
+import uz.me.marsbase.dao.UserDao;
 import uz.me.marsbase.model.entity.Team;
 
 import java.sql.*;
@@ -19,7 +19,8 @@ public class TeamDAOImpl implements TeamDao {
     private static final String FIND_ALL_BY_TEAM_LEAD_ID = "SELECT id, name, team_lead_id, is_active FROM team WHERE team_lead_id = ?;";
     private static final String FIND_TEAM_LEAD_BY_ID = "SELECT id, name, team_lead_id, is_active FROM team WHERE team_lead_id = ?;";
     private static final String FIND_BY_NAME = "SELECT id, name, team_lead_id, is_active FROM team WHERE name = ?;";
-    private static final String DELETE = "UPDATE team SET is_active = false WHERE id = ?;";
+    private static final String SET_IS_ACTIVE_FALSE = "UPDATE team SET is_active = false WHERE id = ? AND is_active = true;";
+    private static final String DELETE = "DELETE FROM team  WHERE id = ? AND is_active = false;";
     private static final String UPDATE = "UPDATE team SET name = ?, team_lead_id = ?, is_active = ? WHERE id = ?;";
     private final UserDao userDao = UserDaoImpl.getInstance();
     private static TeamDAOImpl teamDaoImpl;
@@ -37,18 +38,23 @@ public class TeamDAOImpl implements TeamDao {
     public boolean insert(Team team) {
         if (findByName(team.getName()).isPresent())
             throw new MyException("team already exists");
-        var executeUpdate = executeUpdate(INSERT,
+        return executeUpdate(INSERT,
                 Dao.STRING + team.getName(),
                 Dao.INTEGER + team.getTeamLeadId(),
                 Dao.BOOLEAN + team.isActive()
         );
-        return executeUpdate;
     }
 
     @Override
     public boolean delete(int id) {
-        return executeUpdate(DELETE,
-                Dao.INTEGER + id);
+        try {
+            if (executeUpdate(SET_IS_ACTIVE_FALSE, Dao.INTEGER + id))
+                return true;
+            else
+                return executeUpdate(DELETE, Dao.INTEGER + id);
+        } catch (MyException e) {
+            return false;
+        }
     }
 
     @Override
@@ -99,7 +105,7 @@ public class TeamDAOImpl implements TeamDao {
         return executeUpdate(UPDATE,
                 Dao.STRING + team.getName(),
                 Dao.INTEGER + team.getTeamLeadId(),
-                Dao.BOOLEAN+team.isActive(),
+                Dao.BOOLEAN + team.isActive(),
                 Dao.INTEGER + id);
     }
 

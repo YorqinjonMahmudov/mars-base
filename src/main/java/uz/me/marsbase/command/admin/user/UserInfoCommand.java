@@ -9,6 +9,7 @@ import uz.me.marsbase.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import static uz.me.marsbase.command.navigation.AttributeParameterHolder.EDITING_USER;
 import static uz.me.marsbase.command.navigation.PageNavigation.USER_PAGE_FOR_ADMIN;
 import static uz.me.marsbase.router.Router.PageChangeType.REDIRECT;
 
@@ -18,8 +19,13 @@ public class UserInfoCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) {
+
+
         String page = USER_PAGE_FOR_ADMIN;
         HttpSession session = request.getSession();
+        if (session.getAttribute(EDITING_USER)!=null)
+            session.setAttribute(EDITING_USER,null);
+
         var users = userService.getUsers();
         session.setAttribute(AttributeParameterHolder.USERS, users);
             return new Router(page, REDIRECT);

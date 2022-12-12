@@ -1,9 +1,9 @@
-package uz.me.marsbase.model.dao.imp;
+package uz.me.marsbase.dao.imp;
 
 import uz.me.marsbase.connection.MyConnectionPool;
+import uz.me.marsbase.dao.Dao;
 import uz.me.marsbase.exception.MyException;
-import uz.me.marsbase.model.dao.Dao;
-import uz.me.marsbase.model.dao.TeamMembersDao;
+import uz.me.marsbase.dao.TeamMembersDao;
 import uz.me.marsbase.model.entity.TeamMember;
 import uz.me.marsbase.model.entity.User;
 

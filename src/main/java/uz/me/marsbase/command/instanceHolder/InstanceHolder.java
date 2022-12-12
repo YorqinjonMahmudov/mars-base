@@ -1,8 +1,8 @@
 package uz.me.marsbase.command.instanceHolder;
 
 
-import uz.me.marsbase.model.dao.*;
-import uz.me.marsbase.model.dao.imp.*;
+import uz.me.marsbase.dao.*;
+import uz.me.marsbase.dao.imp.*;
 import uz.me.marsbase.service.*;
 import uz.me.marsbase.utils.encoder.PasswordEncoder;
 import uz.me.marsbase.utils.validator.PatternValidator;

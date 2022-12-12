@@ -9,136 +9,43 @@
     <title>ADD REPORT</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="../../static/css/main.css" type="text/css">
-    <link rel="stylesheet" href="../../static/css/nav_style.css" type="text/css">
 </head>
 <body>
 
 <c:choose>
 
-    <c:when test="${sessionScope.currentUser.role.equals(Role.ADMIN) }">
+    <c:when test="${sessionScope.currentUser.role.equals(Role.TEAM_LEADER) || sessionScope.currentUser.role.equals(Role.ADMIN) }">
 
         <div class="container">
-            <div class="row">
-                <div class="col text-center">
-                    <br>
-                    <br>
-                    <ol class="alert-danger">
-                        <c:if test="${sessionScope.invalid_form.title!=null}">
-                            <div class="text-danger">
-                                    ${sessionScope.invalid_form.title}
-                            </div>
-                        </c:if>
-                    </ol>
-
-                    <ol class="alert-danger">
-                        <c:if test="${sessionScope.invalid_form.description!=null}">
-                            <div class="text-danger">
-                                    ${sessionScope.invalid_form.description}
-                            </div>
-                        </c:if>
-                    </ol>
-                    <ol class="alert-danger">
-                        <c:if test="${sessionScope.invalid_form.requiredMoney!=null}">
-                            <div class="text-danger">
-                                    ${sessionScope.invalid_form.requiredMoney}
-                            </div>
-                        </c:if>
-                    </ol>
-                    <ol class="alert-danger">
-                        <c:if test="${sessionScope.invalid_form.date!=null}">
-                            <div class="text-danger">
-                                    ${sessionScope.invalid_form.date}
-                            </div>
-                        </c:if>
-                    </ol><ol class="alert-danger">
-                        <c:if test="${sessionScope.invalid_form.teamName!=null}">
-                            <div class="text-danger">
-                                    ${sessionScope.invalid_form.teamName}
-                            </div>
-                        </c:if>
-                    </ol>
-                    <ol class="alert-danger">
-                        <c:if test="${sessionScope.invalid_form.blockName!=null}">
-                            <div class="text-danger">
-                                    ${sessionScope.invalid_form.blockName}
-                            </div>
-                        </c:if>
-                    </ol>
-                    <br>
-                    <br>
-
-                </div>
-            </div>
+            <c:if test="${sessionScope.invalid_form!=null}">
+                <div> ${sessionScope.invalid_form}</div>
+            </c:if>
         </div>
-
         <div class="registerDiv" id="registerDiv" align="center">
             <br>
             <br>
-            <br>
-            <form action="${pageContext.request.contextPath}/controller?command=${CommandType.FINISH_ADD_WORK}"
+            <form action="${pageContext.request.contextPath}/controller?command=${CommandType.FINISH_ADD_REPORT}&currentWorkId=${sessionScope.currentWork.id}"
                   id="register_form"
                   class="signup-content" method="post">
-                <h1 class="signup-title"> Add Work </h1>
+                <h1 class="signup-title"> Add Report </h1>
 
                 <div class="form-item">
-                    <label for="title"></label>
-                    <input type="text" class="form-control" id="title"
-                           name="${AttributeParameterHolder.PARAMETER_WORK_TITLE}"
-                           placeholder=" Title ">
+                    <label for="comments"></label>
+                    <input type="text" class="form-control" id="comments"
+                           required="required"
+                           name="${AttributeParameterHolder.PARAMETER_REPORT_COMMENTS}"
+                           placeholder=" comments ">
                 </div>
 
                 <div class="form-item">
-                    <label for="description"></label>
-                    <input type="text" class="form-control" id="description"
-                           name="${AttributeParameterHolder.PARAMETER_WORK_DESCRIPTION}"
-                           placeholder=" description ">
+                    <label for="reportDate"></label>
+                    <input type="date" class="form-control" id="reportedDate"
+                           name="${AttributeParameterHolder.PARAMETER_REPORT_DATE}"
+                           placeholder="date">
                 </div>
 
                 <div class="form-item">
-                    <label for="requiredMoney"></label>
-                    <input type="text" class="form-control" id="requiredMoney"
-                           name="${AttributeParameterHolder.PARAMETER_WORK_REQUIRED_MONEY}"
-                           placeholder=" required money ">
-                </div>
-
-                <div class="form-item">
-                    <label for="startDate"></label>
-                    <input type="date" class="form-control" id="startDate"
-                           name="${AttributeParameterHolder.PARAMETER_WORK_START_DATE}"
-                           placeholder=" start date ">
-                </div>
-
-                <div class="form-item">
-                    <label for="finishDate"></label>
-                    <input type="date" class="form-control" id="finishDate"
-                           name="${AttributeParameterHolder.PARAMETER_WORK_FINISH_DATE}"
-                           placeholder=" finish date ">
-                </div>
-
-                <select name="teamName" class="form-select" size="1"
-                        aria-label="size 3 select example">
-                    <option selected>Open this select menu</option>
-
-                    <c:forEach items="${sessionScope.teams}" var="team">
-                        <option name="${AttributeParameterHolder.PARAMETER_TEAM_NAME}"
-                                value="${team.name}"> ${team.name}</option>
-                    </c:forEach>
-                </select>
-
-                <select name="blockName" class="form-select" size="1"
-                        aria-label="size 3 select example">
-                    <option selected>Open this select menu</option>
-
-                    <c:forEach items="${sessionScope.blocks}" var="block">
-                        <option name="${AttributeParameterHolder.PARAMETER_BLOCK_NAME}"
-                                value="${block.name}"> ${block.name}</option>
-                    </c:forEach>
-                </select>
-
-
-                <div class="form-item">
-                    <button type="submit" class="btn btn-block btn-primary">Add Work</button>
+                    <button type="submit" class="btn btn-block btn-primary">Add Report</button>
                 </div>
             </form>
         </div>

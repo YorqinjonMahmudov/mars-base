@@ -1,17 +1,16 @@
-package uz.me.marsbase.model.dao.imp;
+package uz.me.marsbase.dao.imp;
 
 import uz.me.marsbase.connection.MyConnectionPool;
+import uz.me.marsbase.dao.Dao;
 import uz.me.marsbase.exception.MyException;
-import uz.me.marsbase.model.dao.BlockDao;
-import uz.me.marsbase.model.dao.Dao;
-import uz.me.marsbase.model.dao.WorkDao;
+import uz.me.marsbase.dao.BlockDao;
+import uz.me.marsbase.dao.WorkDao;
 import uz.me.marsbase.model.entity.Work;
 import uz.me.marsbase.model.entity.enums.Status;
 import uz.me.marsbase.payload.WorkDTO;
 import uz.me.marsbase.payload.WorkViewDTO;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,12 +22,12 @@ public class WorkDAOImpl implements WorkDao {
     private static final String FIND_BY_ID_FOR_DTO = "SELECT w.id id, title, description, required_money, start_date, finish_date, star, status, b.name blockName, t.name teamName FROM work w JOIN block b on b.id = w.block_id JOIN team t on t.id = w.team_id WHERE  w.id = ?;";
     private static final String FIND_BY_TITLE = "SELECT id, title, description, required_money, status, start_date, finish_date, star, team_id, block_id FROM work WHERE title = ?;";
     private static final String FIND_ALL = "SELECT id, title, description, required_money, status, start_date, finish_date, star, team_id, block_id FROM work;";
-    private static final String FIND_ALL_FOR_VIEW = "SELECT w.id id,  w.title title, t.name teamName, b.name blockName FROM work w JOIN team t on t.id = w.team_id JOIN block b on b.id = w.block_id;";
+    private static final String FIND_ALL_FOR_VIEW = "SELECT w.id id,  w.title title, w.status status, t.name teamName, b.name blockName FROM work w JOIN team t on t.id = w.team_id JOIN block b on b.id = w.block_id;";
     private static final String FIND_ALL_BY_STATUS = "SELECT id, title, description, required_money, status, start_date, finish_date, star, team_id, block_id FROM work WHERE status = ?;";
     private static final String FIND_ALL_BY_BLOCK_ID = "SELECT id, title, description, required_money, status, start_date, finish_date, star, team_id, block_id FROM work WHERE blockId = ?';";
     private static final String FIND_ALL_BY_TEAM_ID = "SELECT id, title, description, required_money, status, start_date, finish_date, star, team_id, block_id FROM work WHERE blockId = ?';";
     private static final String SET_STATUS_TO = "UPDATE work SET status = ? WHERE id = ?;";
-    private static final String UPDATE_WORK = "UPDATE work SET title =?, description =?, required_money = ?, start_date = ?, finish_date = ?, team_id = ?, block_id = ? WHERE id = ?;";
+    private static final String UPDATE_WORK = "UPDATE work SET title =?, description =?, star =?, required_money = ?, start_date = ?, finish_date = ?, status = ?, team_id = ?, block_id = ? WHERE id = ?;";
     private static WorkDAOImpl workDAOImpl;
     public static final BlockDao blockDao = BlockDAOImpl.getInstance();
 
@@ -57,9 +56,12 @@ public class WorkDAOImpl implements WorkDao {
         }
     }
 
+    /**
+     * work can not be deleted. instead its status will be changed to CANCELLED
+     */
     @Override
     public boolean delete(int id) {
-        throw new MyException("Work can not be deleted");
+        return setStatusToCancelled(id);
     }
 
     @Override
@@ -295,6 +297,7 @@ public class WorkDAOImpl implements WorkDao {
         workViewDTO.setTeamName(rs.getString("teamName"));
         workViewDTO.setTitle(rs.getString("title"));
         workViewDTO.setBlockName(rs.getString("blockName"));
+        workViewDTO.setStatus(Status.valueOf(rs.getString("status")));
 
         return workViewDTO;
     }
@@ -302,7 +305,7 @@ public class WorkDAOImpl implements WorkDao {
     private boolean setStatusTo(int workId, Status status) {
         try (Connection connection = MyConnectionPool.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement(SET_STATUS_TO)) {
-            return executeUpdatePrepareStatement(ps, Dao.INTEGER + workId, Dao.STRING + status.name());
+            return executeUpdatePrepareStatement(ps,  Dao.STRING + status.name(),Dao.INTEGER + workId);
         } catch (SQLException e) {
             throw new MyException(e.getMessage());
         }
@@ -312,10 +315,7 @@ public class WorkDAOImpl implements WorkDao {
         try (PreparedStatement ps = connection.prepareStatement(FIND_BY_ID)) {
             ResultSet resultSet = executePrepareStatement(ps, Dao.INTEGER + id);
 
-            if (resultSet.next())
-                return resultSet.getInt("id") == 0;
-
-            return false;
+            return (resultSet.next());
         }
     }
 
@@ -334,8 +334,10 @@ public class WorkDAOImpl implements WorkDao {
                     Dao.DOUBLE + work.getRequiredMoney(),
                     Dao.DATE + work.getStartDate(),
                     Dao.DATE + work.getFinishDate(),
+                    Dao.STRING + work.getStatus().name(),
+                    Dao.INTEGER + work.getTeamId(),
                     Dao.INTEGER + work.getBlockId(),
-                    Dao.INTEGER + work.getTeamId());
+                    Dao.INTEGER + id);
         }
     }
 

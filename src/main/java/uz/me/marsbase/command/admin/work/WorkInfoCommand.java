@@ -25,17 +25,17 @@ public class WorkInfoCommand implements Command {
 
         HttpSession session = request.getSession();
         String currenWorkId = request.getParameter(CURRENT_WORK_ID);
+        session.setAttribute(EDITING_WORK,null);
+        session.setAttribute(EDITING_REPORT,null);
         if (currenWorkId != null) {
             int curWorkId = Integer.parseInt(currenWorkId);
             WorkDTO workDTO = workService.findById(curWorkId);
             ReportDTO reportDTO = reportService.findByWorkId(curWorkId);
 
 
-//            if (session.getAttribute(CURRENT_WORK) == null)
-                session.setAttribute(CURRENT_WORK, workDTO);
+            session.setAttribute(CURRENT_WORK, workDTO);
 
-//            if (session.getAttribute(CURRENT_WORK_REPORT) == null)
-                session.setAttribute(CURRENT_WORK_REPORT, reportDTO);
+            session.setAttribute(CURRENT_WORK_REPORT, reportDTO);
 
             return new Router(WORK_INFO, REDIRECT);
         } else

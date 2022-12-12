@@ -3,6 +3,7 @@ package uz.me.marsbase.model.entity;
 import lombok.*;
 import uz.me.marsbase.model.entity.abs.AbsEntity;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -14,11 +15,14 @@ public class Report extends AbsEntity {
 
     private Integer workId;
 
-    private Date date;
+    private LocalDate date;
 
     private String comments;
 
-    private Integer teamId;
-
-
+    public Report(Integer id, Integer workId, LocalDate date, String comments) {
+        super(id);
+        this.workId = workId;
+        this.date = date;
+        this.comments = comments;
+    }
 }

@@ -44,11 +44,11 @@ public class SignInFinishCommand implements Command {
                 if (authenticatedUser.getRole().equals(Role.ADMIN)) {
                     page = ADMIN_PANEL;
                     type = REDIRECT;
-                    session.setAttribute(SESSION_ATTRIBUTE_CURRENT_USER, authenticatedUser);
+                    session.setAttribute(CURRENT_USER, authenticatedUser);
                 } else if (authenticatedUser.getRole().equals(Role.TEAM_LEADER)) {
                     page = TEAM_LEAD_PANEL;
                     type = REDIRECT;
-                    session.setAttribute(SESSION_ATTRIBUTE_CURRENT_USER, authenticatedUser);
+                    session.setAttribute(CURRENT_USER, authenticatedUser);
                 }
             } else {
                 session.setAttribute(REQ_ATTRIBUTE_USER_INVALID, INVALID_USER_MESSAGE);

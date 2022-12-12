@@ -7,11 +7,10 @@ import uz.me.marsbase.service.BlockService;
 import uz.me.marsbase.service.TeamService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
-import static uz.me.marsbase.command.navigation.AttributeParameterHolder.BLOCKS;
-import static uz.me.marsbase.command.navigation.AttributeParameterHolder.TEAMS;
-import static uz.me.marsbase.command.navigation.PageNavigation.ADD_WORK_PAGE_FOR_ADMIN;
+import static uz.me.marsbase.command.navigation.AttributeParameterHolder.*;
+import static uz.me.marsbase.command.navigation.PageNavigation.ADD_REPORT_PAGE;
+import static uz.me.marsbase.command.navigation.PageNavigation.WORK_INFO;
 import static uz.me.marsbase.router.Router.PageChangeType.REDIRECT;
 
 public class AddReportCommand implements Command {
@@ -21,11 +20,9 @@ public class AddReportCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) {
-        String page = ADD_WORK_PAGE_FOR_ADMIN;
-        var type = REDIRECT;
-        HttpSession session = request.getSession();
-        session.setAttribute(TEAMS, teamService.getTeamDTOs());
-        session.setAttribute(BLOCKS, blockService.getBlocks());
-        return new Router(page, type);
+        if (request.getParameter(CURRENT_WORK_ID) != null) {
+            return new Router(ADD_REPORT_PAGE, REDIRECT);
+        }
+        return new Router(WORK_INFO, REDIRECT);
     }
 }

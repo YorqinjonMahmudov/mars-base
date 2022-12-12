@@ -10,38 +10,32 @@ public final class AttributeParameterHolder {
      */
     public static final String PARAMETER_COMMAND = "command";
 
-    public static final String SESSION_ATTRIBUTE_CURRENT_PAGE = "current_page";
-    public static final String SESSION_ATTRIBUTE_CURRENT_COMMAND = "current_command";
-
     public static final String BLOCKS = "blocks";
     public static final String TEAMS = "teams";
     public static final String WORK_VIEWS = "workViews";
     public static final String CURRENT_WORK = "currentWork";
     public static final String CURRENT_WORK_ID = "currentWorkId";
     public static final String CURRENT_WORK_REPORT = "currentWorkReport";
+    public static final String CURRENT_WORK_REPORT_ID = "currentWorkReportId";
     public static final String EDITING_USER = "editingUser";
     public static final String EDITING_TEAM = "editingTeam";
+    public static final String EDITING_WORK = "editingWork";
+    public static final String EDITING_WORK_ID = "editingWorkId";
+    public static final String EDITING_REPORT_ID = "editingReportId";
+    public static final String EDITING_REPORT = "editingReport";
 
 
     /**
      * SESSION_ATTRIBUTE_EDITING => session attribute for set as session attribute for knowing which is editing
      */
     public static final String SESSION_ATTRIBUTE_EDITING = "editing";
-    public static final String SESSION_ATTRIBUTE_CURRENT_USER = "currentUser";
+    public static final String CURRENT_USER = "currentUser";
 
     /**
      * SESSION_ATTR_PAGE => resultPage -> session attribute for return page of items as result
      */
     public static final String SESSION_ATTR_PAGE = "resultPage";
 
-    /**
-     * when adding cruise we need pagination for requests and drivers for choosing
-     * <p>
-     * SESSION_CRUISE_REQUEST_PAGE => for requests
-     * SESSION_CRUISE_DRIVER_PAGE => for drivers
-     */
-    public static final String SESSION_CRUISE_REQUEST_PAGE = "requestsPage";
-    public static final String SESSION_CRUISE_DRIVER_PAGE = "driversPage";
 
     /**
      * ADDING Cruises page we need pagination two of below are for pagination
@@ -79,11 +73,12 @@ public final class AttributeParameterHolder {
     public static final String PARAMETER_WORK_FINISH_DATE = "finishDate";
     public static final String PARAMETER_WORK_DATE = "date";
 
-    public static final String PARAMETER_REQUEST_FROM = "from";
-    public static final String PARAMETER_REQUEST_TO = "to";
-    public static final String INVALID_REQUEST_NAME = "request name can not be blank";
-    public static final String INVALID_REQUEST_FROM = "request from name can not be blank";
-    public static final String INVALID_REQUEST_TO = "request to name can not be blank";
+    /**
+     * params of work
+     */
+    public static final String PARAMETER_REPORT_COMMENTS = "comments";
+    public static final String PARAMETER_REPORT_DATE = "reportedDate";
+
 
     /**
      * params of team
@@ -104,9 +99,7 @@ public final class AttributeParameterHolder {
     public static final String PARAMETER_USER_ID = "userId";
     public static final String INVALID_USER_FIRSTNAME = "invalid user first name";
     public static final String INVALID_USER_LASTNAME = "invalid user last name";
-    public static final String INVALID_USER_PHONE = "invalid user phone number";
     public static final String INVALID_USER_PASSWORD = "user password invalid";
-    public static final String INVALID_USER_ID = "driver car id invalid";
 
     /**
      * params of user
@@ -116,9 +109,6 @@ public final class AttributeParameterHolder {
     public static final String PARAMETER_BLOCK_LOCATION = "blockLocation";
     public static final String INVALID_BLOCK_NAME = "invalid block name";
 
-    /**
-     * carId -> car id parameter for get car id param ex. when delete command when editing command
-     */
     public static final String PARAMETER_CAR_ID = "carId";
 
     /**
@@ -139,16 +129,12 @@ public final class AttributeParameterHolder {
     public static final String INVALID_USER_MESSAGE = "user not found";
     public static final String INVALID_EMAIL_MESSAGE = "email is not valid";
     public static final String INVALID_PASSWORD_MESSAGE = "Password is not valid";
-    public static final String INVALID_TEAM_NAME_MESSAGE = "invalidDeleting";
+    public static final String INVALID_TEAM_NAME_MESSAGE = "invalid team name";
     public static final String INVALID_TEAM_LEAD_EMAIL_MESSAGE = "invalidDeleting";
     public static final String INVALID_WORK_TITLE_MESSAGE = "invalid title";
     public static final String INVALID_WORK_DESCRIPTION_MESSAGE = "invalid description";
     public static final String INVALID_WORK_REQUIRED_MONEY_MESSAGE = "invalid required money";
-    public static final String INVALID_WORK_DATE_MESSAGE = "invalid date";
-    public static final String REQ_ATTRIBUTE_USER_BLOCKED = "user_blocked";
-    public static final String USER_BLOCKED_MESSAGE = "user is blocked";
-    public static final String INVALID_CRUISE_REQUEST_ID = " Request id can not be blank";
-    public static final String INVALID_CRUISE_DRIVER_ID = " Driver id can not be blank";
+    public static final String INVALID_DATE_MESSAGE = "invalid date";
     public static final String USERS = "users";
     public static final String PARAMETER_TEAM_ID = "teamId";
 }

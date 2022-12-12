@@ -1,8 +1,8 @@
 package uz.me.marsbase.service;
 
 import uz.me.marsbase.mappers.UserMapper;
-import uz.me.marsbase.model.dao.UserDao;
-import uz.me.marsbase.model.dao.imp.UserDaoImpl;
+import uz.me.marsbase.dao.UserDao;
+import uz.me.marsbase.dao.imp.UserDaoImpl;
 import uz.me.marsbase.payload.UserDTO;
 import uz.me.marsbase.model.entity.User;
 

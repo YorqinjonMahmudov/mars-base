@@ -69,10 +69,10 @@
             font-family: sans-serif;
         }
 
-        /*body {*/
-        /*    background: url("../../images/mars-user.jpg");*/
-        /*    background-size: cover;*/
-        /*}*/
+        body {
+            background: url("../../images/mars-user.jpg");
+            background-size: cover;
+        }
 
         table {
             margin: 50px 0px 0px 100px;
@@ -83,7 +83,7 @@
         table, tr, th, td {
             padding: 10px 10px;
             text-align: center;
-            color: black;
+            color: #ffffff;
         }
 
 
@@ -136,12 +136,14 @@
 <body>
 
 <div id="mySidenav" class="sidenav">
-    <a href="#" onclick="closeNav()"> <span onclick='closeNav()'>&times;</span> </a>
+    <a href="#" onclick="closeNav()" >  <span onclick='closeNav()'>&times;</span> </a>
     <a href="${pageContext.request.contextPath}/controller?command=${CommandType.USERS_FOR_ADMIN}">User</a>
     <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAMS_FOR_ADMIN}">Team</a>
-    <a href="../work-info.jsp">Work</a>
-    <a href="../report-info.jsp">Report</a>
+    <a href="${pageContext.request.contextPath}/controller?command=${CommandType.WORK_PAGE_FOR_ADMIN}">Work</a>
 </div>
+
+<span style="font-size:30px;cursor:pointer; color: #fff"  onclick="openNav()">&#9776; MENU</span>
+
 
 <c:if test="${sessionScope.currentUser.role.equals(Role.ADMIN) && sessionScope.editingTeam!=null}">
 
@@ -241,15 +243,17 @@
                 <th>title</th>
                 <th>team name</th>
                 <th>block name</th>
+                <th>status</th>
             </tr>
 
             <c:forEach items="${sessionScope.workViews}" var="currentWork">
                 <tr class="trHover">
-                    <td class="column-1"><span><a
+                    <td class="column-1"><span><a style="color: whitesmoke"
                             href="${pageContext.request.contextPath}/controller?command=${CommandType.WORK_INFO_WITH_REPORT}&currentWorkId=${currentWork.id}"> ${currentWork.title}</a> </span>
                     </td>
                     <td class="column-1">${currentWork.teamName} </td>
                     <td class="column-1">${currentWork.blockName} </td>
+                    <td class="column-1">${currentWork.status.name()} </td>
                 </tr>
 
             </c:forEach>

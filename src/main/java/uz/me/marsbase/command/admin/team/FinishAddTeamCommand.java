@@ -36,8 +36,9 @@ public class FinishAddTeamCommand implements Command {
             UserDTO user = userService.getUserByEmail(teamLeadEmail);
             var team = new Team(teamName, user.getId(), true);
             if (teamService.insert(team)) {
+                userService.makeTeamLead(user.getId());
                 page = TEAM_PAGE_FOR_ADMIN;
-                session.setAttribute(TEAMS,teamService.getTeamDTOs());
+                session.setAttribute(TEAMS, teamService.getTeamDTOs());
             }
         } else
             page = ADD_TEAM_PAGE_FOR_ADMIN;

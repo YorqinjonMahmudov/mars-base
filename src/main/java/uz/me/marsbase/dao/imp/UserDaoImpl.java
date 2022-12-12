@@ -1,10 +1,10 @@
-package uz.me.marsbase.model.dao.imp;
+package uz.me.marsbase.dao.imp;
 
 import uz.me.marsbase.connection.MyConnectionPool;
+import uz.me.marsbase.dao.Dao;
 import uz.me.marsbase.exception.MyException;
 import uz.me.marsbase.mappers.UserMapper;
-import uz.me.marsbase.model.dao.Dao;
-import uz.me.marsbase.model.dao.UserDao;
+import uz.me.marsbase.dao.UserDao;
 import uz.me.marsbase.model.entity.User;
 import uz.me.marsbase.model.entity.enums.Role;
 import uz.me.marsbase.payload.UserDTO;
@@ -124,7 +124,7 @@ public class UserDaoImpl implements UserDao {
         if (optionalUser.isPresent() && optionalUser.get().getRole().equals(Role.USER)) {
             try (Connection connection = MyConnectionPool.getInstance().getConnection();
                  PreparedStatement ps = connection.prepareStatement(MAKE_TEAM_LEAD)) {
-                return executeUpdatePrepareStatement(ps, Dao.INTEGER + userId, Dao.STRING + Role.TEAM_LEADER.name());
+                return executeUpdatePrepareStatement(ps, Dao.STRING + Role.TEAM_LEADER.name(), Dao.INTEGER + userId);
             } catch (SQLException e) {
                 throw new MyException(e.getMessage());
             }

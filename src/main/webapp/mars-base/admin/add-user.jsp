@@ -9,8 +9,6 @@
     <title>Users</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="../../static/css/main.css" type="text/css">
-    <link rel="stylesheet" href="../../static/css/nav_style.css" type="text/css">
 </head>
 <body>
 
@@ -68,8 +66,6 @@
             </div>
 
             <div class="registerDiv" id="registerDiv">
-
-                <br>
                 <br>
                 <br>
 
@@ -107,7 +103,7 @@
                     </div>
 
                     <select name="blockName" class="form-select" size="1" aria-label="size 3 select example">
-                        <option selected>Open this select menu</option>
+                        <option value="">select block</option>
 
                         <c:forEach items="${sessionScope.blocks}" var="block">
                             <option name="blockName" value="${block.name}"> ${block.name}</option>
@@ -141,9 +137,6 @@
             </div>
 
             <div class="registerDiv" id="registerDiv">
-
-                <br>
-                <br>
                 <br>
 
                 <form action="${pageContext.request.contextPath}/controller?command=${CommandType.ADD_USER_TO_TEAM}"

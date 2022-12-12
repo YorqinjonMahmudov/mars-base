@@ -31,24 +31,23 @@ public class AddWorkValidator implements FormValidator {
             validationResult.put(PARAMETER_WORK_DESCRIPTION, INVALID_WORK_DESCRIPTION_MESSAGE);
 
         /* validate required money */
-        if (parameters.get(PARAMETER_WORK_REQUIRED_MONEY) == null || Double.parseDouble(parameters.get(PARAMETER_WORK_REQUIRED_MONEY)[0]) < 1)
+        if (parameters.get(PARAMETER_WORK_REQUIRED_MONEY) == null || parameters.get(PARAMETER_WORK_REQUIRED_MONEY)[0].isBlank() || Double.parseDouble(parameters.get(PARAMETER_WORK_REQUIRED_MONEY)[0]) < 1)
             validationResult.put(PARAMETER_WORK_REQUIRED_MONEY, INVALID_WORK_REQUIRED_MONEY_MESSAGE);
 
         /* validate dates */
         if (parameters.get(PARAMETER_WORK_START_DATE) == null
-                || (parameters.get(PARAMETER_WORK_FINISH_DATE) != null
+                || parameters.get(PARAMETER_WORK_START_DATE)[0].isBlank()
+                || (!parameters.get(PARAMETER_WORK_FINISH_DATE)[0].isBlank()
+                && !parameters.get(PARAMETER_WORK_START_DATE)[0].isBlank()
                 && !LocalDate.parse(parameters.get(PARAMETER_WORK_FINISH_DATE)[0]).isAfter(LocalDate.parse(parameters.get(PARAMETER_WORK_START_DATE)[0])))) {
-            validationResult.put(PARAMETER_WORK_DATE, INVALID_WORK_DATE_MESSAGE);
+            validationResult.put(PARAMETER_WORK_DATE, INVALID_DATE_MESSAGE);
         }
 
-
-//        Team teamByName = teamService.getTeamByName(parameters.get(PARAMETER_TEAM_NAME)[0]);
-//        if (teamByName != null && !teamByName.getId().equals(Integer.valueOf(parameters.get("editingTeamId")[0])))
-//            validationResult.put(PARAMETER_TEAM_NAME, INVALID_TEAM_NAME_MESSAGE);
+        /* validate team name */
         if (parameters.get(PARAMETER_TEAM_NAME) == null || teamService.getTeamByName(parameters.get(PARAMETER_TEAM_NAME)[0]) == null)
             validationResult.put(PARAMETER_TEAM_NAME, INVALID_TEAM_NAME_MESSAGE);
 
-
+        /* validate block name */
         if (parameters.get(PARAMETER_BLOCK_NAME) == null
                 || blockService.findByName(parameters.get(PARAMETER_BLOCK_NAME)[0]).isEmpty()
         ) {

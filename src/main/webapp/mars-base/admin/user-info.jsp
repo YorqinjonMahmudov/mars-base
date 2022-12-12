@@ -80,7 +80,6 @@
             color: #fff;
         }
 
-
         .sidenav {
             height: 100%;
             width: 0;
@@ -115,6 +114,89 @@
             margin-left: 50px;
         }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+
+        .modal {
+            position: absolute;
+            z-index: 1000;
+            width: 500px;
+            height: 500px;
+            background: #fff;
+            border: 1px solid #000;
+            top: 100px;
+            left: 500px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            padding: 30px 0 0 0;
+            box-shadow: 0px 0px 20px #000;
+        }
+
+        .registerDiv {
+            width: 100%;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-top: 50px;
+            width: 100%;
+        }
+
+        .form-item {
+            width: 70%;
+            margin: 5px;
+        }
+
+        .form-item input {
+            width: 100%;
+            padding: 10px 20px;
+        }
+
+        .select {
+            width: 70%;
+        }
+
+        .select select {
+            width: 100%;
+            padding: 10px 20px;
+            outline: none;
+        }
+
+        .buttons {
+            display: flex;
+            margin-top: 10px;
+        }
+
+        .buttons button {
+            padding: 10px 25px;
+            background: #ff0;
+            margin-left: 50px;;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .buttons .cancel {
+            padding: 6px 20px;
+            border-radius: 5px;
+            background: red;
+            color: #fff;
+        }
+
+        .buttons .cancel a {
+            color: #fff;
+            text-decoration: none;
+        }
+
         @media screen and (max-height: 450px) {
             .sidenav {
                 padding-top: 15px;
@@ -132,11 +214,10 @@
     <a href="#" onclick="closeNav()"> <span onclick='closeNav()'>&times;</span> </a>
     <a href="${pageContext.request.contextPath}/controller?command=${CommandType.USERS_FOR_ADMIN}">User</a>
     <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAMS_FOR_ADMIN}">Team</a>
-    <a href="../work-info.jsp">Work</a>
-    <a href="../report-info.jsp">Report</a>
+    <a href="${pageContext.request.contextPath}/controller?command=${CommandType.WORK_PAGE_FOR_ADMIN}">Work</a>
 </div>
 
-<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; MENU</span>
+<span style="font-size:30px;cursor:pointer; color: #fff" onclick="openNav()">&#9776; MENU</span>
 
 <c:if test="${sessionScope.currentUser.role.equals(Role.ADMIN) && sessionScope.editingUser!=null}">
 
@@ -184,70 +265,73 @@
         </div>
     </div>
 
-    <div class="registerDiv" id="registerDiv">
+    <div class="modal">
+        <div class="registerDiv" id="registerDiv">
 
-        <h1 class="signup-title"> Edit User </h1>
+            <h1 class="signup-title"> Edit User </h1>
 
-        <form id="register_form"
-              action="${pageContext.request.contextPath}/controller?command=${CommandType.FINISH_EDIT_USER}&editingUserId=${sessionScope.editing.id}"
-              class="add-request-content" method="post">
+            <form id="register_form"
+                  action="${pageContext.request.contextPath}/controller?command=${CommandType.FINISH_EDIT_USER}&editingUserId=${sessionScope.editingUser.id}"
+                  class="add-request-content" method="post">
 
-            <div class="form-item">
-                <label for="editingUserFirstName"></label>
-                <input type="text" class="form-control"
-                       id="editingUserFirstName" name="${AttributeParameterHolder.PARAMETER_USER_FIRSTNAME}"
-                       property="${sessionScope.editingUser.firstName}"
-                       value="${sessionScope.editingUser.firstName}"
-                       placeholder=" firstName ">
-            </div>
-            <div class="form-item">
-                <label for="editingUserLastName"></label>
-                <input type="text" class="form-control"
-                       id="editingUserLastName" name="${AttributeParameterHolder.PARAMETER_USER_LASTNAME}"
-                       value="${sessionScope.editingUser.lastName}"
-                       placeholder=" lastName ">
-            </div>
-            <div class="form-item">
-                <label for="editingUserEmail"></label>
-                <input type="text" class="form-control"
-                       id="editingUserEmail" name="${AttributeParameterHolder.PARAMETER_USER_EMAIL}"
-                       value="${sessionScope.editingUser.email}"
-                       placeholder=" email ">
-            </div>
+                <div class="form-item">
+                    <label for="editingUserFirstName"></label>
+                    <input type="text" class="form-control"
+                           id="editingUserFirstName" name="${AttributeParameterHolder.PARAMETER_USER_FIRSTNAME}"
+                           property="${sessionScope.editingUser.firstName}"
+                           value="${sessionScope.editingUser.firstName}"
+                           placeholder=" firstName ">
+                </div>
+                <div class="form-item">
+                    <label for="editingUserLastName"></label>
+                    <input type="text" class="form-control"
+                           id="editingUserLastName" name="${AttributeParameterHolder.PARAMETER_USER_LASTNAME}"
+                           value="${sessionScope.editingUser.lastName}"
+                           placeholder=" lastName ">
+                </div>
+                <div class="form-item">
+                    <label for="editingUserEmail"></label>
+                    <input type="text" class="form-control"
+                           id="editingUserEmail" name="${AttributeParameterHolder.PARAMETER_USER_EMAIL}"
+                           value="${sessionScope.editingUser.email}"
+                           placeholder=" email ">
+                </div>
 
-            <div class="form-item">
-                <label for="editingUserPassword"></label>
-                <input type="text" class="form-control"
-                       id="editingUserPassword" name="${AttributeParameterHolder.PARAMETER_USER_PASSWORD}"
-                       value="${sessionScope.editingUser.password}"
-                       placeholder=" password ">
-            </div>
+                <div class="form-item">
+                    <label for="editingUserPassword"></label>
+                    <input type="text" class="form-control"
+                           id="editingUserPassword" name="${AttributeParameterHolder.PARAMETER_USER_PASSWORD}"
+                           value="${sessionScope.editingUser.password}"
+                           placeholder=" password ">
+                </div>
 
-            <div>
-                <select name="blockName" class="form-select" size="${sessionScope.blocks.size()}"
-                        aria-label="size 3 select example">
-                    <option selected>Open this select menu</option>
+                <div class="select">
+                    <select name="blockName" class="form-select" size="1" required>
+                        <option>select block</option>
 
-                    <c:forEach items="${sessionScope.blocks}" var="block">
-                        <option name="blockName" value="${block.name}"> ${block.name}</option>
-                    </c:forEach>
+                        <c:forEach items="${sessionScope.blocks}" var="block">
+                            <option name="blockName" value="${block.name}"> ${block.name}</option>
+                        </c:forEach>
 
-                </select>
-            </div>
+                    </select>
+                </div>
 
 
-            <div class="form-item">
-                <button type="submit" class="btn btn-block btn-primary">Edit</button>
-            </div>
+                <div class="buttons">
+                    <div class="cancel">
+                        <a href="${pageContext.request.contextPath}/controller?command=${CommandType.USERS_FOR_ADMIN}"
+                           class="btn btn-block btn-danger">Cancel</a>
+                    </div>
 
-            <div class="form-item">
-                <a href="${pageContext.request.contextPath}/controller?command=${CommandType.USERS_FOR_ADMIN}"
-                   class="btn btn-block btn-danger">Cancel</a>
-            </div>
+                    <div class="edit">
+                        <button type="submit" class="btn btn-block btn-primary">Edit</button>
+                    </div>
+                </div>
 
-        </form>
+            </form>
+        </div>
+
     </div>
-
 </c:if>
 
 <h1 align="center"> List of Users</h1>
@@ -273,17 +357,17 @@
             <td class="column-1"><span> ${user.blockId} </span></td>
 
             <td class="column-row">
-                <a class="btn btn-outline-primary"
-                   href="${pageContext.request.contextPath}/controller?command=${CommandType.EDIT_USER}&editingUserId=${user.id}">
+                <a class="btn btn-outline-primary" id="edit-btn"
+                   href="${pageContext.request.contextPath}/controller?command=${CommandType.EDIT_USER}&editingUserId=${user.id}" style="color: yellow">
                     EDIT</a>
             </td>
             <td class="column-row">
-                <a href=${pageContext.request.contextPath}/controller?command=${CommandType.DELETE_USER}&deletingUserId=${user.id}>
+                <a href=${pageContext.request.contextPath}/controller?command=${CommandType.DELETE_USER}&deletingUserId=${user.id} style="color: red">
                     Delete</a>
             </td>
         </tr>
     </c:forEach>
-    >
+
 </table>
 <br>
 
@@ -305,6 +389,8 @@
     function closeNav() {
         document.getElementById("mySidenav").style.width = "0";
     }
+
+
 </script>
 
 </body>

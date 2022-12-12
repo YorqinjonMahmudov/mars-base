@@ -57,7 +57,6 @@ public class FinishAddWorkCommand implements Command {
                     .build();
             if (workService.insert(work))
                 session.setAttribute(WORK_VIEWS, workService.getWorks());
-
         } else {
             session.setAttribute(INVALID_FORM,validatedResult);
             page = ADD_WORK_PAGE_FOR_ADMIN;

@@ -9,8 +9,6 @@
     <title>ADD WORK</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="../../static/css/main.css" type="text/css">
-    <link rel="stylesheet" href="../../static/css/nav_style.css" type="text/css">
 </head>
 <body>
 
@@ -51,7 +49,8 @@
                                     ${sessionScope.invalid_form.date}
                             </div>
                         </c:if>
-                    </ol><ol class="alert-danger">
+                    </ol>
+                    <ol class="alert-danger">
                         <c:if test="${sessionScope.invalid_form.teamName!=null}">
                             <div class="text-danger">
                                     ${sessionScope.invalid_form.teamName}
@@ -74,10 +73,9 @@
 
         <div class="registerDiv" id="registerDiv" align="center">
             <br>
-            <br>
-            <br>
             <form action="${pageContext.request.contextPath}/controller?command=${CommandType.FINISH_ADD_WORK}"
                   id="register_form"
+                  align="center"
                   class="signup-content" method="post">
                 <h1 class="signup-title"> Add Work </h1>
 
@@ -116,19 +114,16 @@
                            placeholder=" finish date ">
                 </div>
 
-                <select name="teamName" class="form-select" size="1"
-                        aria-label="size 3 select example">
-                    <option selected>Open this select menu</option>
-
+                <select name="teamName" class="form-select" size="1">
+                    <option value="">select team</option>
                     <c:forEach items="${sessionScope.teams}" var="team">
                         <option name="${AttributeParameterHolder.PARAMETER_TEAM_NAME}"
                                 value="${team.name}"> ${team.name}</option>
                     </c:forEach>
                 </select>
 
-                <select name="blockName" class="form-select" size="1"
-                        aria-label="size 3 select example">
-                    <option selected>Open this select menu</option>
+                <select name="blockName" class="form-select" size="1">
+                    <option value="">select block</option>
 
                     <c:forEach items="${sessionScope.blocks}" var="block">
                         <option name="${AttributeParameterHolder.PARAMETER_BLOCK_NAME}"

@@ -2,10 +2,10 @@ package uz.me.marsbase.service;
 
 import uz.me.marsbase.command.instanceHolder.InstanceHolder;
 import uz.me.marsbase.mappers.UserMapper;
-import uz.me.marsbase.model.dao.TeamDao;
-import uz.me.marsbase.model.dao.TeamMembersDao;
-import uz.me.marsbase.model.dao.imp.TeamDAOImpl;
-import uz.me.marsbase.model.dao.imp.TeamMembersDAOImpl;
+import uz.me.marsbase.dao.TeamDao;
+import uz.me.marsbase.dao.TeamMembersDao;
+import uz.me.marsbase.dao.imp.TeamDAOImpl;
+import uz.me.marsbase.dao.imp.TeamMembersDAOImpl;
 import uz.me.marsbase.model.entity.Team;
 import uz.me.marsbase.model.entity.TeamMember;
 import uz.me.marsbase.model.entity.User;

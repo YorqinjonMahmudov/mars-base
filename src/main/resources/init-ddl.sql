@@ -65,7 +65,6 @@ CREATE TABLE report
     id       SERIAL PRIMARY KEY,
     date     DATE NOT NULL DEFAULT now(),
     comments VARCHAR(500),
-    team_id  INTEGER   NOT NULL REFERENCES team (id),
     work_id   INTEGER   NOT NULL REFERENCES work (id)
 );
 

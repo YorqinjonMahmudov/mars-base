@@ -2,6 +2,7 @@ package uz.me.marsbase.payload;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -15,10 +16,8 @@ public class ReportDTO {
 
     private Integer workId;
 
-    private Date reportedDate;
+    private LocalDate reportedDate;
 
     private String comments;
-
-    private String teamName;
 
 }

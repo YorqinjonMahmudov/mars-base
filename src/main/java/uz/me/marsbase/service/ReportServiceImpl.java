@@ -1,15 +1,20 @@
 package uz.me.marsbase.service;
 
 import uz.me.marsbase.command.instanceHolder.InstanceHolder;
-import uz.me.marsbase.model.dao.ReportDao;
-import uz.me.marsbase.model.entity.Work;
+import uz.me.marsbase.dao.ReportDao;
+import uz.me.marsbase.dao.WorkDao;
+import uz.me.marsbase.mappers.ReportMapper;
+import uz.me.marsbase.model.entity.Report;
 import uz.me.marsbase.payload.ReportDTO;
 
 import java.util.List;
+import java.util.Optional;
 
-public class ReportServiceImpl  implements ReportService{
+public class ReportServiceImpl implements ReportService {
 
-    private static final ReportDao reportDao= InstanceHolder.getInstance(ReportDao.class);
+    private static final ReportDao reportDao = InstanceHolder.getInstance(ReportDao.class);
+    private static final WorkDao workDao = InstanceHolder.getInstance(WorkDao.class);
+    private static final ReportMapper reportMapper = ReportMapper.getInstance();
 
     @Override
     public List<ReportDTO> getReports() {
@@ -18,26 +23,36 @@ public class ReportServiceImpl  implements ReportService{
 
     @Override
     public ReportDTO findById(Integer id) {
+        Optional<Report> optionalReport = reportDao.findById(id);
+        return reportMapper.toDto(optionalReport.orElse(null));
+    }
+
+    @Override
+    public ReportDTO findByWorkId(Integer reportId) {
+        return reportDao.findByWorkId(reportId).orElse(null);
+    }
+
+    @Override
+    public ReportDTO insert(Report report) {
+        var insert = reportDao.insert(report);
+        if (insert) {
+            Optional<ReportDTO> optionalReportDTO = reportDao.findByWorkId(report.getWorkId());
+            if (optionalReportDTO.isEmpty())
+                return null;
+            var reportDTO = optionalReportDTO.get();
+            workDao.setStatusToReported(reportDTO.getId());
+            return reportDTO;
+        }
         return null;
     }
 
     @Override
-    public ReportDTO findByWorkId(Integer workId) {
-        return reportDao.findByWorkId(workId).orElse(null);
+    public boolean update(Integer editingReportId, Report report) {
+        return reportDao.update(editingReportId, report);
     }
 
     @Override
-    public boolean insert(Work work) {
-        return false;
-    }
-
-    @Override
-    public boolean update(Integer editingWorkId, Work work) {
-        return false;
-    }
-
-    @Override
-    public boolean delete(int deletingWorkId) {
-        return false;
+    public boolean delete(int deletingReportId) {
+        return reportDao.delete(deletingReportId);
     }
 }

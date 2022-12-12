@@ -3,13 +3,14 @@ package uz.me.marsbase.command;
 
 import uz.me.marsbase.command.admin.team.*;
 import uz.me.marsbase.command.admin.user.*;
-import uz.me.marsbase.command.admin.work.AddWorkCommand;
-import uz.me.marsbase.command.admin.work.FinishAddWorkCommand;
-import uz.me.marsbase.command.admin.work.WorkInfoCommand;
-import uz.me.marsbase.command.admin.work.WorkViewCommand;
+import uz.me.marsbase.command.admin.work.*;
 import uz.me.marsbase.command.auth.LogOutCommand;
 import uz.me.marsbase.command.auth.SignInFinishCommand;
 import uz.me.marsbase.command.auth.SignInGetCommand;
+import uz.me.marsbase.command.teamLead.report.AddReportCommand;
+import uz.me.marsbase.command.teamLead.report.EditReportCommand;
+import uz.me.marsbase.command.teamLead.report.FinishAddReportCommand;
+import uz.me.marsbase.command.teamLead.report.FinishEditReportCommand;
 
 public enum CommandType {
 
@@ -37,7 +38,14 @@ public enum CommandType {
     WORK_PAGE_FOR_ADMIN(new WorkViewCommand()),
     WORK_INFO_WITH_REPORT(new WorkInfoCommand()),
     ADD_WORK(new AddWorkCommand()),
-    FINISH_ADD_WORK(new FinishAddWorkCommand());
+    FINISH_ADD_WORK(new FinishAddWorkCommand()),
+    EDIT_WORK(new EditWorkCommand()),
+    FINISH_EDIT_WORK(new FinishEditWorkCommand()),
+    DELETE_WORK(new DeleteWorkCommand()),
+    ADD_REPORT(new AddReportCommand()),
+    FINISH_ADD_REPORT(new FinishAddReportCommand()),
+    EDIT_REPORT(new EditReportCommand()),
+    FINISH_EDIT_REPORT(new FinishEditReportCommand());
 
 //    REQUESTS(new RequestCommand()),
 //    ADD_REQUEST(new AddRequestCommand()),

@@ -7,6 +7,7 @@
 --%>
 <%@page import="uz.me.marsbase.command.CommandType" %>
 <%@page import="uz.me.marsbase.model.entity.enums.Role" %>
+<%@page import="uz.me.marsbase.model.entity.enums.Status" %>
 <%@page import="uz.me.marsbase.command.navigation.AttributeParameterHolder" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -84,6 +85,11 @@
             padding: 10px 10px;
             text-align: center;
             color: #fff;
+
+        }
+
+        table, tr, th, td a {
+            color: whitesmoke;
         }
 
 
@@ -121,6 +127,90 @@
             margin-left: 50px;
         }
 
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+
+        .modal {
+            position: absolute;
+            z-index: 1000;
+            width: 500px;
+            height: 600px;
+            background: #fff;
+            border: 1px solid #000;
+            top: 100px;
+            left: 500px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            padding: 30px 0 0 0;
+            box-shadow: 0px 0px 20px #000;
+        }
+
+        .registerDiv {
+            width: 100%;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-top: 50px;
+            width: 100%;
+        }
+
+        .form-item {
+            width: 70%;
+            margin: 4px;
+        }
+
+        .form-item input {
+            width: 100%;
+            padding: 10px 20px;
+        }
+
+        .select {
+            width: 70%;
+        }
+
+        .select select {
+            width: 100%;
+            padding: 10px 20px;
+            outline: none;
+        }
+
+        .buttons {
+            display: flex;
+            margin-top: 10px;
+        }
+
+        .buttons button {
+            padding: 10px 25px;
+            background: #ff0;
+            margin-left: 50px;;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .buttons .cancel {
+            padding: 6px 20px;
+            border-radius: 5px;
+            background: red;
+            color: #fff;
+        }
+
+        .buttons .cancel a {
+            color: #fff;
+            text-decoration: none;
+        }
+
         @media screen and (max-height: 450px) {
             .sidenav {
                 padding-top: 15px;
@@ -139,11 +229,13 @@
     <a href="#" onclick="closeNav()"> <span onclick='closeNav()'>&times;</span> </a>
     <a href="${pageContext.request.contextPath}/controller?command=${CommandType.USERS_FOR_ADMIN}">User</a>
     <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAMS_FOR_ADMIN}">Team</a>
-    <a href="../work-info.jsp">Work</a>
-    <a href="../report-info.jsp">Report</a>
+    <a href="${pageContext.request.contextPath}/controller?command=${CommandType.WORK_PAGE_FOR_ADMIN}">Work</a>
 </div>
 
-<c:if test="${sessionScope.currentUser.role.equals(Role.ADMIN) && sessionScope.editingTeam!=null}">
+<span style="font-size:30px;cursor:pointer; color: #fff" onclick="openNav()">&#9776; MENU</span>
+
+
+<c:if test="${sessionScope.currentUser.role.equals(Role.ADMIN) && sessionScope.editingWork!=null}">
 
     <div class="container">
         <div class="row">
@@ -189,54 +281,129 @@
         </div>
     </div>
 
-    <div class="registerDiv" id="registerDiv">
+    <div class="modal">
+        <div class="registerDiv" id="registerDivWork">
 
-        <h1 class="signup-title"> Edit Team </h1>
+            <h1 class="title"> Edit Work </h1>
 
-        <form id="register_form" align="center"
-              action="${pageContext.request.contextPath}/controller?command=${CommandType.FINISH_EDIT_TEAM}&editingTeamId=${sessionScope.editingTeam.id}"
-              class="add-request-content" method="post">
+            <form id="register_form_work" align="center"
+                  action="${pageContext.request.contextPath}/controller?command=${CommandType.FINISH_EDIT_WORK}&editingWorkId=${sessionScope.editingWork.id}"
+                  class="add-request-content" method="post">
 
-            <div class="form-item">
-                <label for="editingTeamFirstName"></label>
-                <input type="text" class="form-control"
-                       id="editingTeamFirstName" name="${AttributeParameterHolder.PARAMETER_TEAM_NAME}"
-                       property="${sessionScope.editingTeam.name}"
-                       value="${sessionScope.editingTeam.name}"
-                       placeholder=" Team name ">
-            </div>
+                <div class="form-item">
+                    <label for="title"></label>
+                    <input type="text" class="form-control"
+                           id="title" name="${AttributeParameterHolder.PARAMETER_WORK_TITLE}"
+                           property="${sessionScope.editingWork.title}"
+                           value="${sessionScope.editingWork.title}"
+                           placeholder=" title ">
+                </div>
 
-            <div>
-                <select name="teamLeadEmail" class="form-select" size="1"
-                        aria-label="size 3 select example">
-                    <option selected>${sessionScope.editingTeam.teamLeadEmail}</option>
+                <div class="form-item">
+                    <label for="description"></label>
+                    <input type="text" class="form-control"
+                           id="description" name="${AttributeParameterHolder.PARAMETER_WORK_DESCRIPTION}"
+                           property="${sessionScope.editingWork.description}"
+                           value="${sessionScope.editingWork.description}"
+                           placeholder=" description ">
+                </div>
 
-                    <c:forEach items="${sessionScope.users}" var="user">
-                        <option name="teamLeadEmail" value="${user.email}"> ${user.email}</option>
-                    </c:forEach>
-                </select>
-            </div>
+                <div class="form-item">
+                    <label for="requiredMoney"></label>
+                    <input type="number" class="form-control"
+                           id="requiredMoney" name="${AttributeParameterHolder.PARAMETER_WORK_REQUIRED_MONEY}"
+                           property="${sessionScope.editingWork.requiredMoney}"
+                           value="${sessionScope.editingWork.requiredMoney}"
+                           placeholder=" required money ">
+                </div>
+
+                <div class="select">
+                    <select name="star" class="form-select" size="1" required>
+                        <option selected>${sessionScope.editingWork.star}</option>
+                        <option name="star" value="0">0</option>
+                        <option name="star" value="1">1</option>
+                        <option name="star" value="2">2</option>
+                        <option name="star" value="3">3</option>
+                        <option name="star" value="4">4</option>
+                        <option name="star" value="5">5</option>
+                        <option name="star" value="6">6</option>
+                        <option name="star" value="7">7</option>
+                        <option name="star" value="8">8</option>
+                        <option name="star" value="9">9</option>
+                        <option name="star" value="10">10</option>
+                    </select>
+                </div>
+
+                <div class="select">
+                    <select name="status" class="form-select" size="1">
+                        <option selected>${sessionScope.editingWork.status}</option>
+
+                        <c:forEach items="${Status.values()}" var="status">
+                            <option name="status" value="${status}"> ${status}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+
+                <div class="form-item">
+                    <label for="startDate"></label>
+                    <input type="date" class="form-control"
+                           id="startDate" name="${AttributeParameterHolder.PARAMETER_WORK_START_DATE}"
+                           property="${sessionScope.editingWork.startDate}"
+                           value="${sessionScope.editingWork.startDate}"
+                           placeholder=" start date ">
+                </div>
+
+                <div class="form-item">
+                    <label for="finishDate"></label>
+                    <input type="date" class="form-control"
+                           id="finishDate" name="${AttributeParameterHolder.PARAMETER_WORK_FINISH_DATE}"
+                           property="${sessionScope.editingWork.finishDate}"
+                           value="${sessionScope.editingWork.finishDate}"
+                           placeholder=" finish date ">
+                </div>
+
+                <div class="select">
+                    <select name="teamName" class="form-select" size="1">
+                        <option selected>${sessionScope.editingWork.teamName}</option>
+
+                        <c:forEach items="${sessionScope.teams}" var="team">
+                            <option name="teamName" value="${team.name}"> ${team.name}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+
+                <div class="select">
+                    <select name="blockName" class="form-select" size="1">
+                        <option selected>${sessionScope.editingWork.blockName}</option>
+
+                        <c:forEach items="${sessionScope.blocks}" var="block">
+                            <option name="blockName" value="${block.name}"> ${block.name}</option>
+                        </c:forEach>
+                    </select>
+                </div>
 
 
-            <div class="form-item">
-                <button type="submit" class="btn btn-block btn-primary">Edit</button>
-            </div>
+                <div class="buttons">
+                    <div class="cancel">
+                        <a href="${pageContext.request.contextPath}/controller?command=${CommandType.WORK_INFO_WITH_REPORT}&currentWorkId=${sessionScope.currentWork.id}"
+                           class="btn btn-block btn-danger">Cancel</a>
+                    </div>
 
-            <div class="form-item">
-                <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAMS_FOR_ADMIN}"
-                   class="btn btn-block btn-danger">Cancel</a>
-            </div>
+                    <div class="edit">
+                        <button type="submit" class="btn btn-block btn-primary">Edit</button>
+                    </div>
+                </div>
 
-        </form>
+            </form>
+        </div>
     </div>
-
 </c:if>
 
 
 <c:choose>
     <c:when test="${sessionScope.currentUser.role.equals(Role.ADMIN)}">
 
-        <h1 align="center">Work details</h1>
+        <h1 align="center" style="color: #ffffff">Work details</h1>
         <table>
             <tr>
                 <th>title</th>
@@ -260,13 +427,14 @@
                 <td class="column-1"> ${sessionScope.currentWork.star} </td>
                 <td class="column-1"> ${sessionScope.currentWork.teamName} </td>
                 <td class="column-1"> ${sessionScope.currentWork.blockName} </td>
-                    <%--                    <td class="column-1"><span> <a--%>
-                    <%--                            href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAM_MEMBERS_ADMIN}&teamId=${team.id}"> ${currentWork.teamName}</a> </span>--%>
-                    <%--                    </td>--%>
-                    <%--                    <td class="column-1"><span>  <a--%>
-                    <%--                            href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAM_MEMBERS_ADMIN}&teamId=${team.id}"> ${currentWork.blockName}</a> </span>--%>
-                    <%--                    </td>--%>
 
+
+                <td class="column-1"><span> <a
+                        href="${pageContext.request.contextPath}/controller?command=${CommandType.EDIT_WORK}&editingWorkId=${sessionScope.currentWork.id}"> EDIT</a> </span>
+                </td>
+                <td class="column-1"><span>  <a
+                        href="${pageContext.request.contextPath}/controller?command=${CommandType.DELETE_WORK}&deletingWorkId=${sessionScope.currentWork.id}"> DELETE</a> </span>
+                </td>
 
             </tr>
 
@@ -274,25 +442,88 @@
         <br>
         <br>
 
-        <c:if test="${sessionScope.currentWorkReport==null}  && ${sessionScope.currentUser.role.equals(Role.TEAM_LEADER)}">
-            <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAM_MEMBERS_ADMIN}&teamId=${team.id}"> Add Report</a>
+        <c:if test="${sessionScope.currentWorkReport==null &&sessionScope.currentWork.status.equals(Status.NEW)  && (sessionScope.currentUser.role.equals(Role.TEAM_LEADER) || sessionScope.currentUser.role.equals(Role.ADMIN))}">
+            <div>
+                <a style="color: whitesmoke" align="center"
+                   href="${pageContext.request.contextPath}/controller?command=${CommandType.ADD_REPORT}&currentWorkId=${sessionScope.currentWork.id}">
+                    Add Report</a>
+            </div>
         </c:if>
-        <c:if test="${sessionScope.currentWorkReport!=null}">
+
+
+        <c:if test="${sessionScope.currentWorkReport!=null && (sessionScope.currentUser.role.equals(Role.TEAM_LEADER) || sessionScope.currentUser.role.equals(Role.ADMIN))}">
+
+            <c:if test="${sessionScope.editingReport!=null}">
+
+                <div class="modal">
+                    <div class="registerDiv" id="registerDivReport">
+
+                        <h1 class="title"> Edit Report </h1>
+
+                        <form id="register_form_report" align="center"
+                              action="${pageContext.request.contextPath}/controller?command=${CommandType.FINISH_EDIT_REPORT}&editingWorkId=${sessionScope.currentWork.id}&editingReportId=${sessionScope.editingReport.id}"
+                              class="add-request-content" method="post">
+
+                            <div class="form-item">
+                                <label for="comments"></label>
+                                <input type="text" class="form-control" id="comments"
+                                       required="required"
+                                       property="${sessionScope.editingReport.comments}"
+                                       value="${sessionScope.editingReport.comments}"
+                                       name="${AttributeParameterHolder.PARAMETER_REPORT_COMMENTS}"
+                                       placeholder=" comments ">
+                            </div>
+
+                            <div class="form-item">
+                                <label for="reportDate"></label>
+                                <input type="date" class="form-control" id="reportDate"
+                                       property="${sessionScope.editingReport.reportedDate}"
+                                       value="${sessionScope.editingReport.reportedDate}"
+                                       name="${AttributeParameterHolder.PARAMETER_REPORT_DATE}"
+                                       placeholder="date">
+                            </div>
+
+
+                            <div class="buttons">
+                                <div class="cancel">
+                                    <a href="${pageContext.request.contextPath}/controller?command=${CommandType.WORK_INFO_WITH_REPORT}&currentWorkId=${sessionScope.currentWork.id}"
+                                       class="btn btn-block btn-danger">Cancel</a>
+                                </div>
+
+                                <div class="edit">
+                                    <button type="submit" class="btn btn-block btn-primary">Edit</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+            </c:if>
+
 
             <table>
                 <tr>
                     <th>work id</th>
                     <th>reported date</th>
                     <th>comments</th>
-                    <th>team name</th>
+                    <c:if test="${sessionScope.currentWork.status.equals(Status.REPORTED)}">
+                        <th colspan="1">action</th>
+                    </c:if>
                 </tr>
 
                 <tr class="trHover">
                     <td class="column-1"> ${sessionScope.currentWorkReport.workId} </td>
                     <td class="column-1"> ${sessionScope.currentWorkReport.reportedDate} </td>
                     <td class="column-1"> ${sessionScope.currentWorkReport.comments} </td>
-                    <td class="column-1"> ${sessionScope.currentWorkReport.teamName} </td>
+                    <c:if test="${sessionScope.currentWork.status.equals(Status.REPORTED)}">
+                        <td>
+                            <a href="${pageContext.request.contextPath}/controller?command=${CommandType.EDIT_REPORT}&currentWorkReportId=${sessionScope.currentWorkReport.id}">
+                                EDIT</a></td>
+                    </c:if>
+
                 </tr>
+
 
             </table>
 

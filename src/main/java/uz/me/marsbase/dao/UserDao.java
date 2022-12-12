@@ -1,4 +1,4 @@
-package uz.me.marsbase.model.dao;
+package uz.me.marsbase.dao;
 
 import uz.me.marsbase.payload.UserDTO;
 import uz.me.marsbase.model.entity.User;
