@@ -197,6 +197,47 @@
             text-decoration: none;
         }
 
+        .open {
+            position: absolute;
+            top: 30vh;
+            left: 85vh;
+            width: 300px;
+            height: 100px;
+            background: #fff;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .open .aaa {
+            margin-top: 15px;
+        }
+
+        .open a {
+            padding: 5px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .open a:nth-child(1) {
+            background: yellow;
+        }
+
+        .open a:nth-child(2) {
+            background: red;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .hide {
+            width: 0;
+            height: 0;
+            overflow: hidden;
+        }
+
         @media screen and (max-height: 450px) {
             .sidenav {
                 padding-top: 15px;
@@ -213,174 +254,199 @@
 <div id="mySidenav" class="sidenav">
     <a href="#" onclick="closeNav()"> <span onclick='closeNav()'>&times;</span> </a>
     <a href="${pageContext.request.contextPath}/controller?command=${CommandType.USERS_FOR_ADMIN}">User</a>
-    <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAMS_FOR_ADMIN}">Team</a>
+    <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAMS}">Team</a>
     <a href="${pageContext.request.contextPath}/controller?command=${CommandType.WORK_PAGE_FOR_ADMIN}">Work</a>
 </div>
 
 <span style="font-size:30px;cursor:pointer; color: #fff" onclick="openNav()">&#9776; MENU</span>
+<c:choose>
+    <c:when test="${sessionScope.currentUser.role.equals(Role.ADMIN)}">
 
-<c:if test="${sessionScope.currentUser.role.equals(Role.ADMIN) && sessionScope.editingUser!=null}">
+    <c:if test="${ sessionScope.editingUser!=null}">
 
-    <div class="container">
-        <div class="row">
-            <div class="col text-center">
-                <br>
-                <br>
-                <ol class="alert-danger">
-                    <c:if test="${sessionScope.invalid_form.email!=null}">
-                        <div class="text-danger">
-                                ${sessionScope.invalid_form.email}
-                        </div>
-                    </c:if>
-                </ol>
+        <div class="container">
+            <div class="row">
+                <div class="col text-center">
+                    <br>
+                    <br>
+                    <ol class="alert-danger">
+                        <c:if test="${sessionScope.invalid_form.email!=null}">
+                            <div class="text-danger">
+                                    ${sessionScope.invalid_form.email}
+                            </div>
+                        </c:if>
+                    </ol>
 
-                <ol class="alert-danger">
-                    <c:if test="${sessionScope.invalid_form.password!=null}">
-                        <div class="text-danger">
-                                ${invalid_form.password}
-                        </div>
-                    </c:if>
-                </ol>
+                    <ol class="alert-danger">
+                        <c:if test="${sessionScope.invalid_form.password!=null}">
+                            <div class="text-danger">
+                                    ${invalid_form.password}
+                            </div>
+                        </c:if>
+                    </ol>
 
-                <ol class="alert-danger">
-                    <c:if test="${sessionScope.invalid_form.lastname!=null}">
-                        <div class="text-danger">
-                                ${sessionScope.invalid_form.lastname}
-                        </div>
-                    </c:if>
-                </ol>
+                    <ol class="alert-danger">
+                        <c:if test="${sessionScope.invalid_form.lastname!=null}">
+                            <div class="text-danger">
+                                    ${sessionScope.invalid_form.lastname}
+                            </div>
+                        </c:if>
+                    </ol>
 
-                <ol class="alert-danger">
-                    <c:if test="${sessionScope.invalid_form.firstname!=null}">
-                        <div class="text-danger">
-                                ${sessionScope.invalid_form.firstname}
-                        </div>
-                    </c:if>
-                </ol>
+                    <ol class="alert-danger">
+                        <c:if test="${sessionScope.invalid_form.firstname!=null}">
+                            <div class="text-danger">
+                                    ${sessionScope.invalid_form.firstname}
+                            </div>
+                        </c:if>
+                    </ol>
+                    <br>
+                    <br>
 
-                <br>
-                <br>
-
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="modal">
-        <div class="registerDiv" id="registerDiv">
+        <div class="modal">
+            <div class="registerDiv" id="registerDiv">
 
-            <h1 class="signup-title"> Edit User </h1>
+                <h1 class="signup-title"> Edit User </h1>
 
-            <form id="register_form"
-                  action="${pageContext.request.contextPath}/controller?command=${CommandType.FINISH_EDIT_USER}&editingUserId=${sessionScope.editingUser.id}"
-                  class="add-request-content" method="post">
+                <form id="register_form"
+                      action="${pageContext.request.contextPath}/controller?command=${CommandType.FINISH_EDIT_USER}&editingUserId=${sessionScope.editingUser.id}"
+                      class="add-request-content" method="post">
 
-                <div class="form-item">
-                    <label for="editingUserFirstName"></label>
-                    <input type="text" class="form-control"
-                           id="editingUserFirstName" name="${AttributeParameterHolder.PARAMETER_USER_FIRSTNAME}"
-                           property="${sessionScope.editingUser.firstName}"
-                           value="${sessionScope.editingUser.firstName}"
-                           placeholder=" firstName ">
-                </div>
-                <div class="form-item">
-                    <label for="editingUserLastName"></label>
-                    <input type="text" class="form-control"
-                           id="editingUserLastName" name="${AttributeParameterHolder.PARAMETER_USER_LASTNAME}"
-                           value="${sessionScope.editingUser.lastName}"
-                           placeholder=" lastName ">
-                </div>
-                <div class="form-item">
-                    <label for="editingUserEmail"></label>
-                    <input type="text" class="form-control"
-                           id="editingUserEmail" name="${AttributeParameterHolder.PARAMETER_USER_EMAIL}"
-                           value="${sessionScope.editingUser.email}"
-                           placeholder=" email ">
-                </div>
-
-                <div class="form-item">
-                    <label for="editingUserPassword"></label>
-                    <input type="text" class="form-control"
-                           id="editingUserPassword" name="${AttributeParameterHolder.PARAMETER_USER_PASSWORD}"
-                           value="${sessionScope.editingUser.password}"
-                           placeholder=" password ">
-                </div>
-
-                <div class="select">
-                    <select name="blockName" class="form-select" size="1" required>
-                        <option>select block</option>
-
-                        <c:forEach items="${sessionScope.blocks}" var="block">
-                            <option name="blockName" value="${block.name}"> ${block.name}</option>
-                        </c:forEach>
-
-                    </select>
-                </div>
-
-
-                <div class="buttons">
-                    <div class="cancel">
-                        <a href="${pageContext.request.contextPath}/controller?command=${CommandType.USERS_FOR_ADMIN}"
-                           class="btn btn-block btn-danger">Cancel</a>
+                    <div class="form-item">
+                        <label for="editingUserFirstName"></label>
+                        <input type="text" class="form-control"
+                               id="editingUserFirstName" name="${AttributeParameterHolder.PARAMETER_USER_FIRSTNAME}"
+                               property="${sessionScope.editingUser.firstName}"
+                               value="${sessionScope.editingUser.firstName}"
+                               placeholder=" firstName ">
+                    </div>
+                    <div class="form-item">
+                        <label for="editingUserLastName"></label>
+                        <input type="text" class="form-control"
+                               id="editingUserLastName" name="${AttributeParameterHolder.PARAMETER_USER_LASTNAME}"
+                               value="${sessionScope.editingUser.lastName}"
+                               placeholder=" lastName ">
+                    </div>
+                    <div class="form-item">
+                        <label for="editingUserEmail"></label>
+                        <input type="text" class="form-control"
+                               id="editingUserEmail" name="${AttributeParameterHolder.PARAMETER_USER_EMAIL}"
+                               value="${sessionScope.editingUser.email}"
+                               placeholder=" email ">
                     </div>
 
-                    <div class="edit">
-                        <button type="submit" class="btn btn-block btn-primary">Edit</button>
+                    <div class="form-item">
+                        <label for="editingUserPassword"></label>
+                        <input type="text" class="form-control"
+                               id="editingUserPassword" name="${AttributeParameterHolder.PARAMETER_USER_PASSWORD}"
+                               value="${sessionScope.editingUser.password}"
+                               placeholder=" password ">
                     </div>
-                </div>
 
-            </form>
+                    <div class="select">
+                        <select name="blockId" class="form-select" size="1" required>
+                            <option>select block</option>
+
+                            <c:forEach items="${sessionScope.blocks}" var="block">
+                                <option name="blockId" value="${block.id}"> ${block.name}</option>
+                            </c:forEach>
+
+                        </select>
+                    </div>
+
+
+                    <div class="buttons">
+                        <div class="cancel">
+                            <a href="${pageContext.request.contextPath}/controller?command=${CommandType.USERS_FOR_ADMIN}"
+                               class="btn btn-block btn-danger">Cancel</a>
+                        </div>
+
+                        <div class="edit">
+                            <button type="submit" class="btn btn-block btn-primary">Edit</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
         </div>
+    </c:if>
 
-    </div>
-</c:if>
+    <h1 align="center" style="color: white"> List of Users</h1>
 
-<h1 align="center"> List of Users</h1>
-
-<table>
-    <tr>
-        <th>first name</th>
-        <th>last name</th>
-        <th>email</th>
-        <th>password</th>
-        <th>role</th>
-        <th>block id</th>
-        <th colspan="2">action</th>
-    </tr>
-
-    <c:forEach items="${sessionScope.users}" var="user">
-        <tr class="trHover">
-            <td class="column-1"><span> ${user.firstName} </span></td>
-            <td class="column-1"><span> ${user.lastName} </span></td>
-            <td class="column-1"><span> ${user.email} </span></td>
-            <td class="column-1"><span> ${user.password} </span></td>
-            <td class="column-1"><span> ${user.role} </span></td>
-            <td class="column-1"><span> ${user.blockId} </span></td>
-
-            <td class="column-row">
-                <a class="btn btn-outline-primary" id="edit-btn"
-                   href="${pageContext.request.contextPath}/controller?command=${CommandType.EDIT_USER}&editingUserId=${user.id}" style="color: yellow">
-                    EDIT</a>
-            </td>
-            <td class="column-row">
-                <a href=${pageContext.request.contextPath}/controller?command=${CommandType.DELETE_USER}&deletingUserId=${user.id} style="color: red">
-                    Delete</a>
-            </td>
+    <table>
+        <tr>
+            <th>first name</th>
+            <th>last name</th>
+            <th>email</th>
+            <th>password</th>
+            <th>role</th>
+            <th>block id</th>
+            <th colspan="2">action</th>
         </tr>
-    </c:forEach>
 
-</table>
-<br>
+        <c:forEach items="${sessionScope.users}" var="user">
+            <tr class="trHover">
+                <td class="column-1"><span> ${user.firstName} </span></td>
+                <td class="column-1"><span> ${user.lastName} </span></td>
+                <td class="column-1"><span> ${user.email} </span></td>
+                <td class="column-1"><span> ${user.password} </span></td>
+                <td class="column-1"><span> ${user.role} </span></td>
+                <td class="column-1"><span> ${user.blockId} </span></td>
 
-<form align="center" method="post"
-      action="${pageContext.request.contextPath}/controller?command=${CommandType.ADD_USER}">
-    <button>
-        ADD USER
-    </button>
+                <td class="column-row">
+                    <a class="btn btn-outline-primary" id="edit-btn"
+                       href="${pageContext.request.contextPath}/controller?command=${CommandType.EDIT_USER}&editingUserId=${user.id}"
+                       style="color: yellow">
+                        EDIT</a>
+                </td>
+                <td class="column-row">
+                    <a id="${user.id}" style="color: #23a2f6" onclick="openDeleteModal()">DELETE</a>
+                </td>
+            </tr>
+        </c:forEach>
 
-</form>
+    </table>
+
+    <form align="center" method="post"
+          action="${pageContext.request.contextPath}/controller?command=${CommandType.ADD_USER}">
+        <button>
+            ADD USER
+        </button>
+
+    </form>
+
+    <div class="hide" id="modalBig">
+        <h3>Are you know what you do?</h3>
+        <div class="aaa" id="modal">
+            <a id="no" onclick="hide()">NO</a>
+            <a id="yes" onclick="hide()">YES</a>
+        </div>
+    </div>
+
+    </c:when>
+
+    <c:otherwise>
+        You have no permission to this page
+    </c:otherwise>
+</c:choose>
 
 
 <script>
+    function openDeleteModal () {
+        let id = event.target.id;
+        document.getElementById("modalBig").className = "open"
+        let user = document.getElementById("yes");
+        user.href = "${pageContext.request.contextPath}/controller?command=${CommandType.DELETE_USER}&deletingUserId=" + id;
+    }
+
+    function hide() {
+        document.getElementById("modalBig").className = "hide";
+    }
 
     function openNav() {
         document.getElementById("mySidenav").style.width = "250px";

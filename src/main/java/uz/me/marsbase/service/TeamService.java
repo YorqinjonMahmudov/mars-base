@@ -12,6 +12,8 @@ public interface TeamService {
 
     List<TeamDTO> getTeamDTOs();
 
+    List<TeamDTO> getTeamDTOsByTeamLeadId(Integer teamLeadId);
+
     Team getTeamByName(String name);
 
     Team getTeamById(Integer id);
@@ -26,5 +28,5 @@ public interface TeamService {
 
     boolean insertUserToTeam(int teamId, String user);
 
-    boolean deleteUser(int deletingUserId,int teamId);
+    boolean deleteUser(int deletingUserId, int teamId);
 }

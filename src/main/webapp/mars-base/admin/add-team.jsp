@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Users</title>
+    <title>Add team</title>
     <style>
         * {
             margin: 0;
@@ -63,14 +63,6 @@
 </head>
 <body>
 
-<c:choose>
-    <c:when test="${sessionScope.currentUser.role.equals(Role.ADMIN) }">
-
-
-    </c:when>
-
-
-</c:choose>
 <c:choose>
 
     <c:when test="${sessionScope.currentUser.role.equals(Role.ADMIN) }">

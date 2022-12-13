@@ -32,10 +32,14 @@ public class DataLoader {
     @SneakyThrows
     private static void loadData() {
 
-        Block block = Block.builder().name("Admin`s office").location("Wall Street 39A, UzaMars, Mars").area(123456789).build();
+        Block blockOffice = Block.builder().name("Admin`s office").location("Wall Street 39A, UzaMars, Mars").area(123456789).build();
+        Block blockResidential = Block.builder().name("Residential").location("High Street 39A, UzaMars, Mars").area(123456789).build();
+        Block blockGreenHouse = Block.builder().name("GreenHouse").location("Middle East 39A, UzaMars, Mars").area(123456789).build();
 
         BlockDao blockDao = InstanceHolder.getInstance(BlockDao.class);
-        blockDao.insert(block);
+        blockDao.insert(blockOffice);
+        blockDao.insert(blockResidential);
+        blockDao.insert(blockGreenHouse);
 
         User admin = User.builder().blockId(1).firstName("Admin").lastName("Tom").password("root123").email("admin@gmail.com").role(Role.ADMIN).build();
         UserDao userDao = InstanceHolder.getInstance(UserDao.class);

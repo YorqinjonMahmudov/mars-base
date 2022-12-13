@@ -228,7 +228,7 @@
 <div id="mySidenav" class="sidenav">
     <a href="#" onclick="closeNav()"> <span onclick='closeNav()'>&times;</span> </a>
     <a href="${pageContext.request.contextPath}/controller?command=${CommandType.USERS_FOR_ADMIN}">User</a>
-    <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAMS_FOR_ADMIN}">Team</a>
+    <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAMS}">Team</a>
     <a href="${pageContext.request.contextPath}/controller?command=${CommandType.WORK_PAGE_FOR_ADMIN}">Work</a>
 </div>
 
@@ -240,7 +240,6 @@
     <div class="container">
         <div class="row">
             <div class="col text-center">
-                <br>
                 <br>
                 <ol class="alert-danger">
                     <c:if test="${sessionScope.invalid_form.email!=null}">
@@ -401,7 +400,7 @@
 
 
 <c:choose>
-    <c:when test="${sessionScope.currentUser.role.equals(Role.ADMIN)}">
+    <c:when test="${sessionScope.currentUser.role.equals(Role.ADMIN) ||sessionScope.currentUser.role.equals(Role.TEAM_LEADER)}">
 
         <h1 align="center" style="color: #ffffff">Work details</h1>
         <table>
@@ -428,13 +427,15 @@
                 <td class="column-1"> ${sessionScope.currentWork.teamName} </td>
                 <td class="column-1"> ${sessionScope.currentWork.blockName} </td>
 
+                <c:if test="${sessionScope.currentUser.role.equals(Role.ADMIN)}">
 
-                <td class="column-1"><span> <a
-                        href="${pageContext.request.contextPath}/controller?command=${CommandType.EDIT_WORK}&editingWorkId=${sessionScope.currentWork.id}"> EDIT</a> </span>
-                </td>
-                <td class="column-1"><span>  <a
-                        href="${pageContext.request.contextPath}/controller?command=${CommandType.DELETE_WORK}&deletingWorkId=${sessionScope.currentWork.id}"> DELETE</a> </span>
-                </td>
+                    <td class="column-1"><span> <a
+                            href="${pageContext.request.contextPath}/controller?command=${CommandType.EDIT_WORK}&editingWorkId=${sessionScope.currentWork.id}"> EDIT</a> </span>
+                    </td>
+                    <td class="column-1"><span>  <a
+                            href="${pageContext.request.contextPath}/controller?command=${CommandType.DELETE_WORK}&deletingWorkId=${sessionScope.currentWork.id}"> DELETE</a> </span>
+                    </td>
+                </c:if>
 
             </tr>
 

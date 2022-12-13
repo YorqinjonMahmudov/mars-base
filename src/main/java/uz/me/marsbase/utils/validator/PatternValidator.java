@@ -13,13 +13,9 @@ public final class PatternValidator {
     }
 
     public boolean validPassword(String password) {
-        return true;
-//        return password != null && password.matches(PASSWORD_PATTERN);
+        return password != null;
     }
 
-//    public boolean validCarModel(String model) {
-//        return !CarModel.define(model).equals(CarModel.NOT_SET);
-//    }
 
     public boolean validPhoneNumber(String number) {
         if (number.length() != 13 || !number.startsWith("+998"))

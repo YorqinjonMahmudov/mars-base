@@ -1,14 +1,17 @@
 package uz.me.marsbase.dao.imp;
 
+import uz.me.marsbase.command.instanceHolder.InstanceHolder;
 import uz.me.marsbase.connection.MyConnectionPool;
 import uz.me.marsbase.dao.Dao;
+import uz.me.marsbase.dao.UserDao;
 import uz.me.marsbase.exception.MyException;
 import uz.me.marsbase.mappers.UserMapper;
-import uz.me.marsbase.dao.UserDao;
 import uz.me.marsbase.model.entity.User;
 import uz.me.marsbase.model.entity.enums.Role;
 import uz.me.marsbase.payload.UserDTO;
+import uz.me.marsbase.utils.encoder.PasswordEncoder;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,14 +20,14 @@ import java.util.Optional;
 
 public class UserDaoImpl implements UserDao {
     private static final UserMapper userMapper = new UserMapper();
+    private static final PasswordEncoder passwordEncoder = InstanceHolder.getInstance(PasswordEncoder.class);
+
 
     private static final String INSERT = "INSERT INTO users (email, role,first_name, last_name, password, block_id) VALUES(?,?,?,?,?,?);";
     private static final String FIND_BY_ID = "SELECT id, role, email, first_name, last_name, password, block_id FROM users WHERE id = ?;";
     private static final String FIND_BY_EMAIL = "SELECT id, role, email,first_name, last_name, password, block_id FROM users WHERE email = ?;";
     private static final String FIND_ALL = "SELECT id, role, email, first_name, last_name, password, block_id FROM users;";
     private static final String MAKE_TEAM_LEAD = "UPDATE users SET role = ? WHERE id = ?;";
-    private static final String CHANGE_FROM_TEAM_LEAD_TO_USER = "UPDATE users SET role = ? WHERE id = ?;";
-    private static final String CHANGE_PASSWORD = "UPDATE users SET password = ? WHERE id = ?;";
     private static final String UPDATE_USER = "UPDATE users SET email =?, first_name =?, last_name = ?, password = ?, block_id = ? WHERE id = ?;";
     private static final String DELETE_USER = "DELETE FROM users WHERE id = ?;";
     private static UserDaoImpl userDaoImpl;
@@ -44,14 +47,16 @@ public class UserDaoImpl implements UserDao {
              PreparedStatement ps = connection.prepareStatement(INSERT)) {
             if (findByEmail(user.getEmail()).isPresent())
                 return false;
+
+            var encoded = passwordEncoder.encode(user.getPassword());
             return executeUpdatePrepareStatement(ps,
                     Dao.STRING + user.getEmail(),
                     Dao.STRING + user.getRole().name(),
                     Dao.STRING + user.getFirstName(),
                     Dao.STRING + user.getLastName(),
-                    Dao.STRING + user.getPassword(),
+                    Dao.STRING + encoded,
                     Dao.INTEGER + user.getBlockId());
-        } catch (SQLException e) {
+        } catch (SQLException | NoSuchAlgorithmException e) {
             throw new MyException(e.getMessage());
         }
     }
@@ -83,14 +88,12 @@ public class UserDaoImpl implements UserDao {
         try (Connection connection = MyConnectionPool.getInstance().getConnection();
              Statement statement = connection.createStatement()
         ) {
-
             List<User> list = new ArrayList<>();
 
             ResultSet resultSet = statement.executeQuery(FIND_ALL);
 
-            while (resultSet.next()) {
+            while (resultSet.next())
                 list.add(getUserFromResultSet(resultSet));
-            }
 
             return list;
         } catch (SQLException e) {
@@ -109,16 +112,6 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean updatePassword(int id, String password) {
-        try (Connection connection = MyConnectionPool.getInstance().getConnection();
-             PreparedStatement ps = connection.prepareStatement(CHANGE_PASSWORD)) {
-            return executeUpdatePrepareStatement(ps, Dao.INTEGER + id, Dao.STRING + password);
-        } catch (SQLException e) {
-            throw new MyException(e.getMessage());
-        }
-    }
-
-    @Override
     public boolean makeTeamLead(int userId) {
         var optionalUser = findById(userId);
         if (optionalUser.isPresent() && optionalUser.get().getRole().equals(Role.USER)) {
@@ -130,16 +123,6 @@ public class UserDaoImpl implements UserDao {
             }
         }
         return true;
-    }
-
-    @Override
-    public boolean changeFromTeamLeadToUser(int userId) {
-        try (Connection connection = MyConnectionPool.getInstance().getConnection();
-             PreparedStatement ps = connection.prepareStatement(CHANGE_FROM_TEAM_LEAD_TO_USER)) {
-            return executeUpdatePrepareStatement(ps, Dao.INTEGER + userId, Dao.STRING + Role.USER.name());
-        } catch (SQLException e) {
-            throw new MyException(e.getMessage());
-        }
     }
 
     @Override
@@ -203,16 +186,17 @@ public class UserDaoImpl implements UserDao {
         if (!existById(connection, id))
             return false;
 
-//        todo check exist block
-
         try (PreparedStatement ps = connection.prepareStatement(UPDATE_USER)) {
+            var encoded = passwordEncoder.encode(user.getPassword());
             return executeUpdatePrepareStatement(ps,
                     Dao.STRING + user.getEmail(),
                     Dao.STRING + user.getFirstName(),
                     Dao.STRING + user.getLastName(),
-                    Dao.STRING + user.getPassword(),
+                    Dao.STRING + encoded,
                     Dao.INTEGER + user.getBlockId(),
                     Dao.INTEGER + id);
+        } catch (NoSuchAlgorithmException e) {
+            throw new MyException(e.getMessage());
         }
     }
 

@@ -12,7 +12,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Work info</title>
+    <title>Team info</title>
     <style>
         body {
             font-family: "Lato", sans-serif;
@@ -52,6 +52,7 @@
             margin-left: 50px;
         }
 
+
         @media screen and (max-height: 450px) {
             .sidenav {
                 padding-top: 15px;
@@ -75,7 +76,7 @@
         }
 
         table {
-            margin: 50px 0px 0px 100px;
+            margin: 50px 0 0 100px;
             width: 80%;
             backdrop-filter: blur(20px);
         }
@@ -83,7 +84,12 @@
         table, tr, th, td {
             padding: 10px 10px;
             text-align: center;
-            color: #ffffff;
+            color: #fff;
+        }
+
+        table a {
+            color: #fff;
+            text-decoration: none;
         }
 
 
@@ -121,6 +127,90 @@
             margin-left: 50px;
         }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+
+        .modal {
+            position: absolute;
+            z-index: 1000;
+            width: 500px;
+            height: 500px;
+            background: #fff;
+            border: 1px solid #000;
+            top: 100px;
+            left: 500px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            padding: 30px 0 0 0;
+            box-shadow: 0px 0px 20px #000;
+        }
+
+        .registerDiv {
+            width: 100%;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-top: 50px;
+            width: 100%;
+        }
+
+        .form-item {
+            width: 70%;
+            margin: 5px;
+        }
+
+        .form-item input {
+            width: 100%;
+            padding: 10px 20px;
+        }
+
+        .select {
+            width: 70%;
+        }
+
+        .select select {
+            width: 100%;
+            padding: 10px 20px;
+            outline: none;
+        }
+
+        .buttons {
+            display: flex;
+            margin-top: 10px;
+        }
+
+        .buttons button {
+            padding: 10px 25px;
+            background: #ff0;
+            margin-left: 50px;;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .buttons .cancel {
+            padding: 6px 20px;
+            border-radius: 5px;
+            background: red;
+            color: #fff;
+        }
+
+        .buttons .cancel a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+
         @media screen and (max-height: 450px) {
             .sidenav {
                 padding-top: 15px;
@@ -137,7 +227,6 @@
 
 <div id="mySidenav" class="sidenav">
     <a href="#" onclick="closeNav()"> <span onclick='closeNav()'>&times;</span> </a>
-    <a href="${pageContext.request.contextPath}/controller?command=${CommandType.USERS_FOR_ADMIN}">User</a>
     <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAMS}">Team</a>
     <a href="${pageContext.request.contextPath}/controller?command=${CommandType.WORK_PAGE_FOR_ADMIN}">Work</a>
 </div>
@@ -146,41 +235,31 @@
 
 
 <c:choose>
-    <c:when test="${sessionScope.currentUser.role.equals(Role.ADMIN) || sessionScope.currentUser.role.equals(Role.TEAM_LEADER)}">
+    <c:when test="${sessionScope.currentUser.role.equals(Role.TEAM_LEADER)}">
 
         <table>
             <tr>
-                <th>title</th>
                 <th>team name</th>
-                <th>block name</th>
-                <th>status</th>
+                <th>team leader email</th>
+                <th>active</th>
             </tr>
 
-            <c:forEach items="${sessionScope.workViews}" var="currentWork">
+            <c:forEach items="${sessionScope.teams}" var="team">
                 <tr class="trHover">
-                    <td class="column-1"><span><a style="color: whitesmoke"
-                                                  href="${pageContext.request.contextPath}/controller?command=${CommandType.WORK_INFO_WITH_REPORT}&currentWorkId=${currentWork.id}"> ${currentWork.title}</a> </span>
+
+                    <td class="column-1"><span><a
+                            href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAM_MEMBERS_ADMIN}&teamId=${team.id}"> ${team.name}</a> </span>
                     </td>
-                    <td class="column-1">${currentWork.teamName} </td>
-                    <td class="column-1">${currentWork.blockName} </td>
-                    <td class="column-1">${currentWork.status.name()} </td>
+                    <td class="column-1"> ${team.teamLeadEmail}
+                    </td>
+                    <td class="column-1"> ${team.active}
+                    </td>
+
                 </tr>
 
             </c:forEach>
-
         </table>
-
-
-        <c:if test="${sessionScope.currentUser.role.equals(Role.ADMIN)}">
-
-            <form align="center" method="post"
-                  action="${pageContext.request.contextPath}/controller?command=${CommandType.ADD_WORK}">
-                <button>
-                    ADD WORK
-                </button>
-            </form>
-        </c:if>
-
+        <br>
     </c:when>
     <c:otherwise>
         You have no permission to this page

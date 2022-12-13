@@ -2,7 +2,9 @@ package uz.me.marsbase.command.admin.work;
 
 import uz.me.marsbase.command.Command;
 import uz.me.marsbase.command.instanceHolder.InstanceHolder;
+import uz.me.marsbase.model.entity.enums.Role;
 import uz.me.marsbase.payload.ReportDTO;
+import uz.me.marsbase.payload.UserDTO;
 import uz.me.marsbase.payload.WorkDTO;
 import uz.me.marsbase.router.Router;
 import uz.me.marsbase.service.ReportService;
@@ -22,24 +24,26 @@ public class WorkInfoCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) {
-
+        String page = WORK_PAGE_FOR_ADMIN;
         HttpSession session = request.getSession();
         String currenWorkId = request.getParameter(CURRENT_WORK_ID);
-        session.setAttribute(EDITING_WORK,null);
-        session.setAttribute(EDITING_REPORT,null);
+        session.setAttribute(EDITING_WORK, null);
+        session.setAttribute(EDITING_REPORT, null);
+
+
         if (currenWorkId != null) {
+
             int curWorkId = Integer.parseInt(currenWorkId);
             WorkDTO workDTO = workService.findById(curWorkId);
             ReportDTO reportDTO = reportService.findByWorkId(curWorkId);
 
-
             session.setAttribute(CURRENT_WORK, workDTO);
 
             session.setAttribute(CURRENT_WORK_REPORT, reportDTO);
-
-            return new Router(WORK_INFO, REDIRECT);
+            page = WORK_INFO;
+            return new Router(page, REDIRECT);
         } else
-            return new Router(WORK_PAGE_FOR_ADMIN, REDIRECT);
+            return new Router(page, REDIRECT);
 
     }
 }

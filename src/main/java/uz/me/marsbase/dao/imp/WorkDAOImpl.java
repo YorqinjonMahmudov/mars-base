@@ -1,10 +1,10 @@
 package uz.me.marsbase.dao.imp;
 
 import uz.me.marsbase.connection.MyConnectionPool;
-import uz.me.marsbase.dao.Dao;
-import uz.me.marsbase.exception.MyException;
 import uz.me.marsbase.dao.BlockDao;
+import uz.me.marsbase.dao.Dao;
 import uz.me.marsbase.dao.WorkDao;
+import uz.me.marsbase.exception.MyException;
 import uz.me.marsbase.model.entity.Work;
 import uz.me.marsbase.model.entity.enums.Status;
 import uz.me.marsbase.payload.WorkDTO;
@@ -23,6 +23,7 @@ public class WorkDAOImpl implements WorkDao {
     private static final String FIND_BY_TITLE = "SELECT id, title, description, required_money, status, start_date, finish_date, star, team_id, block_id FROM work WHERE title = ?;";
     private static final String FIND_ALL = "SELECT id, title, description, required_money, status, start_date, finish_date, star, team_id, block_id FROM work;";
     private static final String FIND_ALL_FOR_VIEW = "SELECT w.id id,  w.title title, w.status status, t.name teamName, b.name blockName FROM work w JOIN team t on t.id = w.team_id JOIN block b on b.id = w.block_id;";
+    private static final String FIND_ALL_FOR_VIEW_BY_TEAM_LEAD_ID = "SELECT w.id id,  w.title title, w.status status, t.name teamName, b.name blockName FROM work w JOIN team t on t.id = w.team_id JOIN block b on b.id = w.block_id WHERE t.team_lead_id = ?;";
     private static final String FIND_ALL_BY_STATUS = "SELECT id, title, description, required_money, status, start_date, finish_date, star, team_id, block_id FROM work WHERE status = ?;";
     private static final String FIND_ALL_BY_BLOCK_ID = "SELECT id, title, description, required_money, status, start_date, finish_date, star, team_id, block_id FROM work WHERE blockId = ?';";
     private static final String FIND_ALL_BY_TEAM_ID = "SELECT id, title, description, required_money, status, start_date, finish_date, star, team_id, block_id FROM work WHERE blockId = ?';";
@@ -215,6 +216,23 @@ public class WorkDAOImpl implements WorkDao {
 
     }
 
+    @Override
+    public List<WorkViewDTO> findAllForViewByTeamLeadId(Integer teamLeadId) {
+        try (Connection connection = MyConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_ALL_FOR_VIEW_BY_TEAM_LEAD_ID)) {
+            List<WorkViewDTO> list = new ArrayList<>();
+
+            ResultSet resultSet = executePrepareStatement(statement, Dao.INTEGER + teamLeadId);
+
+            while (resultSet.next())
+                list.add(getWorkViewFromResultSet(resultSet));
+
+            return list;
+        } catch (SQLException e) {
+            throw new MyException(e.getMessage());
+        }
+    }
+
     private ResultSet executePrepareStatement(PreparedStatement ps, String... args) throws SQLException {
         return putArgs(ps, args)
                 .executeQuery();
@@ -305,7 +323,7 @@ public class WorkDAOImpl implements WorkDao {
     private boolean setStatusTo(int workId, Status status) {
         try (Connection connection = MyConnectionPool.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement(SET_STATUS_TO)) {
-            return executeUpdatePrepareStatement(ps,  Dao.STRING + status.name(),Dao.INTEGER + workId);
+            return executeUpdatePrepareStatement(ps, Dao.STRING + status.name(), Dao.INTEGER + workId);
         } catch (SQLException e) {
             throw new MyException(e.getMessage());
         }

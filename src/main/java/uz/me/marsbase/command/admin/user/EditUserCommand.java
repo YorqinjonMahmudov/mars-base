@@ -2,6 +2,7 @@ package uz.me.marsbase.command.admin.user;
 
 import uz.me.marsbase.command.Command;
 import uz.me.marsbase.command.instanceHolder.InstanceHolder;
+import uz.me.marsbase.payload.UserDTO;
 import uz.me.marsbase.router.Router;
 import uz.me.marsbase.service.BlockService;
 import uz.me.marsbase.service.UserService;
@@ -24,7 +25,7 @@ public class EditUserCommand implements Command {
         HttpSession session = request.getSession();
         session.setAttribute(BLOCKS, blockService.getBlocks());
         Integer editingUserId = Integer.valueOf(request.getParameter("editingUserId"));
-        var editingUser = userService.getUserById(editingUserId);
+        UserDTO editingUser = userService.getUserById(editingUserId);
         session.setAttribute(EDITING_USER, editingUser);
         return new Router(USER_PAGE_FOR_ADMIN, REDIRECT);
     }

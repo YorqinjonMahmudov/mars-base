@@ -3,7 +3,6 @@ package uz.me.marsbase.command;
 import uz.me.marsbase.router.Router;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import static uz.me.marsbase.command.navigation.PageNavigation.HOME;
 import static uz.me.marsbase.router.Router.PageChangeType.REDIRECT;
@@ -16,9 +15,7 @@ import static uz.me.marsbase.router.Router.PageChangeType.REDIRECT;
 public class HomeCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        String page = HOME;
 
-        return new Router(page, REDIRECT);
+        return new Router(HOME, REDIRECT);
     }
 }

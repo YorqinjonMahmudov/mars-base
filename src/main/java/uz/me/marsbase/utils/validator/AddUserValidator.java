@@ -32,11 +32,11 @@ public class AddUserValidator implements FormValidator {
         }
 
         if (parameters.get(PARAMETER_USER_FIRSTNAME) == null)
-            validationResult.put(PARAMETER_USER_FIRSTNAME, INVALID_USER_FIRSTNAME);
+            validationResult.put(PARAMETER_USER_FIRSTNAME, INVALID_USER_FIRSTNAME_MESSAGE);
         if (parameters.get(PARAMETER_USER_LASTNAME) == null)
-            validationResult.put(PARAMETER_USER_LASTNAME, INVALID_USER_LASTNAME);
+            validationResult.put(PARAMETER_USER_LASTNAME, INVALID_USER_LASTNAME_MESSAGE);
 
-        if (parameters.get(PARAMETER_BLOCK_NAME) == null || blockService.findByName(parameters.get(PARAMETER_BLOCK_NAME)[0]).isEmpty())
+        if (parameters.get(PARAMETER_BLOCK_ID) == null || blockService.findById(Integer.valueOf(parameters.get(PARAMETER_BLOCK_ID)[0])).isEmpty())
             validationResult.put(PARAMETER_BLOCK_NAME, INVALID_BLOCK_NAME);
 
         return validationResult;

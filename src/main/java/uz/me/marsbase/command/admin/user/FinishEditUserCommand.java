@@ -28,16 +28,16 @@ public class FinishEditUserCommand implements Command {
         var parameterMap = request.getParameterMap();
         var validationResult = validator.validate(parameterMap);
         if (validationResult.isEmpty()) {
-            var firstName = request.getParameter("firstName");
-            var lastName = request.getParameter("lastName");
-            var email = request.getParameter("email");
-            var password = request.getParameter("password");
-            Optional<BlockDTO> blockDTO = blockService.findByName(request.getParameter("blockName"));
+            var firstName = request.getParameter(PARAMETER_USER_FIRSTNAME);
+            String lastName = request.getParameter(PARAMETER_USER_LASTNAME);
+            var email = request.getParameter(PARAMETER_EMAIL);
+            var password = request.getParameter(PARAMETER_USER_PASSWORD);
+            Optional<BlockDTO> blockDTO = blockService.findById(Integer.valueOf(request.getParameter(PARAMETER_BLOCK_ID)));
             var blockId = blockDTO.get().getId();
-            UserDTO editingUser = (UserDTO) session.getAttribute("editingUser");
+            UserDTO editingUser = (UserDTO) session.getAttribute(EDITING_USER);
             if (userService.update(editingUser.getId(), new UserDTO(editingUser.getId(), firstName, lastName, email, password, editingUser.getRole(), blockId))) {
                 session.setAttribute(EDITING_USER, null);
-                session.setAttribute(USERS,userService.getUsers());
+                session.setAttribute(USERS, userService.getUsers());
             }
         } else
             session.setAttribute(INVALID_FORM, validationResult);

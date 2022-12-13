@@ -228,7 +228,7 @@
 <div id="mySidenav" class="sidenav">
     <a href="#" onclick="closeNav()"> <span onclick='closeNav()'>&times;</span> </a>
     <a href="${pageContext.request.contextPath}/controller?command=${CommandType.USERS_FOR_ADMIN}">User</a>
-    <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAMS_FOR_ADMIN}">Team</a>
+    <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAMS}">Team</a>
     <a href="${pageContext.request.contextPath}/controller?command=${CommandType.WORK_PAGE_FOR_ADMIN}">Work</a>
 </div>
 
@@ -315,7 +315,7 @@
                 </div>
 
                 <div class="form-item">
-                    <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAMS_FOR_ADMIN}"
+                    <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAMS}"
                        class="btn btn-block btn-danger">Cancel</a>
                 </div>
 

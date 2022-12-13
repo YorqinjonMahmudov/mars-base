@@ -30,4 +30,6 @@ public interface WorkDao extends Dao<Work> {
 
 
     Optional<WorkDTO> getWorkDTOById(Integer id);
+
+    List<WorkViewDTO> findAllForViewByTeamLeadId(Integer teamLeadId);
 }

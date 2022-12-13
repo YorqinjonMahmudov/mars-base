@@ -13,6 +13,7 @@ public interface WorkService {
     WorkDTO findById(Integer id);
 
     List<WorkViewDTO> getByTeamName(String teamName);
+    List<WorkViewDTO> getByTeamLeadId(Integer teamLeadId);
 
     List<WorkViewDTO> getByBlockName(String teamName);
 

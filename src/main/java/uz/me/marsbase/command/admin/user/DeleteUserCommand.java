@@ -16,12 +16,11 @@ public class DeleteUserCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) {
-        String page = USER_PAGE_FOR_ADMIN;
         var session = request.getSession();
         if (userService.delete(Integer.parseInt(request.getParameter("deletingUserId")))) {
             var users = userService.getUsers();
             session.setAttribute(USERS, users);
         }
-        return new Router(page, REDIRECT);
+        return new Router(USER_PAGE_FOR_ADMIN, REDIRECT);
     }
 }

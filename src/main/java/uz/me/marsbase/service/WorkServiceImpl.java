@@ -27,6 +27,11 @@ public class WorkServiceImpl implements WorkService {
     }
 
     @Override
+    public List<WorkViewDTO> getByTeamLeadId(Integer teamLeadId) {
+        return workDao.findAllForViewByTeamLeadId(teamLeadId);
+    }
+
+    @Override
     public List<WorkViewDTO> getByBlockName(String teamName) {
         return null;
     }

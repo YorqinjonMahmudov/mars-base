@@ -26,7 +26,7 @@ public enum CommandType {
     EDIT_USER(new EditUserCommand()),
     FINISH_EDIT_USER(new FinishEditUserCommand()),
     DELETE_USER(new DeleteUserCommand()),
-    TEAMS_FOR_ADMIN(new TeamsInfoCommand()),
+    TEAMS(new TeamsInfoCommand()),
     TEAM_MEMBERS_ADMIN(new TeamMembersCommand()),
     ADD_TEAM(new AddTeamCommand()),
     FINISH_ADD_TEAM(new FinishAddTeamCommand()),

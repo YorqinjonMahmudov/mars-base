@@ -31,30 +31,7 @@ public final class AttributeParameterHolder {
     public static final String SESSION_ATTRIBUTE_EDITING = "editing";
     public static final String CURRENT_USER = "currentUser";
 
-    /**
-     * SESSION_ATTR_PAGE => resultPage -> session attribute for return page of items as result
-     */
-    public static final String SESSION_ATTR_PAGE = "resultPage";
 
-
-    /**
-     * ADDING Cruises page we need pagination two of below are for pagination
-     */
-    public static final String CRUISE_REQUESTS_PAGINATION = "reqsPagination";
-    public static final String CRUISE_DRIVERS_PAGINATION = "driversPagination";
-
-    /**
-     * Parameters for cruise adding
-     */
-    public static final String PARAMETER_CRUISE_DRIVER_ID = "driverId";
-    public static final String PARAMETER_CRUISE_REQUEST_ID = "requestId";
-
-    /**
-     * PAGINATION -> getting page
-     * PAGE_COUNT -> page count
-     */
-    public static final String PAGINATION = "page";
-    public static final int PAGE_COUNT = 10;
 
     /**
      * params of user
@@ -97,29 +74,16 @@ public final class AttributeParameterHolder {
     public static final String PARAMETER_USER_EMAIL = "email";
     public static final String PARAMETER_USER_PASSWORD = "password";
     public static final String PARAMETER_USER_ID = "userId";
-    public static final String INVALID_USER_FIRSTNAME = "invalid user first name";
-    public static final String INVALID_USER_LASTNAME = "invalid user last name";
-    public static final String INVALID_USER_PASSWORD = "user password invalid";
+    public static final String INVALID_USER_FIRSTNAME_MESSAGE = "invalid user first name";
+    public static final String INVALID_USER_LASTNAME_MESSAGE = "invalid user last name";
 
     /**
      * params of user
      */
     public static final String PARAMETER_BLOCK_NAME = "blockName";
     public static final String PARAMETER_BLOCK_ID = "blockId";
-    public static final String PARAMETER_BLOCK_LOCATION = "blockLocation";
     public static final String INVALID_BLOCK_NAME = "invalid block name";
 
-    public static final String PARAMETER_CAR_ID = "carId";
-
-    /**
-     * requestId -> car id parameter for get request id param ex. when delete command
-     */
-    public static final String PARAMETER_REQUEST_ID = "requestId";
-
-    /**
-     * PARAMETER_CURRENT_ID -> request param. We need when we know which entity is editing or deleting
-     */
-    public static final String PARAMETER_CURRENT_ID = "currentId";
 
     /**
      * REQ_ATTRIBUTE_FORM_INVALID => invalid form request param

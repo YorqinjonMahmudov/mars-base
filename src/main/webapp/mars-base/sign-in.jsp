@@ -10,11 +10,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <!-- Design by foolishdeveloper.com -->
     <title>Login</title>
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <%--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">--%>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
     <!--Stylesheet-->
     <style media="screen">
@@ -163,6 +161,15 @@
 <div class="background">
     <div class="shape"></div>
     <div class="shape"></div>
+
+    <div class="container">
+        <c:if test="${requestScope.invalid_user!=null}">
+            <div style="color: red">
+            <h1>${requestScope.invalid_user}</h1>
+            </div>
+        </c:if>
+    </div>
+
 
     <form action="${pageContext.request.contextPath}/controller?command=${CommandType.FINISH_SIGN_IN}" method="post"
           width='90%'>

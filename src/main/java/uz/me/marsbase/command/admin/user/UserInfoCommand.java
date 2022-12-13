@@ -20,14 +20,12 @@ public class UserInfoCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
 
-
-        String page = USER_PAGE_FOR_ADMIN;
         HttpSession session = request.getSession();
-        if (session.getAttribute(EDITING_USER)!=null)
-            session.setAttribute(EDITING_USER,null);
+        if (session.getAttribute(EDITING_USER) != null)
+            session.setAttribute(EDITING_USER, null);
 
         var users = userService.getUsers();
         session.setAttribute(AttributeParameterHolder.USERS, users);
-            return new Router(page, REDIRECT);
+        return new Router(USER_PAGE_FOR_ADMIN, REDIRECT);
     }
 }

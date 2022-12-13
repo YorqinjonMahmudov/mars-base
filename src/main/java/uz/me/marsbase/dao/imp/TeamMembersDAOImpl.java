@@ -20,7 +20,7 @@ public class TeamMembersDAOImpl implements TeamMembersDao {
     private static final String FIND_ALL = "SELECT id, team_id, user_id FROM team_member;";
     private static final String FIND_BY_TEAM_ID_AND_USER_ID = "SELECT id, team_id, user_id FROM team_member where team_id = ? AND user_id = ? LIMIT 1 ;";
     private static final String FIND_ALL_USERS_BY_TEAM_LEAD_ID = "SELECT u.id, u.email, u.first_name, u.last_name, u.role,u.password,u.block_id\nFROM team_member tm\n         JOIN team t on t.id = tm.team_id\n         JOIN users u on u.id = tm.user_id\nWHERE t.team_lead_id =?;";
-    private static final String FIND_ALL_USERS_BY_TEAM_ID = "SELECT u.id, u.email, u.first_name, u.last_name, u.role,u.password,u.block_id\nFROM team_member tm\n         JOIN team t on t.id = tm.team_id \n         JOIN users u on u.id = tm.user_id \nWHERE tm.team_id =?;";
+    private static final String FIND_ALL_USERS_BY_TEAM_ID = "SELECT u.id, u.email, u.first_name, u.last_name, u.role,u.password,u.block_id\nFROM team_member tm\n      JOIN users u on u.id = tm.user_id \nWHERE tm.team_id =?;";
     private static final String DELETE_BY_ID = "DELETE FROM team_member where id=?;";
     private static final String DELETE_USER_FROM_TEAM_BY_ID = "DELETE FROM team_member where user_id=? AND team_id = ?;";
 

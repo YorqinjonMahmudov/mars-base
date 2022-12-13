@@ -31,7 +31,7 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public List<TeamDTO> getTeamDTOs() {
         var teams = getTeams();
-        var teamDTOList = teams.stream().map(
+        List<TeamDTO> teamDTOList = teams.stream().map(
                 team ->
                         new TeamDTO(team.getId(),
                                 team.getName(),
@@ -41,6 +41,21 @@ public class TeamServiceImpl implements TeamService {
         ).toList();
 
         return teamDTOList;
+    }
+
+    @Override
+    public List<TeamDTO> getTeamDTOsByTeamLeadId(Integer teamLeadId) {
+        List<Team> teams = teamDao.findByTeamLeadId(teamLeadId);
+        List<TeamDTO> teamDTOList = teams.stream().map(
+                team ->
+                        new TeamDTO(team.getId(),
+                                team.getName(),
+                                userService.getUserById(team.getTeamLeadId()).getEmail(),
+                                team.isActive()
+                        )
+        ).toList();
+        return teamDTOList;
+
     }
 
     @Override

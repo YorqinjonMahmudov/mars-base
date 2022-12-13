@@ -60,7 +60,7 @@
     <li class="user"><a
             href="${pageContext.request.contextPath}/controller?command=${CommandType.USERS_FOR_ADMIN}">User</a></li>
     <li class="team"><a
-            href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAMS_FOR_ADMIN}">Team</a></li>
+            href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAMS}">Team</a></li>
     <li class="work"><a href="${pageContext.request.contextPath}/controller?command=${CommandType.WORK_PAGE_FOR_ADMIN}">Work</a>
     </li>
 </ul>
