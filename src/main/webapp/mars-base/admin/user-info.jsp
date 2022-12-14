@@ -260,6 +260,7 @@
     <a href="${pageContext.request.contextPath}/controller?command=${CommandType.USERS_FOR_ADMIN}">User</a>
     <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAMS}">Team</a>
     <a href="${pageContext.request.contextPath}/controller?command=${CommandType.WORK_PAGE_FOR_ADMIN}">Work</a>
+    <a href="${pageContext.request.contextPath}/controller?command=${CommandType.LOG_OUT}">Log out</a>
 </div>
 
 <span style="font-size:30px;cursor:pointer; color: #fff" onclick="openNav()">&#9776; MENU</span>

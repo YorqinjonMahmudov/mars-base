@@ -63,6 +63,9 @@
             href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAMS}">Team</a></li>
     <li class="work"><a href="${pageContext.request.contextPath}/controller?command=${CommandType.WORK_PAGE_FOR_ADMIN}">Work</a>
     </li>
+    <li class="log0ut">
+        <a href="${pageContext.request.contextPath}/controller?command=${CommandType.LOG_OUT}">Log out</a>
+    </li>
 </ul>
 
 </body>

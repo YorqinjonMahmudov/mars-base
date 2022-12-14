@@ -115,22 +115,26 @@
             margin-left: 50px;
         }
 
-        .open .aaa{
+        .open .aaa {
             margin-top: 15px;
         }
+
         .open a {
             padding: 5px 15px;
             border-radius: 5px;
             cursor: pointer;
         }
+
         .open a:nth-child(1) {
             background: yellow;
         }
+
         .open a:nth-child(2) {
             background: red;
             text-decoration: none;
             color: #fff;
         }
+
         .hide {
             width: 0;
             height: 0;
@@ -167,9 +171,13 @@
 
 <div id="mySidenav" class="sidenav" style="color: white">
     <a href="#" onclick="closeNav()"> <span onclick='closeNav()'>&times;</span> </a>
-    <a href="${pageContext.request.contextPath}/controller?command=${CommandType.USERS_FOR_ADMIN}">User</a>
+    <c:if test="${sessionScope.currentUser.role.equals(Role.ADMIN)}">
+        <a href="${pageContext.request.contextPath}/controller?command=${CommandType.USERS_FOR_ADMIN}">User</a>
+    </c:if>
     <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAMS}">Team</a>
     <a href="${pageContext.request.contextPath}/controller?command=${CommandType.WORK_PAGE_FOR_ADMIN}">Work</a>
+    <a href="${pageContext.request.contextPath}/controller?command=${CommandType.LOG_OUT}">Log out</a>
+
 </div>
 
 <span style=" color: white; font-size:30px;cursor:pointer " onclick="openNav()">&#9776; MENU</span>

@@ -137,9 +137,13 @@
 
 <div id="mySidenav" class="sidenav">
     <a href="#" onclick="closeNav()"> <span onclick='closeNav()'>&times;</span> </a>
-    <a href="${pageContext.request.contextPath}/controller?command=${CommandType.USERS_FOR_ADMIN}">User</a>
+    <c:if test="${sessionScope.currentUser.role.equals(Role.ADMIN)}">
+        <a href="${pageContext.request.contextPath}/controller?command=${CommandType.USERS_FOR_ADMIN}">User</a>
+    </c:if>
     <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAMS}">Team</a>
     <a href="${pageContext.request.contextPath}/controller?command=${CommandType.WORK_PAGE_FOR_ADMIN}">Work</a>
+    <a href="${pageContext.request.contextPath}/controller?command=${CommandType.LOG_OUT}">Log out</a>
+
 </div>
 
 <span style="font-size:30px;cursor:pointer; color: #fff" onclick="openNav()">&#9776; MENU</span>

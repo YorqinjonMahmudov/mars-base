@@ -229,6 +229,8 @@
     <a href="#" onclick="closeNav()"> <span onclick='closeNav()'>&times;</span> </a>
     <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAMS}">Team</a>
     <a href="${pageContext.request.contextPath}/controller?command=${CommandType.WORK_PAGE_FOR_ADMIN}">Work</a>
+    <a href="${pageContext.request.contextPath}/controller?command=${CommandType.LOG_OUT}">Log out</a>
+
 </div>
 
 <span style="font-size:30px;cursor:pointer; color: #fff" onclick="openNav()">&#9776; MENU</span>
@@ -247,7 +249,7 @@
             <c:forEach items="${sessionScope.teams}" var="team">
                 <tr class="trHover">
 
-                    <td class="column-1"><span><a
+                    <td class="column-1"><span><a style="color: #23a2f6"
                             href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAM_MEMBERS_ADMIN}&teamId=${team.id}"> ${team.name}</a> </span>
                     </td>
                     <td class="column-1"> ${team.teamLeadEmail}
