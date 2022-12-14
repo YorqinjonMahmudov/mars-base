@@ -158,7 +158,7 @@
 
             <c:forEach items="${sessionScope.workViews}" var="currentWork">
                 <tr class="trHover">
-                    <td class="column-1"><span><a style="color: whitesmoke"
+                    <td class="column-1"><span><a style="color: #23a2f6"
                                                   href="${pageContext.request.contextPath}/controller?command=${CommandType.WORK_INFO_WITH_REPORT}&currentWorkId=${currentWork.id}"> ${currentWork.title}</a> </span>
                     </td>
                     <td class="column-1">${currentWork.teamName} </td>

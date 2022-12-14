@@ -115,6 +115,43 @@
             margin-left: 50px;
         }
 
+        .open .aaa{
+            margin-top: 15px;
+        }
+        .open a {
+            padding: 5px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .open a:nth-child(1) {
+            background: yellow;
+        }
+        .open a:nth-child(2) {
+            background: red;
+            text-decoration: none;
+            color: #fff;
+        }
+        .hide {
+            width: 0;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .open {
+            position: absolute;
+            top: 30vh;
+            left: 85vh;
+            width: 300px;
+            height: 100px;
+            background: #fff;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
         @media screen and (max-height: 450px) {
             .sidenav {
                 padding-top: 15px;
@@ -128,14 +165,14 @@
 </head>
 <body>
 
-<div id="mySidenav" class="sidenav">
+<div id="mySidenav" class="sidenav" style="color: white">
     <a href="#" onclick="closeNav()"> <span onclick='closeNav()'>&times;</span> </a>
     <a href="${pageContext.request.contextPath}/controller?command=${CommandType.USERS_FOR_ADMIN}">User</a>
     <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAMS}">Team</a>
     <a href="${pageContext.request.contextPath}/controller?command=${CommandType.WORK_PAGE_FOR_ADMIN}">Work</a>
 </div>
 
-<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; MENU</span>
+<span style=" color: white; font-size:30px;cursor:pointer " onclick="openNav()">&#9776; MENU</span>
 
 <c:if test="${sessionScope.currentUser.role.equals(Role.ADMIN) || sessionScope.currentUser.role.equals(Role.TEAM_LEADER)}">
 
@@ -160,12 +197,11 @@
                 <td class="column-1"><span> ${user.blockId} </span></td>
 
                 <td class="column-row">
-                    <a href=${pageContext.request.contextPath}/controller?command=${CommandType.DELETE_USER_FROM_TEAM}&deletingUserId=${user.id}>
-                        Delete</a>
+                    <a id="${user.id}" style="color: red" onclick="openDeleteModal()">DELETE</a>
                 </td>
             </tr>
         </c:forEach>
-        >
+
     </table>
     <br>
 
@@ -177,10 +213,30 @@
 
     </form>
 
+    <div class="hide" id="modalBig">
+        <h3> Are you sure?</h3>
+        <div class="aaa" id="modal">
+            <a id="no" onclick="hide()">NO</a>
+            <a id="yes" onclick="hide()">YES</a>
+        </div>
+    </div>
+
 </c:if>
 
 
 <script>
+
+    function openDeleteModal() {
+        let id = event.target.id;
+        document.getElementById("modalBig").className = "open"
+        let user = document.getElementById("yes");
+        user.href = "${pageContext.request.contextPath}/controller?command=${CommandType.DELETE_USER_FROM_TEAM}&deletingUserId=" + id;
+    }
+
+    function hide() {
+        document.getElementById("modalBig").className = "hide";
+    }
+
 
     function openNav() {
         document.getElementById("mySidenav").style.width = "250px";

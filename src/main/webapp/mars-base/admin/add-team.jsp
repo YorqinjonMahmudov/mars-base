@@ -67,33 +67,34 @@
 
     <c:when test="${sessionScope.currentUser.role.equals(Role.ADMIN) }">
 
-        <div class="container">
-            <div class="row">
-                <div class="col text-center">
-                    <br>
-                    <ol class="alert-danger">
-                        <c:if test="${sessionScope.invalid_form.teamName!=null}">
-                            <div class="text-danger">
-                                    ${sessionScope.invalid_form.teamName}
-                            </div>
-                        </c:if>
-                    </ol>
-
-                    <ol class="alert-danger">
-                        <c:if test="${sessionScope.invalid_form.blockName!=null}">
-                            <div class="text-danger">
-                                    ${sessionScope.invalid_form.blockName}
-                            </div>
-                        </c:if>
-                    </ol>
-                    <br>
-
-                </div>
-            </div>
-        </div>
 
         <div class="registerDiv card" id="registerDiv">
             <h1 class="signup-title"> Add Team </h1>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col text-center">
+                        <br>
+                        <ol class="alert-danger">
+                            <c:if test="${sessionScope.invalid_form.teamName!=null}">
+                                <div class="text-danger" style="color: red">
+                                        ${sessionScope.invalid_form.teamName}
+                                </div>
+                            </c:if>
+                        </ol>
+
+                        <ol class="alert-danger">
+                            <c:if test="${sessionScope.invalid_form.teamLeadEmail!=null}">
+                                <div class="text-danger" style="color: red">
+                                        ${sessionScope.invalid_form.teamLeadEmail}
+                                </div>
+                            </c:if>
+                        </ol>
+                        <br>
+
+                    </div>
+                </div>
+            </div>
 
             <form action="${pageContext.request.contextPath}/controller?command=${CommandType.FINISH_ADD_TEAM}"
                   id="register_form"
@@ -115,7 +116,7 @@
 
 
                 <div class="form-item">
-                    <button type="submit" class="btn btn-block btn-primary">Add User</button>
+                    <button type="submit" class="btn btn-block btn-primary">Add Team</button>
                 </div>
             </form>
         </div>

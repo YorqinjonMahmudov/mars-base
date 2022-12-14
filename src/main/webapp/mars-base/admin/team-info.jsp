@@ -211,6 +211,44 @@
         }
 
 
+        .open .aaa{
+            margin-top: 15px;
+        }
+        .open a {
+            padding: 5px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .open a:nth-child(1) {
+            background: yellow;
+        }
+        .open a:nth-child(2) {
+            background: red;
+            text-decoration: none;
+            color: #fff;
+        }
+        .hide {
+            width: 0;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .open {
+            position: absolute;
+            top: 30vh;
+            left: 85vh;
+            width: 300px;
+            height: 100px;
+            background: #fff;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+
         @media screen and (max-height: 450px) {
             .sidenav {
                 padding-top: 15px;
@@ -237,54 +275,38 @@
 
 <c:if test="${sessionScope.currentUser.role.equals(Role.ADMIN) && sessionScope.editingTeam!=null}">
 
-    <div class="container">
-        <div class="row">
-            <div class="col text-center">
-                <br>
-                <br>
-                <ol class="alert-danger">
-                    <c:if test="${sessionScope.invalid_form.email!=null}">
-                        <div class="text-danger">
-                                ${sessionScope.invalid_form.email}
-                        </div>
-                    </c:if>
-                </ol>
-
-                <ol class="alert-danger">
-                    <c:if test="${sessionScope.invalid_form.password!=null}">
-                        <div class="text-danger">
-                                ${invalid_form.password}
-                        </div>
-                    </c:if>
-                </ol>
-
-                <ol class="alert-danger">
-                    <c:if test="${sessionScope.invalid_form.lastname!=null}">
-                        <div class="text-danger">
-                                ${sessionScope.invalid_form.lastname}
-                        </div>
-                    </c:if>
-                </ol>
-
-                <ol class="alert-danger">
-                    <c:if test="${sessionScope.invalid_form.firstname!=null}">
-                        <div class="text-danger">
-                                ${sessionScope.invalid_form.firstname}
-                        </div>
-                    </c:if>
-                </ol>
-
-                <br>
-                <br>
-
-            </div>
-        </div>
-    </div>
 
     <div class="modal">
         <div class="registerDiv" id="registerDiv">
 
             <h1 class="edit-title"> Edit Team </h1>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col text-center">
+                        <br>
+                        <ol class="alert-danger">
+                            <c:if test="${sessionScope.invalid_form.teamName!=null}">
+                                <div class="text-danger" style="color: red">
+                                        ${sessionScope.invalid_form.teamName}
+                                </div>
+                            </c:if>
+                        </ol>
+
+
+
+                        <ol class="alert-danger">
+                            <c:if test="${sessionScope.invalid_form.teamLeadEmail!=null}">
+                                <div class="text-danger" style="color: red">
+                                        ${sessionScope.invalid_form.teamLeadEmail}
+                                </div>
+                            </c:if>
+                        </ol>
+
+                    </div>
+                </div>
+            </div>
+
 
             <form id="register_form" align="center"
                   action="${pageContext.request.contextPath}/controller?command=${CommandType.FINISH_EDIT_TEAM}&editingTeamId=${sessionScope.editingTeam.id}"
@@ -292,7 +314,7 @@
 
                 <div class="form-item">
                     <label for="editingTeamName"> </label>
-                    <input type="text" class="form-control"
+                    <input type="text" class="form-control" required="required"
                            id="editingTeamName" name="${AttributeParameterHolder.PARAMETER_TEAM_NAME}"
                            property="${sessionScope.editingTeam.name}"
                            value="${sessionScope.editingTeam.name}"
@@ -340,8 +362,8 @@
             <c:forEach items="${sessionScope.teams}" var="team">
                 <tr class="trHover">
 
-                    <td class="column-1"><span><a
-                            href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAM_MEMBERS_ADMIN}&teamId=${team.id}"> ${team.name}</a> </span>
+                    <td class="column-1"><span><a style="color: #23a2f6"
+                                                  href="${pageContext.request.contextPath}/controller?command=${CommandType.TEAM_MEMBERS_ADMIN}&teamId=${team.id}"> ${team.name}</a> </span>
                     </td>
                     <td class="column-1"> ${team.teamLeadEmail}
                     </td>
@@ -354,9 +376,7 @@
                             EDIT</a>
                     </td>
                     <td class="column-row">
-                        <a href=${pageContext.request.contextPath}/controller?command=${CommandType.DELETE_TEAM}&deletingTeamId=${team.id}
-                           style="color: red">
-                            Delete</a>
+                        <a id="${team.id}" style="color: red" onclick="openDeleteModal()">DELETE</a>
                     </td>
                 </tr>
 
@@ -370,6 +390,16 @@
                 ADD TEAM
             </button>
         </form>
+
+
+        <div class="hide" id="modalBig">
+            <h3>if team is connected with other tables, you can't delete. Are you sure?</h3>
+            <div class="aaa" id="modal">
+                <a id="no" onclick="hide()">NO</a>
+                <a id="yes" onclick="hide()">YES</a>
+            </div>
+        </div>
+
     </c:when>
     <c:otherwise>
         You have no permission to this page
@@ -377,6 +407,19 @@
 </c:choose>
 
 <script>
+
+    function openDeleteModal() {
+        let id = event.target.id;
+        document.getElementById("modalBig").className = "open"
+        let team = document.getElementById("yes");
+        team.href = "${pageContext.request.contextPath}/controller?command=${CommandType.DELETE_TEAM}&deletingTeamId=" + id;
+    }
+
+    function hide() {
+        document.getElementById("modalBig").className = "hide";
+    }
+
+
     function openNav() {
         document.getElementById("mySidenav").style.width = "250px";
     }

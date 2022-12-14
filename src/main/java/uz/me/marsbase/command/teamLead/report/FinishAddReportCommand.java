@@ -6,8 +6,10 @@ import uz.me.marsbase.model.entity.Report;
 import uz.me.marsbase.model.entity.enums.Role;
 import uz.me.marsbase.payload.ReportDTO;
 import uz.me.marsbase.payload.UserDTO;
+import uz.me.marsbase.payload.WorkDTO;
 import uz.me.marsbase.router.Router;
 import uz.me.marsbase.service.ReportService;
+import uz.me.marsbase.service.WorkService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -21,6 +23,7 @@ import static uz.me.marsbase.router.Router.PageChangeType.REDIRECT;
 public class FinishAddReportCommand implements Command {
 
     private final ReportService reportService = InstanceHolder.getInstance(ReportService.class);
+    private final WorkService workService = InstanceHolder.getInstance(WorkService.class);
 
     @Override
     public Router execute(HttpServletRequest request) {
@@ -40,7 +43,9 @@ public class FinishAddReportCommand implements Command {
                 return new Router(WORK_INFO, REDIRECT);
 
             ReportDTO reportDTO = reportService.findByWorkId(currentWorkId);
+            WorkDTO workDTO = workService.findById(currentWorkId);
             session.setAttribute(CURRENT_WORK_REPORT, reportDTO);
+            session.setAttribute(CURRENT_WORK, workDTO);
 
 
         }

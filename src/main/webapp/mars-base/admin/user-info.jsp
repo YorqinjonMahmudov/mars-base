@@ -137,6 +137,10 @@
             box-shadow: 0px 0px 20px #000;
         }
 
+        .container{
+
+        }
+
         .registerDiv {
             width: 100%;
             text-align: center;
@@ -263,52 +267,55 @@
     <c:when test="${sessionScope.currentUser.role.equals(Role.ADMIN)}">
 
     <c:if test="${ sessionScope.editingUser!=null}">
-
-        <div class="container">
-            <div class="row">
-                <div class="col text-center">
-                    <br>
-                    <br>
-                    <ol class="alert-danger">
-                        <c:if test="${sessionScope.invalid_form.email!=null}">
-                            <div class="text-danger">
-                                    ${sessionScope.invalid_form.email}
-                            </div>
-                        </c:if>
-                    </ol>
-
-                    <ol class="alert-danger">
-                        <c:if test="${sessionScope.invalid_form.password!=null}">
-                            <div class="text-danger">
-                                    ${invalid_form.password}
-                            </div>
-                        </c:if>
-                    </ol>
-
-                    <ol class="alert-danger">
-                        <c:if test="${sessionScope.invalid_form.lastname!=null}">
-                            <div class="text-danger">
-                                    ${sessionScope.invalid_form.lastname}
-                            </div>
-                        </c:if>
-                    </ol>
-
-                    <ol class="alert-danger">
-                        <c:if test="${sessionScope.invalid_form.firstname!=null}">
-                            <div class="text-danger">
-                                    ${sessionScope.invalid_form.firstname}
-                            </div>
-                        </c:if>
-                    </ol>
-                    <br>
-                    <br>
-
-                </div>
-            </div>
-        </div>
-
         <div class="modal">
             <div class="registerDiv" id="registerDiv">
+                <div class="container">
+                    <div class="row">
+                        <div class="col text-center">
+                            <ol class="alert-danger">
+                                <c:if test="${sessionScope.invalid_form.email!=null}">
+                                    <div class="text-danger" style="color: red" >
+                                            ${sessionScope.invalid_form.email}
+                                    </div>
+                                </c:if>
+                            </ol>
+
+                            <ol class="alert-danger">
+                                <c:if test="${sessionScope.invalid_form.password!=null}">
+                                    <div class="text-danger" style="color: red">
+                                            ${sessionScope.invalid_form.password}
+                                    </div>
+                                </c:if>
+                            </ol>
+
+                            <ol class="alert-danger">
+                                <c:if test="${sessionScope.invalid_form.lastName!=null}">
+                                    <div class="text-danger" style="color: red">
+                                            ${sessionScope.invalid_form.lastName}
+                                    </div>
+                                </c:if>
+                            </ol>
+
+                            <ol class="alert-danger">
+                                <c:if test="${sessionScope.invalid_form.firstName!=null}">
+                                    <div class="text-danger" style="color: red">
+                                            ${sessionScope.invalid_form.firstName}
+                                    </div>
+                                </c:if>
+                            </ol>
+                            <ol class="alert-danger">
+                                <c:if test="${sessionScope.invalid_form.blockName!=null}">
+                                    <div class="text-danger" style="color: red">
+                                            ${sessionScope.invalid_form.blockName}
+                                    </div>
+                                </c:if>
+                            </ol>
+
+
+                        </div>
+                    </div>
+                </div>
+
 
                 <h1 class="signup-title"> Edit User </h1>
 
@@ -319,6 +326,7 @@
                     <div class="form-item">
                         <label for="editingUserFirstName"></label>
                         <input type="text" class="form-control"
+
                                id="editingUserFirstName" name="${AttributeParameterHolder.PARAMETER_USER_FIRSTNAME}"
                                property="${sessionScope.editingUser.firstName}"
                                value="${sessionScope.editingUser.firstName}"
@@ -348,8 +356,8 @@
                     </div>
 
                     <div class="select">
-                        <select name="blockId" class="form-select" size="1" required>
-                            <option>select block</option>
+                        <select name="blockId" class="form-select" size="1" aria-label="size 3 select example"required>
+                            <option value="">select block</option>
 
                             <c:forEach items="${sessionScope.blocks}" var="block">
                                 <option name="blockId" value="${block.id}"> ${block.name}</option>
@@ -421,7 +429,7 @@
     </form>
 
     <div class="hide" id="modalBig">
-        <h3>Are you know what you do?</h3>
+        <h3>if user is connected with other tables, you can't delete. Are you sure?</h3>
         <div class="aaa" id="modal">
             <a id="no" onclick="hide()">NO</a>
             <a id="yes" onclick="hide()">YES</a>

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import static uz.me.marsbase.command.navigation.AttributeParameterHolder.BLOCKS;
 import static uz.me.marsbase.command.navigation.AttributeParameterHolder.TEAMS;
 import static uz.me.marsbase.command.navigation.PageNavigation.ADD_WORK_PAGE_FOR_ADMIN;
+import static uz.me.marsbase.router.Router.PageChangeType.FORWARD;
 import static uz.me.marsbase.router.Router.PageChangeType.REDIRECT;
 
 public class AddWorkCommand implements Command {
@@ -22,11 +23,9 @@ public class AddWorkCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) {
-        String page = ADD_WORK_PAGE_FOR_ADMIN;
-        var type = REDIRECT;
         HttpSession session = request.getSession();
         session.setAttribute(TEAMS, teamService.getTeamDTOs());
         session.setAttribute(BLOCKS, blockService.getBlocks());
-        return new Router(page, type);
+        return new Router(ADD_WORK_PAGE_FOR_ADMIN, FORWARD);
     }
 }

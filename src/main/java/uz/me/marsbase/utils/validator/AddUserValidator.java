@@ -31,13 +31,18 @@ public class AddUserValidator implements FormValidator {
             validationResult.put(PARAMETER_PASSWORD, INVALID_PASSWORD_MESSAGE);
         }
 
-        if (parameters.get(PARAMETER_USER_FIRSTNAME) == null)
+        if (parameters.get(PARAMETER_USER_FIRSTNAME) == null || parameters.get(PARAMETER_USER_FIRSTNAME)[0].isBlank())
             validationResult.put(PARAMETER_USER_FIRSTNAME, INVALID_USER_FIRSTNAME_MESSAGE);
-        if (parameters.get(PARAMETER_USER_LASTNAME) == null)
+        if (parameters.get(PARAMETER_USER_LASTNAME) == null|| parameters.get(PARAMETER_USER_LASTNAME)[0].isBlank())
             validationResult.put(PARAMETER_USER_LASTNAME, INVALID_USER_LASTNAME_MESSAGE);
 
-        if (parameters.get(PARAMETER_BLOCK_ID) == null || blockService.findById(Integer.valueOf(parameters.get(PARAMETER_BLOCK_ID)[0])).isEmpty())
+        try {
+            if (parameters.get(PARAMETER_BLOCK_ID) == null || blockService.findById(Integer.valueOf(parameters.get(PARAMETER_BLOCK_ID)[0])).isEmpty())
+                validationResult.put(PARAMETER_BLOCK_NAME, INVALID_BLOCK_NAME);
+        } catch (NumberFormatException e) {
             validationResult.put(PARAMETER_BLOCK_NAME, INVALID_BLOCK_NAME);
+
+        }
 
         return validationResult;
     }

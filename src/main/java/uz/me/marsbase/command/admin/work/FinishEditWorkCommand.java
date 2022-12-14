@@ -19,7 +19,6 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import static uz.me.marsbase.command.navigation.AttributeParameterHolder.*;
-import static uz.me.marsbase.command.navigation.PageNavigation.ADD_WORK_PAGE_FOR_ADMIN;
 import static uz.me.marsbase.command.navigation.PageNavigation.WORK_INFO;
 import static uz.me.marsbase.router.Router.PageChangeType.REDIRECT;
 
@@ -40,7 +39,9 @@ public class FinishEditWorkCommand implements Command {
             String description = request.getParameter(PARAMETER_WORK_DESCRIPTION);
             double requiredMoney = Double.parseDouble(request.getParameter(PARAMETER_WORK_REQUIRED_MONEY));
             LocalDate startDate = LocalDate.parse(request.getParameter(PARAMETER_WORK_START_DATE));
-            LocalDate finishDate = LocalDate.parse(request.getParameter(PARAMETER_WORK_FINISH_DATE));
+            LocalDate finishDate = null;
+            if (!request.getParameter(PARAMETER_WORK_FINISH_DATE).isBlank())
+                finishDate = LocalDate.parse(request.getParameter(PARAMETER_WORK_FINISH_DATE));
             int star = Integer.parseInt(request.getParameter("star"));
             Status status = Status.valueOf(request.getParameter("status"));
             String teamName = request.getParameter(PARAMETER_TEAM_NAME);

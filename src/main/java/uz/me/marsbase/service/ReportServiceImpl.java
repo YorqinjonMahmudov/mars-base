@@ -40,7 +40,7 @@ public class ReportServiceImpl implements ReportService {
             if (optionalReportDTO.isEmpty())
                 return null;
             var reportDTO = optionalReportDTO.get();
-            workDao.setStatusToReported(reportDTO.getId());
+            workDao.setStatusToReported(reportDTO.getWorkId());
             return reportDTO;
         }
         return null;

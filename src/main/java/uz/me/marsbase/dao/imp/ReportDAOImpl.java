@@ -38,6 +38,8 @@ public class ReportDAOImpl implements ReportDao {
     public boolean insert(Report report) {
 
         try (PreparedStatement ps = MyConnectionPool.getInstance().getConnection().prepareStatement(INSERT)) {
+            if (findByWorkId(report.getWorkId()).isPresent())
+                return false;
             return putArgs(ps,
                     Dao.INTEGER + report.getWorkId(),
                     Dao.DATE + report.getDate(),
@@ -95,6 +97,7 @@ public class ReportDAOImpl implements ReportDao {
             throw new MyException(e.getMessage());
         }
     }
+
     @Override
     public boolean update(int id, Report report) {
         try (PreparedStatement ps = MyConnectionPool.getInstance().getConnection().prepareStatement(UPDATE)) {
@@ -129,7 +132,6 @@ public class ReportDAOImpl implements ReportDao {
         reportDTO.setWorkId(rs.getInt("work_id"));
         return reportDTO;
     }
-
 
 
 }

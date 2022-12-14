@@ -28,7 +28,7 @@ public interface Dao<T extends AbsEntity> {
             else if (arg.startsWith(DOUBLE)) ps.setDouble(++index, Double.parseDouble(arg.substring(9)));
             else if (arg.startsWith(BOOLEAN)) ps.setBoolean(++index, Boolean.parseBoolean(arg.substring(10)));
             else if (arg.startsWith(DATE))
-                ps.setDate(++index, Date.valueOf(arg.substring(10)));
+                ps.setDate(++index, Date.valueOf(   arg.substring(10)));
         }
         return ps;
     }

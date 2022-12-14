@@ -22,8 +22,6 @@
             </c:if>
         </div>
         <div class="registerDiv" id="registerDiv" align="center">
-            <br>
-            <br>
             <form action="${pageContext.request.contextPath}/controller?command=${CommandType.FINISH_ADD_REPORT}&currentWorkId=${sessionScope.currentWork.id}"
                   id="register_form"
                   class="signup-content" method="post">
@@ -38,8 +36,8 @@
                 </div>
 
                 <div class="form-item">
-                    <label for="reportDate"></label>
-                    <input type="date" class="form-control" id="reportedDate"
+                    <label for="reportedDate"></label>
+                    <input type="date" class="form-control" id="reportedDate" required
                            name="${AttributeParameterHolder.PARAMETER_REPORT_DATE}"
                            placeholder="date">
                 </div>

@@ -14,8 +14,8 @@ import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 
 import static uz.me.marsbase.command.navigation.AttributeParameterHolder.*;
-import static uz.me.marsbase.command.navigation.PageNavigation.ADD_REPORT_PAGE;
 import static uz.me.marsbase.command.navigation.PageNavigation.WORK_INFO;
+import static uz.me.marsbase.router.Router.PageChangeType.FORWARD;
 import static uz.me.marsbase.router.Router.PageChangeType.REDIRECT;
 
 public class FinishEditReportCommand implements Command {
@@ -32,18 +32,20 @@ public class FinishEditReportCommand implements Command {
             LocalDate reportDate = LocalDate.parse(request.getParameter(PARAMETER_REPORT_DATE));
             if (reportDate.isAfter(LocalDate.now())) {
                 session.setAttribute(INVALID_FORM, INVALID_DATE_MESSAGE + ", date should be less than now");
-                return new Router(ADD_REPORT_PAGE, REDIRECT);
+                return new Router(WORK_INFO, FORWARD);
             }
+
+            session.setAttribute(INVALID_FORM, null);
             Integer editingWorkId = Integer.valueOf(request.getParameter(EDITING_WORK_ID));
             Integer editingReportId = Integer.valueOf(request.getParameter(EDITING_REPORT_ID));
             var report = new Report(editingWorkId, reportDate, comments);
             report.setId(editingReportId);
             if (!reportService.update(editingReportId, report))
-                return new Router(WORK_INFO, REDIRECT);
+                return new Router(WORK_INFO, FORWARD);
 
             ReportDTO reportDTO = reportService.findByWorkId(editingWorkId);
             session.setAttribute(CURRENT_WORK_REPORT, reportDTO);
-            session.setAttribute(EDITING_REPORT,null);
+            session.setAttribute(EDITING_REPORT, null);
 
         }
         return new Router(WORK_INFO, REDIRECT);

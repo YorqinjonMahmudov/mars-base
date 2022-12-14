@@ -291,7 +291,7 @@
 
                 <div class="form-item">
                     <label for="title"></label>
-                    <input type="text" class="form-control"
+                    <input type="text" class="form-control" required="required"
                            id="title" name="${AttributeParameterHolder.PARAMETER_WORK_TITLE}"
                            property="${sessionScope.editingWork.title}"
                            value="${sessionScope.editingWork.title}"
@@ -300,7 +300,7 @@
 
                 <div class="form-item">
                     <label for="description"></label>
-                    <input type="text" class="form-control"
+                    <input type="text" class="form-control" required="required"
                            id="description" name="${AttributeParameterHolder.PARAMETER_WORK_DESCRIPTION}"
                            property="${sessionScope.editingWork.description}"
                            value="${sessionScope.editingWork.description}"
@@ -309,7 +309,7 @@
 
                 <div class="form-item">
                     <label for="requiredMoney"></label>
-                    <input type="number" class="form-control"
+                    <input type="number" class="form-control" required="required"
                            id="requiredMoney" name="${AttributeParameterHolder.PARAMETER_WORK_REQUIRED_MONEY}"
                            property="${sessionScope.editingWork.requiredMoney}"
                            value="${sessionScope.editingWork.requiredMoney}"
@@ -334,18 +334,20 @@
                 </div>
 
                 <div class="select">
-                    <select name="status" class="form-select" size="1">
+                    <select name="status" class="form-select" size="1" required="required">
                         <option selected>${sessionScope.editingWork.status}</option>
 
                         <c:forEach items="${Status.values()}" var="status">
-                            <option name="status" value="${status}"> ${status}</option>
+<%--                            <c:if test="${status!=Status.REPORTED && sessionScope.editingWork.status.Equals(Status.NEW)}">--%>
+                                <option name="status" value="${status}"> ${status}</option>
+<%--                            </c:if>--%>
                         </c:forEach>
                     </select>
                 </div>
 
                 <div class="form-item">
                     <label for="startDate"></label>
-                    <input type="date" class="form-control"
+                    <input type="date" class="form-control" required="required"
                            id="startDate" name="${AttributeParameterHolder.PARAMETER_WORK_START_DATE}"
                            property="${sessionScope.editingWork.startDate}"
                            value="${sessionScope.editingWork.startDate}"
@@ -354,7 +356,7 @@
 
                 <div class="form-item">
                     <label for="finishDate"></label>
-                    <input type="date" class="form-control"
+                    <input type="date" class="form-control" required="required"
                            id="finishDate" name="${AttributeParameterHolder.PARAMETER_WORK_FINISH_DATE}"
                            property="${sessionScope.editingWork.finishDate}"
                            value="${sessionScope.editingWork.finishDate}"
@@ -362,7 +364,7 @@
                 </div>
 
                 <div class="select">
-                    <select name="teamName" class="form-select" size="1">
+                    <select name="teamName" class="form-select" size="1" required="required">
                         <option selected>${sessionScope.editingWork.teamName}</option>
 
                         <c:forEach items="${sessionScope.teams}" var="team">
@@ -372,7 +374,7 @@
                 </div>
 
                 <div class="select">
-                    <select name="blockName" class="form-select" size="1">
+                    <select name="blockName" class="form-select" size="1" required="required">
                         <option selected>${sessionScope.editingWork.blockName}</option>
 
                         <c:forEach items="${sessionScope.blocks}" var="block">
@@ -440,8 +442,6 @@
             </tr>
 
         </table>
-        <br>
-        <br>
 
         <c:if test="${sessionScope.currentWorkReport==null &&sessionScope.currentWork.status.equals(Status.NEW)  && (sessionScope.currentUser.role.equals(Role.TEAM_LEADER) || sessionScope.currentUser.role.equals(Role.ADMIN))}">
             <div>
@@ -460,6 +460,12 @@
                     <div class="registerDiv" id="registerDivReport">
 
                         <h1 class="title"> Edit Report </h1>
+
+                        <div class="container">
+                            <c:if test="${sessionScope.invalid_form!=null}">
+                                <div style="color: red"> ${sessionScope.invalid_form}</div>
+                            </c:if>
+                        </div>
 
                         <form id="register_form_report" align="center"
                               action="${pageContext.request.contextPath}/controller?command=${CommandType.FINISH_EDIT_REPORT}&editingWorkId=${sessionScope.currentWork.id}&editingReportId=${sessionScope.editingReport.id}"

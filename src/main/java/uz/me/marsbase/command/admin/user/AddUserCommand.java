@@ -9,7 +9,6 @@ import uz.me.marsbase.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import java.util.List;
 
 import static uz.me.marsbase.command.navigation.AttributeParameterHolder.*;
@@ -27,6 +26,7 @@ public class AddUserCommand implements Command {
         var type = FORWARD;
         HttpSession session = request.getSession();
         session.setAttribute(BLOCKS, blockService.getBlocks());
+        session.setAttribute(INVALID_FORM, null);
         if (session.getAttribute(PARAMETER_TEAM_ID) != null) {
             List<UserDTO> users = userService.getUsers();
             session.setAttribute(USERS, users);

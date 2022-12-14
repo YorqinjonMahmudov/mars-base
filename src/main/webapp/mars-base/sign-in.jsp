@@ -162,18 +162,19 @@
     <div class="shape"></div>
     <div class="shape"></div>
 
-    <div class="container">
-        <c:if test="${requestScope.invalid_user!=null}">
-            <div style="color: red">
-            <h1>${requestScope.invalid_user}</h1>
-            </div>
-        </c:if>
-    </div>
-
 
     <form action="${pageContext.request.contextPath}/controller?command=${CommandType.FINISH_SIGN_IN}" method="post"
           width='90%'>
         <h3>LogIn Here</h3>
+
+        <div class="container">
+            <c:if test="${requestScope.invalid_user!=null}">
+                <br>
+                <div style="color: red">
+                        ${requestScope.invalid_user}
+                </div>
+            </c:if>
+        </div>
 
         <!--suppress XmlInvalidId -->
         <label>Email</label>

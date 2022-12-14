@@ -78,8 +78,6 @@
         <div class="container">
             <div class="row">
                 <div class="col text-center">
-                    <br>
-                    <br>
                     <ol class="alert-danger">
                         <c:if test="${sessionScope.invalid_form.firstName!=null}">
                             <div class="text-danger">
@@ -102,13 +100,7 @@
                             </div>
                         </c:if>
                     </ol>
-                    <ol class="alert-danger">
-                        <c:if test="${sessionScope.invalid_form.role!=null}">
-                            <div class="text-danger">
-                                    ${sessionScope.invalid_form.role}
-                            </div>
-                        </c:if>
-                    </ol>
+
                     <ol class="alert-danger">
                         <c:if test="${sessionScope.invalid_form.password!=null}">
                             <div class="text-danger">
@@ -116,7 +108,6 @@
                             </div>
                         </c:if>
                     </ol>
-                    <br>
                     <br>
 
                 </div>
@@ -132,41 +123,42 @@
 
                 <div class="form-item">
                     <label for="firstName"></label>
-                    <input type="text" class="form-control" id="firstName"
+                    <input type="text" class="form-control" id="firstName" required="required"
                            name="${AttributeParameterHolder.PARAMETER_USER_FIRSTNAME}"
                            placeholder=" First name ">
                 </div>
 
                 <div class="form-item">
                     <label for="lastName"></label>
-                    <input type="text" class="form-control" id="lastName"
+                    <input type="text" class="form-control" id="lastName" required="required"
                            name="${AttributeParameterHolder.PARAMETER_USER_LASTNAME}"
                            placeholder=" Last name ">
                 </div>
 
                 <div class="form-item">
                     <label for="email"></label>
-                    <input type="text" class="form-control" id="email"
+                    <input type="text" class="form-control" id="email" required="required"
                            name="${AttributeParameterHolder.PARAMETER_USER_EMAIL}"
                            placeholder="Email">
                 </div>
 
                 <div class="form-item">
                     <label for="password"></label>
-                    <input type="password" class="form-control" id="password"
+                    <input type="password" class="form-control" id="password" required="required"
                            name="${AttributeParameterHolder.PARAMETER_USER_PASSWORD}"
                            placeholder=" Password ">
                 </div>
 
-                <select name="blockId" class="form-select" size="1" aria-label="size 3 select example">
-                    <option value="">select block</option>
+                <div class="select">
+                    <select name="blockId" class="form-select" size="1" aria-label="size 3 select example" required>
+                        <option value="">select block</option>
 
-                    <c:forEach items="${sessionScope.blocks}" var="block">
-                        <option name="blockId" value="${block.id}"> ${block.name}</option>
-                    </c:forEach>
+                        <c:forEach items="${sessionScope.blocks}" var="block">
+                            <option name="blockId" value="${block.id}"> ${block.name}</option>
+                        </c:forEach>
 
-                </select>
-
+                    </select>
+                </div>
                 <div class="form-item">
                     <button type="submit" class="btn btn-block btn-primary">Add User</button>
                 </div>
@@ -202,7 +194,7 @@
 
 
                 <select name="email" class="form-select" size="1" aria-label="size 3 select example" required>
-                    <option selected> select user</option>
+                    <option value=""> select user</option>
 
                     <c:forEach items="${sessionScope.users}" var="user">
                         <option name="email" value="${user.email}"> ${user.email}</option>

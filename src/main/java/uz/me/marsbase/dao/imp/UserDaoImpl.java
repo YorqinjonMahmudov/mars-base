@@ -56,7 +56,7 @@ public class UserDaoImpl implements UserDao {
                     Dao.STRING + user.getLastName(),
                     Dao.STRING + encoded,
                     Dao.INTEGER + user.getBlockId());
-        } catch (SQLException | NoSuchAlgorithmException e) {
+        } catch (SQLException e) {
             throw new MyException(e.getMessage());
         }
     }
@@ -195,8 +195,6 @@ public class UserDaoImpl implements UserDao {
                     Dao.STRING + encoded,
                     Dao.INTEGER + user.getBlockId(),
                     Dao.INTEGER + id);
-        } catch (NoSuchAlgorithmException e) {
-            throw new MyException(e.getMessage());
         }
     }
 

@@ -42,7 +42,7 @@ public class FinishAddWorkCommand implements Command {
             double requiredMoney = Double.parseDouble(request.getParameter(PARAMETER_WORK_REQUIRED_MONEY));
             LocalDate startDate = LocalDate.parse(request.getParameter(PARAMETER_WORK_START_DATE));
             LocalDate finishDate = null;
-            if (Objects.nonNull(request.getParameter(PARAMETER_WORK_FINISH_DATE)))
+            if (!request.getParameter(PARAMETER_WORK_FINISH_DATE).isBlank())
                 finishDate = LocalDate.parse(request.getParameter(PARAMETER_WORK_FINISH_DATE));
 
             Work work = Work.builder()

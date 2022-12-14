@@ -81,40 +81,40 @@
 
                 <div class="form-item">
                     <label for="title"></label>
-                    <input type="text" class="form-control" id="title"
+                    <input type="text" class="form-control" id="title" required ="required"
                            name="${AttributeParameterHolder.PARAMETER_WORK_TITLE}"
                            placeholder=" Title ">
                 </div>
 
                 <div class="form-item">
                     <label for="description"></label>
-                    <input type="text" class="form-control" id="description"
+                    <input type="text" class="form-control" id="description" required ="required"
                            name="${AttributeParameterHolder.PARAMETER_WORK_DESCRIPTION}"
                            placeholder=" description ">
                 </div>
 
                 <div class="form-item">
                     <label for="requiredMoney"></label>
-                    <input type="text" class="form-control" id="requiredMoney"
+                    <input type="text" class="form-control" id="requiredMoney" required ="required"
                            name="${AttributeParameterHolder.PARAMETER_WORK_REQUIRED_MONEY}"
                            placeholder=" required money ">
                 </div>
 
                 <div class="form-item">
                     <label for="startDate"></label>
-                    <input type="date" class="form-control" id="startDate"
+                    <input type="date" class="form-control" id="startDate" required ="required"
                            name="${AttributeParameterHolder.PARAMETER_WORK_START_DATE}"
                            placeholder=" start date ">
                 </div>
 
                 <div class="form-item">
                     <label for="finishDate"></label>
-                    <input type="date" class="form-control" id="finishDate"
+                    <input type="date" class="form-control" id="finishDate" required="required"
                            name="${AttributeParameterHolder.PARAMETER_WORK_FINISH_DATE}"
                            placeholder=" finish date ">
                 </div>
 
-                <select name="teamName" class="form-select" size="1">
+                <select name="teamName" class="form-select" size="1" required>
                     <option value="">select team</option>
                     <c:forEach items="${sessionScope.teams}" var="team">
                         <option name="${AttributeParameterHolder.PARAMETER_TEAM_NAME}"
@@ -122,7 +122,7 @@
                     </c:forEach>
                 </select>
 
-                <select name="blockName" class="form-select" size="1">
+                <select name="blockName" class="form-select" size="1" required>
                     <option value="">select block</option>
 
                     <c:forEach items="${sessionScope.blocks}" var="block">

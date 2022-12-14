@@ -13,7 +13,7 @@ public final class PatternValidator {
     }
 
     public boolean validPassword(String password) {
-        return password != null;
+        return !password.isBlank();
     }
 
 

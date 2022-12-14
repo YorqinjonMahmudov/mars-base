@@ -23,16 +23,26 @@ public class AddWorkValidator implements FormValidator {
         Map<String, String> validationResult = new HashMap<>();
 
         /* validate title */
-        if (parameters.get(PARAMETER_WORK_TITLE) == null || parameters.get(PARAMETER_WORK_TITLE).length == 0)
+        if (parameters.get(PARAMETER_WORK_TITLE) == null
+                || parameters.get(PARAMETER_WORK_TITLE).length == 0
+                || parameters.get(PARAMETER_WORK_TITLE)[0].isBlank())
             validationResult.put(PARAMETER_WORK_TITLE, INVALID_WORK_TITLE_MESSAGE);
 
         /* validate description */
-        if (parameters.get(PARAMETER_WORK_DESCRIPTION) == null || parameters.get(PARAMETER_WORK_DESCRIPTION).length == 0)
+        if (parameters.get(PARAMETER_WORK_DESCRIPTION) == null
+                || parameters.get(PARAMETER_WORK_DESCRIPTION).length == 0
+                || parameters.get(PARAMETER_WORK_DESCRIPTION)[0].isBlank())
             validationResult.put(PARAMETER_WORK_DESCRIPTION, INVALID_WORK_DESCRIPTION_MESSAGE);
 
-        /* validate required money */
-        if (parameters.get(PARAMETER_WORK_REQUIRED_MONEY) == null || parameters.get(PARAMETER_WORK_REQUIRED_MONEY)[0].isBlank() || Double.parseDouble(parameters.get(PARAMETER_WORK_REQUIRED_MONEY)[0]) < 1)
+        try {
+            /* validate required money */
+            if (parameters.get(PARAMETER_WORK_REQUIRED_MONEY) == null
+                    || parameters.get(PARAMETER_WORK_REQUIRED_MONEY)[0].isBlank()
+                    || Double.parseDouble(parameters.get(PARAMETER_WORK_REQUIRED_MONEY)[0]) < 1)
+                validationResult.put(PARAMETER_WORK_REQUIRED_MONEY, INVALID_WORK_REQUIRED_MONEY_MESSAGE);
+        } catch (NumberFormatException e) {
             validationResult.put(PARAMETER_WORK_REQUIRED_MONEY, INVALID_WORK_REQUIRED_MONEY_MESSAGE);
+        }
 
         /* validate dates */
         if (parameters.get(PARAMETER_WORK_START_DATE) == null
