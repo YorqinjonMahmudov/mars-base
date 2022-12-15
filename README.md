@@ -1,4 +1,4 @@
-# mars-base
+# Mars Base
 ![image](https://user-images.githubusercontent.com/101856957/207853845-260335e7-dc1b-483d-8226-8e811af67c85.png)
 # The platform supports only English language.
 
