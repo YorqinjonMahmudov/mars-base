@@ -68,5 +68,5 @@ PostgreSQL database is used to store data.
  # Usage
  
 
-https://user-images.githubusercontent.com/101856957/207861413-810a0c77-267b-4223-84ad-ee507d65f482.mp4
+![video](https://user-images.githubusercontent.com/101856957/207861413-810a0c77-267b-4223-84ad-ee507d65f482.mp4)
 
