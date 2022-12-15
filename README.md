@@ -63,3 +63,10 @@ PostgreSQL database is used to store data.
 6. Add new Tomcat 9.0.14 configuration to the project. You can download from https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.14/bin/\
 7. Run Tomcat and open http://localhost/ on the browser.
 8. Log in as admin. Admin default account is email admin@gmail.com, password - root123.
+ 
+ 
+ # Usage
+ 
+
+https://user-images.githubusercontent.com/101856957/207861413-810a0c77-267b-4223-84ad-ee507d65f482.mp4
+
