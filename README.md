@@ -65,8 +65,3 @@ PostgreSQL database is used to store data.
 8. Log in as admin. Admin default account is email admin@gmail.com, password - root123.
  
  
- # Usage
- 
-
-![video](https://user-images.githubusercontent.com/101856957/207861413-810a0c77-267b-4223-84ad-ee507d65f482.mp4)
-
