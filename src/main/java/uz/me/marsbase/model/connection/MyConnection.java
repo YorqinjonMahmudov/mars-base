@@ -14,7 +14,7 @@ public class MyConnection implements Connection {
 
     @Override
     public void close() throws SQLException {
-        if(!connection.getAutoCommit()){
+        if (!connection.getAutoCommit()) {
             connection.setAutoCommit(true);
         }
         MyConnectionPool.getInstance().releaseConnection(this);

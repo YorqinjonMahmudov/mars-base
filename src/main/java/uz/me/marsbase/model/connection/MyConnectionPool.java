@@ -58,7 +58,8 @@ public class MyConnectionPool {
             if ((poolSizeParameter = fileProperties.getProperty(POOL_PROPERTIES_PREFIX + POOL_SIZE_PROPERTY)) != null) {
                 try {
                     poolSize = Integer.parseInt(poolSizeParameter);
-                } catch (NumberFormatException ignored) {}
+                } catch (NumberFormatException ignored) {
+                }
             }
             CONNECTION_POOL_SIZE = poolSize;
         } catch (IOException e) {
