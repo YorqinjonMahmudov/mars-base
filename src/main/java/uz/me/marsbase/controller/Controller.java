@@ -5,8 +5,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import uz.me.marsbase.controller.command.Command;
 import uz.me.marsbase.controller.command.CommandType;
-import uz.me.marsbase.exception.CommandException;
 import uz.me.marsbase.controller.router.Router;
+import uz.me.marsbase.exception.CommandException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,7 +25,7 @@ public class Controller extends HttpServlet {
     private static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 
     @Override
-    public void init() throws ServletException {
+    public void init() {
         logger.info("SERVLET INIT");
     }
 
