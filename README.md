@@ -51,4 +51,15 @@ and allocate resources.
 
 PostgreSQL database is used to store data.
 ![databsae -designjpg](https://user-images.githubusercontent.com/101856957/207848904-cdbf7eb5-f21b-47f5-b77e-e1778f635d99.jpg)
+                                              database schema
 
+
+# Installation
+1. Clone the project.
+2. Create a new PostgreSQL database.
+3. Create tables using init-ddl.sql.
+4. Change the application.properties file, located in the resources' folder, based on your database configurations.
+5. Build the project using maven.
+6. Add new Tomcat 9.0.14 configuration to the project. You can download from https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.14/bin/\
+7. Run Tomcat and open http://localhost/ on the browser.
+8. Log in as admin. Admin default account is email admin@gmail.com, password - root123.
