@@ -2,7 +2,7 @@
 ![image](https://user-images.githubusercontent.com/101856957/207853845-260335e7-dc1b-483d-8226-8e811af67c85.png)
 # The platform supports only English language.
 
-#Description
+# Description
 
 Mars base. The base has a list of blocks (residential, working, greenhouses).
 The administrator forms a Brigade for different types of work (planting
