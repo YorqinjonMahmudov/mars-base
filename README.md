@@ -16,7 +16,8 @@ and allocate resources.
 # Functional roles
 ## Admin role:
 
-![image](https://user-images.githubusercontent.com/101856957/207863236-56f74d8b-daf4-4607-a520-98121ba2befa.png)
+![image](https://user-images.githubusercontent.com/101856957/207863831-cb01a275-5573-4db4-890b-47f158322a19.png)
+
 
 1. Sign in;
 2. See users;
@@ -40,8 +41,7 @@ and allocate resources.
 
 ## Team lead Role;
 
-![image](https://user-images.githubusercontent.com/101856957/207863363-ae7964b9-3f0d-4e04-95a4-565abf828d7c.png)
-
+![image](https://user-images.githubusercontent.com/101856957/207863672-ae0eebed-02b7-4159-9a86-be806a293986.png)
 
 1. See teams in which he is team leader;
 2. Add user to team;
