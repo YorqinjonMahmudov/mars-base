@@ -1,4 +1,4 @@
-<%@page import="uz.me.marsbase.command.CommandType" %>
+<%@page import="uz.me.marsbase.controller.command.CommandType" %>
 <%--
   Created by IntelliJ IDEA.
   User: user

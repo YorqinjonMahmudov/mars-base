@@ -1,14 +1,14 @@
 package uz.me.marsbase.utils.validator;
 
 
-import uz.me.marsbase.command.instanceHolder.InstanceHolder;
+import uz.me.marsbase.controller.command.instanceHolder.InstanceHolder;
 import uz.me.marsbase.service.UserService;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static uz.me.marsbase.command.navigation.AttributeParameterHolder.INVALID_EMAIL_MESSAGE;
-import static uz.me.marsbase.command.navigation.AttributeParameterHolder.PARAMETER_EMAIL;
+import static uz.me.marsbase.controller.command.navigation.AttributeParameterHolder.INVALID_EMAIL_MESSAGE;
+import static uz.me.marsbase.controller.command.navigation.AttributeParameterHolder.PARAMETER_EMAIL;
 
 public class CheckEmailValidator implements FormValidator {
 

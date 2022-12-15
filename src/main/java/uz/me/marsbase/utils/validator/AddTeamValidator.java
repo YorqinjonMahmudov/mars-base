@@ -1,7 +1,7 @@
 package uz.me.marsbase.utils.validator;
 
 
-import uz.me.marsbase.command.instanceHolder.InstanceHolder;
+import uz.me.marsbase.controller.command.instanceHolder.InstanceHolder;
 import uz.me.marsbase.model.entity.Team;
 import uz.me.marsbase.service.TeamService;
 import uz.me.marsbase.service.UserService;
@@ -9,11 +9,10 @@ import uz.me.marsbase.service.UserService;
 import java.util.HashMap;
 import java.util.Map;
 
-import static uz.me.marsbase.command.navigation.AttributeParameterHolder.*;
+import static uz.me.marsbase.controller.command.navigation.AttributeParameterHolder.*;
 
 public class AddTeamValidator implements FormValidator {
 
-    private final PatternValidator validator = InstanceHolder.getInstance(PatternValidator.class);
 
     private final TeamService teamService = InstanceHolder.getInstance(TeamService.class);
     private final UserService userService = InstanceHolder.getInstance(UserService.class);

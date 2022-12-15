@@ -1,6 +1,6 @@
 package uz.me.marsbase.service;
 
-import uz.me.marsbase.payload.UserDTO;
+import uz.me.marsbase.model.dtos.UserDTO;
 import uz.me.marsbase.model.entity.User;
 
 import java.util.List;

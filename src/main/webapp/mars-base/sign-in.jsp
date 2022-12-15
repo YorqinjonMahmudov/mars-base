@@ -5,7 +5,7 @@
   Time: 7:14 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@page import="uz.me.marsbase.command.CommandType" %>
+<%@page import="uz.me.marsbase.controller.command.CommandType" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -162,7 +162,6 @@
     <div class="shape"></div>
     <div class="shape"></div>
 
-
     <form action="${pageContext.request.contextPath}/controller?command=${CommandType.FINISH_SIGN_IN}" method="post"
           width='90%'>
         <h3>LogIn Here</h3>
@@ -176,17 +175,14 @@
             </c:if>
         </div>
 
-        <!--suppress XmlInvalidId -->
         <label>Email</label>
         <input type="text" placeholder="Enter email" name="email">
 
-        <!--suppress XmlInvalidId -->
         <label>Password</label>
         <input type="password" placeholder="Enter password" name="password">
 
         <button type="submit">Login</button>
         <br>
-        <%--    <h1>Name: <c:out value="${requestScope.get('apiResult')}"/></h1>--%>
     </form>
 </div>
 </body>

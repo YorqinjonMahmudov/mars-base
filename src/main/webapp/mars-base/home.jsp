@@ -13,7 +13,7 @@
         }
 
         body {
-            background: url("../images/mars.png");
+            background: url("../static/images/mars.png");
             background-size: cover;
             display: flex;
             justify-content: center;

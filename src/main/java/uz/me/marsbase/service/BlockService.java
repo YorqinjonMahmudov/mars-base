@@ -1,6 +1,6 @@
 package uz.me.marsbase.service;
 
-import uz.me.marsbase.payload.BlockDTO;
+import uz.me.marsbase.model.dtos.BlockDTO;
 
 import java.util.List;
 import java.util.Optional;

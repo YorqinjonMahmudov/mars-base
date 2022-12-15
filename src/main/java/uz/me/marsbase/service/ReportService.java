@@ -1,7 +1,7 @@
 package uz.me.marsbase.service;
 
 import uz.me.marsbase.model.entity.Report;
-import uz.me.marsbase.payload.ReportDTO;
+import uz.me.marsbase.model.dtos.ReportDTO;
 
 import java.util.List;
 

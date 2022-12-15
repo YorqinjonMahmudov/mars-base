@@ -1,11 +1,11 @@
 package uz.me.marsbase.service;
 
-import uz.me.marsbase.command.instanceHolder.InstanceHolder;
-import uz.me.marsbase.dao.ReportDao;
-import uz.me.marsbase.dao.WorkDao;
-import uz.me.marsbase.mappers.ReportMapper;
+import uz.me.marsbase.controller.command.instanceHolder.InstanceHolder;
+import uz.me.marsbase.model.dao.ReportDao;
+import uz.me.marsbase.model.dao.WorkDao;
+import uz.me.marsbase.utils.mappers.ReportMapper;
 import uz.me.marsbase.model.entity.Report;
-import uz.me.marsbase.payload.ReportDTO;
+import uz.me.marsbase.model.dtos.ReportDTO;
 
 import java.util.List;
 import java.util.Optional;

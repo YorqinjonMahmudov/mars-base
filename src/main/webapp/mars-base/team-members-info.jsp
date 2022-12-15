@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="uz.me.marsbase.model.entity.enums.Role" %>
-<%@page import="uz.me.marsbase.command.CommandType" %>
-<%@page import="uz.me.marsbase.command.navigation.AttributeParameterHolder" %>
+<%@page import="uz.me.marsbase.controller.command.CommandType" %>
+<%@page import="uz.me.marsbase.controller.command.navigation.AttributeParameterHolder" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 

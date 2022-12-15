@@ -1,7 +1,7 @@
 package uz.me.marsbase.utils.validator;
 
 
-import uz.me.marsbase.command.instanceHolder.InstanceHolder;
+import uz.me.marsbase.controller.command.instanceHolder.InstanceHolder;
 import uz.me.marsbase.service.BlockService;
 import uz.me.marsbase.service.TeamService;
 
@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
-import static uz.me.marsbase.command.navigation.AttributeParameterHolder.*;
+import static uz.me.marsbase.controller.command.navigation.AttributeParameterHolder.*;
 
 public class AddWorkValidator implements FormValidator {
 

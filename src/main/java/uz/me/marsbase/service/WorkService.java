@@ -1,8 +1,8 @@
 package uz.me.marsbase.service;
 
 import uz.me.marsbase.model.entity.Work;
-import uz.me.marsbase.payload.WorkDTO;
-import uz.me.marsbase.payload.WorkViewDTO;
+import uz.me.marsbase.model.dtos.WorkDTO;
+import uz.me.marsbase.model.dtos.WorkViewDTO;
 
 import java.util.List;
 

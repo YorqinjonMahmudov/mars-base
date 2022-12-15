@@ -1,13 +1,13 @@
 package uz.me.marsbase.utils.validator;
 
 
-import uz.me.marsbase.command.instanceHolder.InstanceHolder;
+import uz.me.marsbase.controller.command.instanceHolder.InstanceHolder;
 import uz.me.marsbase.service.BlockService;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static uz.me.marsbase.command.navigation.AttributeParameterHolder.*;
+import static uz.me.marsbase.controller.command.navigation.AttributeParameterHolder.*;
 
 public class AddUserValidator implements FormValidator {
 
@@ -33,7 +33,7 @@ public class AddUserValidator implements FormValidator {
 
         if (parameters.get(PARAMETER_USER_FIRSTNAME) == null || parameters.get(PARAMETER_USER_FIRSTNAME)[0].isBlank())
             validationResult.put(PARAMETER_USER_FIRSTNAME, INVALID_USER_FIRSTNAME_MESSAGE);
-        if (parameters.get(PARAMETER_USER_LASTNAME) == null|| parameters.get(PARAMETER_USER_LASTNAME)[0].isBlank())
+        if (parameters.get(PARAMETER_USER_LASTNAME) == null || parameters.get(PARAMETER_USER_LASTNAME)[0].isBlank())
             validationResult.put(PARAMETER_USER_LASTNAME, INVALID_USER_LASTNAME_MESSAGE);
 
         try {

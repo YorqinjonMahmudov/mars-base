@@ -3,10 +3,10 @@ package uz.me.marsbase.controller;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import uz.me.marsbase.command.Command;
-import uz.me.marsbase.command.CommandType;
+import uz.me.marsbase.controller.command.Command;
+import uz.me.marsbase.controller.command.CommandType;
 import uz.me.marsbase.exception.CommandException;
-import uz.me.marsbase.router.Router;
+import uz.me.marsbase.controller.router.Router;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static uz.me.marsbase.command.navigation.AttributeParameterHolder.PARAMETER_COMMAND;
+import static uz.me.marsbase.controller.command.navigation.AttributeParameterHolder.PARAMETER_COMMAND;
 
 @WebServlet(name = "Controller", value = "/controller")
 public class Controller extends HttpServlet {
