@@ -17,18 +17,18 @@ import java.util.Optional;
 
 public class WorkDAOImpl implements WorkDao {
 
-    private static final String INSERT = "INSERT INTO work (title, description, required_money, status, start_date, finish_date, team_id, block_id) VALUES(?,?,?,?,?,?,?,?);";
-    private static final String FIND_BY_ID = "SELECT id, title, description, required_money, status, start_date, finish_date, star, team_id, block_id FROM work WHERE id = ?;";
-    private static final String FIND_BY_ID_FOR_DTO = "SELECT w.id id, title, description, required_money, start_date, finish_date, star, status, b.name blockName, t.name teamName FROM work w JOIN block b on b.id = w.block_id JOIN team t on t.id = w.team_id WHERE  w.id = ?;";
-    private static final String FIND_BY_TITLE = "SELECT id, title, description, required_money, status, start_date, finish_date, star, team_id, block_id FROM work WHERE title = ?;";
-    private static final String FIND_ALL = "SELECT id, title, description, required_money, status, start_date, finish_date, star, team_id, block_id FROM work;";
+    private static final String INSERT = "INSERT INTO work (title, description, status, start_date, finish_date, team_id, block_id) VALUES(?,?,?,?,?,?,?);";
+    private static final String FIND_BY_ID = "SELECT id, title, description, status, start_date, finish_date, star, team_id, block_id FROM work WHERE id = ?;";
+    private static final String FIND_BY_ID_FOR_DTO = "SELECT w.id id, title, description, start_date, finish_date, star, status, b.name blockName, t.name teamName FROM work w JOIN block b on b.id = w.block_id JOIN team t on t.id = w.team_id WHERE  w.id = ?;";
+    private static final String FIND_BY_TITLE = "SELECT id, title, description, status, start_date, finish_date, star, team_id, block_id FROM work WHERE title = ?;";
+    private static final String FIND_ALL = "SELECT id, title, description, status, start_date, finish_date, star, team_id, block_id FROM work;";
     private static final String FIND_ALL_FOR_VIEW = "SELECT w.id id,  w.title title, w.status status, t.name teamName, b.name blockName FROM work w JOIN team t on t.id = w.team_id JOIN block b on b.id = w.block_id;";
     private static final String FIND_ALL_FOR_VIEW_BY_TEAM_LEAD_ID = "SELECT w.id id,  w.title title, w.status status, t.name teamName, b.name blockName FROM work w JOIN team t on t.id = w.team_id JOIN block b on b.id = w.block_id WHERE t.team_lead_id = ?;";
-    private static final String FIND_ALL_BY_STATUS = "SELECT id, title, description, required_money, status, start_date, finish_date, star, team_id, block_id FROM work WHERE status = ?;";
-    private static final String FIND_ALL_BY_BLOCK_ID = "SELECT id, title, description, required_money, status, start_date, finish_date, star, team_id, block_id FROM work WHERE blockId = ?';";
-    private static final String FIND_ALL_BY_TEAM_ID = "SELECT id, title, description, required_money, status, start_date, finish_date, star, team_id, block_id FROM work WHERE blockId = ?';";
+    private static final String FIND_ALL_BY_STATUS = "SELECT id, title, description, status, start_date, finish_date, star, team_id, block_id FROM work WHERE status = ?;";
+    private static final String FIND_ALL_BY_BLOCK_ID = "SELECT id, title, required_money, status, start_date, finish_date, star, team_id, block_id FROM work WHERE blockId = ?';";
+    private static final String FIND_ALL_BY_TEAM_ID = "SELECT id, title, required_money, status, start_date, finish_date, star, team_id, block_id FROM work WHERE blockId = ?';";
     private static final String SET_STATUS_TO = "UPDATE work SET status = ? WHERE id = ?;";
-    private static final String UPDATE_WORK = "UPDATE work SET title =?, description =?, star =?, required_money = ?, start_date = ?, finish_date = ?, status = ?, team_id = ?, block_id = ? WHERE id = ?;";
+    private static final String UPDATE_WORK = "UPDATE work SET title =?, description =?, star =?, start_date = ?, finish_date = ?, status = ?, team_id = ?, block_id = ? WHERE id = ?;";
     private static WorkDAOImpl workDAOImpl;
     public static final BlockDao blockDao = BlockDAOImpl.getInstance();
 
@@ -45,7 +45,6 @@ public class WorkDAOImpl implements WorkDao {
             return executeUpdatePrepareStatement(ps,
                     Dao.STRING + work.getTitle(),
                     Dao.STRING + work.getDescription(),
-                    Dao.DOUBLE + work.getRequiredMoney(),
                     Dao.STRING + work.getStatus().name(),
                     Dao.DATE + work.getStartDate(),
                     Dao.DATE + work.getFinishDate(),
@@ -206,7 +205,7 @@ public class WorkDAOImpl implements WorkDao {
     public Optional<WorkDTO> getWorkDTOById(Integer id) {
         try (Connection connection = MyConnectionPool.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement(FIND_BY_ID_FOR_DTO)) {
-            var resultSet = executePrepareStatement(ps, Dao.INTEGER + id);
+            ResultSet resultSet = executePrepareStatement(ps, Dao.INTEGER + id);
             if (resultSet.next())
                 return Optional.of(getWorkFromResultSetForDTO(resultSet));
             return Optional.empty();
@@ -286,7 +285,6 @@ public class WorkDAOImpl implements WorkDao {
         work.setTitle(rs.getString("title"));
         work.setBlockId(rs.getInt("block_id"));
         work.setStar(rs.getInt("star"));
-        work.setRequiredMoney(rs.getDouble("required_money"));
         work.setStartDate(rs.getDate("start_date").toLocalDate());
         work.setFinishDate(rs.getDate("finish_date").toLocalDate());
         work.setTeamId(rs.getInt("team_id"));
@@ -302,7 +300,6 @@ public class WorkDAOImpl implements WorkDao {
                 .status(Status.valueOf(rs.getString("status")))
                 .blockName(rs.getString("blockName"))
                 .star(rs.getInt("star"))
-                .requiredMoney(rs.getDouble("required_money"))
                 .startDate(rs.getDate("start_date"))
                 .finishDate(rs.getDate("finish_date"))
                 .teamName(rs.getString("teamName"))
@@ -349,7 +346,6 @@ public class WorkDAOImpl implements WorkDao {
                     Dao.STRING + work.getTitle(),
                     Dao.STRING + work.getDescription(),
                     Dao.INTEGER + work.getStar(),
-                    Dao.DOUBLE + work.getRequiredMoney(),
                     Dao.DATE + work.getStartDate(),
                     Dao.DATE + work.getFinishDate(),
                     Dao.STRING + work.getStatus().name(),

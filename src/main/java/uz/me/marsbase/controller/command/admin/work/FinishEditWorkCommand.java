@@ -2,11 +2,11 @@ package uz.me.marsbase.controller.command.admin.work;
 
 import uz.me.marsbase.controller.command.Command;
 import uz.me.marsbase.controller.command.instanceHolder.InstanceHolder;
+import uz.me.marsbase.controller.router.Router;
+import uz.me.marsbase.model.dtos.BlockDTO;
 import uz.me.marsbase.model.entity.Team;
 import uz.me.marsbase.model.entity.Work;
 import uz.me.marsbase.model.entity.enums.Status;
-import uz.me.marsbase.model.dtos.BlockDTO;
-import uz.me.marsbase.controller.router.Router;
 import uz.me.marsbase.service.BlockService;
 import uz.me.marsbase.service.TeamService;
 import uz.me.marsbase.service.WorkService;
@@ -37,7 +37,6 @@ public class FinishEditWorkCommand implements Command {
         if (validationResult.isEmpty()) {
             String title = request.getParameter(PARAMETER_WORK_TITLE);
             String description = request.getParameter(PARAMETER_WORK_DESCRIPTION);
-            double requiredMoney = Double.parseDouble(request.getParameter(PARAMETER_WORK_REQUIRED_MONEY));
             LocalDate startDate = LocalDate.parse(request.getParameter(PARAMETER_WORK_START_DATE));
             LocalDate finishDate = null;
             if (!request.getParameter(PARAMETER_WORK_FINISH_DATE).isBlank())
@@ -53,7 +52,7 @@ public class FinishEditWorkCommand implements Command {
             Team teamByName = teamService.getTeamByName(teamName);
 
             var editingWorkId = Integer.parseInt(request.getParameter(EDITING_WORK_ID));
-            Work work = new Work(title, description, requiredMoney, status, startDate, finishDate,
+            Work work = new Work(title, description, status, startDate, finishDate,
                     star, teamByName.getId(), blockId);
             work.setId(editingWorkId);
 

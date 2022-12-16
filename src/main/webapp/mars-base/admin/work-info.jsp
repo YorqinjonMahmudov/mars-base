@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: user
-  Date: 11/28/2022
-  Time: 10:17 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@page import="uz.me.marsbase.controller.command.CommandType" %>
 <%@page import="uz.me.marsbase.model.entity.enums.Role" %>
 <%@page import="uz.me.marsbase.model.entity.enums.Status" %>
@@ -239,48 +232,6 @@
 
 <c:if test="${sessionScope.currentUser.role.equals(Role.ADMIN) && sessionScope.editingWork!=null}">
 
-    <div class="container">
-        <div class="row">
-            <div class="col text-center">
-                <br>
-                <ol class="alert-danger">
-                    <c:if test="${sessionScope.invalid_form.email!=null}">
-                        <div class="text-danger">
-                                ${sessionScope.invalid_form.email}
-                        </div>
-                    </c:if>
-                </ol>
-
-                <ol class="alert-danger">
-                    <c:if test="${sessionScope.invalid_form.password!=null}">
-                        <div class="text-danger">
-                                ${invalid_form.password}
-                        </div>
-                    </c:if>
-                </ol>
-
-                <ol class="alert-danger">
-                    <c:if test="${sessionScope.invalid_form.lastname!=null}">
-                        <div class="text-danger">
-                                ${sessionScope.invalid_form.lastname}
-                        </div>
-                    </c:if>
-                </ol>
-
-                <ol class="alert-danger">
-                    <c:if test="${sessionScope.invalid_form.firstname!=null}">
-                        <div class="text-danger">
-                                ${sessionScope.invalid_form.firstname}
-                        </div>
-                    </c:if>
-                </ol>
-
-                <br>
-                <br>
-
-            </div>
-        </div>
-    </div>
 
     <div class="modal">
         <div class="registerDiv" id="registerDivWork">
@@ -309,14 +260,6 @@
                            placeholder=" description ">
                 </div>
 
-                <div class="form-item">
-                    <label for="requiredMoney"></label>
-                    <input type="number" class="form-control" required="required"
-                           id="requiredMoney" name="${AttributeParameterHolder.PARAMETER_WORK_REQUIRED_MONEY}"
-                           property="${sessionScope.editingWork.requiredMoney}"
-                           value="${sessionScope.editingWork.requiredMoney}"
-                           placeholder=" required money ">
-                </div>
 
                 <div class="select">
                     <select name="star" class="form-select" size="1" required>
@@ -411,7 +354,6 @@
             <tr>
                 <th>title</th>
                 <th>description</th>
-                <th>required money</th>
                 <th>status</th>
                 <th>start date</th>
                 <th>finish date</th>
@@ -423,7 +365,6 @@
             <tr class="trHover">
                 <td class="column-1"> ${sessionScope.currentWork.title} </td>
                 <td class="column-1"> ${sessionScope.currentWork.description} </td>
-                <td class="column-1"> ${sessionScope.currentWork.requiredMoney} </td>
                 <td class="column-1"> ${sessionScope.currentWork.status} </td>
                 <td class="column-1"> ${sessionScope.currentWork.startDate} </td>
                 <td class="column-1"> ${sessionScope.currentWork.finishDate} </td>

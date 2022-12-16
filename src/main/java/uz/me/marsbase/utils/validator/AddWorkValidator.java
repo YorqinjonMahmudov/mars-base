@@ -34,16 +34,6 @@ public class AddWorkValidator implements FormValidator {
                 || parameters.get(PARAMETER_WORK_DESCRIPTION)[0].isBlank())
             validationResult.put(PARAMETER_WORK_DESCRIPTION, INVALID_WORK_DESCRIPTION_MESSAGE);
 
-        try {
-            /* validate required money */
-            if (parameters.get(PARAMETER_WORK_REQUIRED_MONEY) == null
-                    || parameters.get(PARAMETER_WORK_REQUIRED_MONEY)[0].isBlank()
-                    || Double.parseDouble(parameters.get(PARAMETER_WORK_REQUIRED_MONEY)[0]) < 1)
-                validationResult.put(PARAMETER_WORK_REQUIRED_MONEY, INVALID_WORK_REQUIRED_MONEY_MESSAGE);
-        } catch (NumberFormatException e) {
-            validationResult.put(PARAMETER_WORK_REQUIRED_MONEY, INVALID_WORK_REQUIRED_MONEY_MESSAGE);
-        }
-
         /* validate dates */
         if (parameters.get(PARAMETER_WORK_START_DATE) == null
                 || parameters.get(PARAMETER_WORK_START_DATE)[0].isBlank()

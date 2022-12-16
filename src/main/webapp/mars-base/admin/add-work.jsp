@@ -93,12 +93,6 @@
                            placeholder=" description ">
                 </div>
 
-                <div class="form-item">
-                    <label for="requiredMoney"></label>
-                    <input type="text" class="form-control" id="requiredMoney" required ="required"
-                           name="${AttributeParameterHolder.PARAMETER_WORK_REQUIRED_MONEY}"
-                           placeholder=" required money ">
-                </div>
 
                 <div class="form-item">
                     <label for="startDate"></label>

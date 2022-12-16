@@ -38,7 +38,6 @@ public class FinishAddWorkCommand implements Command {
             String blockName = request.getParameter(PARAMETER_BLOCK_NAME);
             String title = request.getParameter(PARAMETER_WORK_TITLE);
             String description = request.getParameter(PARAMETER_WORK_DESCRIPTION);
-            double requiredMoney = Double.parseDouble(request.getParameter(PARAMETER_WORK_REQUIRED_MONEY));
             LocalDate startDate = LocalDate.parse(request.getParameter(PARAMETER_WORK_START_DATE));
             LocalDate finishDate = null;
             if (!request.getParameter(PARAMETER_WORK_FINISH_DATE).isBlank())
@@ -47,7 +46,6 @@ public class FinishAddWorkCommand implements Command {
             Work work = Work.builder()
                     .title(title)
                     .description(description)
-                    .requiredMoney(requiredMoney)
                     .startDate(startDate)
                     .finishDate(finishDate)
                     .blockId(blockService.findByName(blockName).get().getId())

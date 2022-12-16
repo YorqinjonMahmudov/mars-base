@@ -18,8 +18,6 @@ public class WorkDTO {
 
     private String description;
 
-    private Double requiredMoney;
-
     private Status status;
 
     private Date startDate;

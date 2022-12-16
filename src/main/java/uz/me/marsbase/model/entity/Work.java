@@ -18,8 +18,6 @@ public class Work extends AbsEntity {
 
     private String description;
 
-    private Double requiredMoney;
-
     private Status status;
 
     private LocalDate startDate;
