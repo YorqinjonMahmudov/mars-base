@@ -64,7 +64,7 @@
         }
 
         body {
-            background: url("../images/mars-user.jpg");
+            background: url("../static/images/mars-user.jpg");
             background-size: cover;
         }
 

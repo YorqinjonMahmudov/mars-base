@@ -2,9 +2,9 @@ package uz.me.marsbase.controller.command.admin.team;
 
 import uz.me.marsbase.controller.command.Command;
 import uz.me.marsbase.controller.command.instanceHolder.InstanceHolder;
-import uz.me.marsbase.model.entity.Team;
-import uz.me.marsbase.model.dtos.UserDTO;
 import uz.me.marsbase.controller.router.Router;
+import uz.me.marsbase.model.dtos.UserDTO;
+import uz.me.marsbase.model.entity.Team;
 import uz.me.marsbase.service.TeamService;
 import uz.me.marsbase.service.UserService;
 import uz.me.marsbase.utils.validator.AddTeamValidator;
@@ -40,8 +40,10 @@ public class FinishAddTeamCommand implements Command {
                 page = TEAM_PAGE_FOR_ADMIN;
                 session.setAttribute(TEAMS, teamService.getTeamDTOs());
             }
-        } else
+        } else {
+            session.setAttribute(INVALID_FORM, validatedResult);
             page = ADD_TEAM_PAGE_FOR_ADMIN;
+        }
         return new Router(page, REDIRECT);
     }
 }

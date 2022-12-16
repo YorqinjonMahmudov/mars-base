@@ -90,7 +90,7 @@ public final class AttributeParameterHolder {
     public static final String INVALID_USER_MESSAGE = "Invalid email or password";
     public static final String INVALID_EMAIL_MESSAGE = "email is not valid";
     public static final String INVALID_PASSWORD_MESSAGE = "Password is not valid";
-    public static final String INVALID_TEAM_NAME_MESSAGE = "invalid team name";
+    public static final String INVALID_TEAM_NAME_MESSAGE = "team name already exists";
     public static final String INVALID_TEAM_LEAD_EMAIL_MESSAGE = "invalidDeleting";
     public static final String INVALID_WORK_TITLE_MESSAGE = "invalid title";
     public static final String INVALID_WORK_DESCRIPTION_MESSAGE = "invalid description";

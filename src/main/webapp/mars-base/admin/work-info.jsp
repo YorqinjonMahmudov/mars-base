@@ -236,6 +236,21 @@
     <div class="modal">
         <div class="registerDiv" id="registerDivWork">
 
+            <div class="container">
+                <div class="row">
+                    <div class="col text-center">
+                        <ol class="alert-danger">
+                            <c:if test="${sessionScope.invalid_form.date!=null}">
+                                <div class="text-danger" style="color: red" >
+                                        ${sessionScope.invalid_form.date}
+                                </div>
+                            </c:if>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+
             <h1 class="title"> Edit Work </h1>
 
             <form id="register_form_work" align="center"

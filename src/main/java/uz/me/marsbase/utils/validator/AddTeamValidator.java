@@ -8,6 +8,7 @@ import uz.me.marsbase.service.UserService;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import static uz.me.marsbase.controller.command.navigation.AttributeParameterHolder.*;
 
@@ -27,7 +28,8 @@ public class AddTeamValidator implements FormValidator {
         )
             validationResult.put(PARAMETER_TEAM_NAME, INVALID_TEAM_NAME_MESSAGE);
         Team teamByName = teamService.getTeamByName(parameters.get(PARAMETER_TEAM_NAME)[0]);
-        if (teamByName != null && !teamByName.getId().equals(Integer.valueOf(parameters.get("editingTeamId")[0])))
+        if (teamByName != null && (Objects.isNull(parameters.get("editingTeamId"))
+                || !teamByName.getId().equals(Integer.valueOf(parameters.get("editingTeamId")[0]))))
             validationResult.put(PARAMETER_TEAM_NAME, INVALID_TEAM_NAME_MESSAGE);
 
 
