@@ -35,7 +35,6 @@ public class SignInFinishCommand implements Command {
         Map<String, String> validationResult = formValidator.validate(parameterMap);
 
         if (validationResult.isEmpty()) {
-
             String username = request.getParameter(PARAMETER_EMAIL);
             String password = request.getParameter(PARAMETER_PASSWORD);
 
@@ -56,7 +55,7 @@ public class SignInFinishCommand implements Command {
                 request.setAttribute(REQ_ATTRIBUTE_USER_INVALID, INVALID_USER_MESSAGE);
             }
         } else {
-            request.setAttribute(INVALID_FORM, validationResult);
+            request.setAttribute(REQ_ATTRIBUTE_USER_INVALID, INVALID_USER_MESSAGE);
         }
 
         return new Router(page, FORWARD);

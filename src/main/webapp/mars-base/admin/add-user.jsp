@@ -115,7 +115,6 @@
         </div>
 
         <div class="registerDiv " id="registerDiv">
-
             <form action="${pageContext.request.contextPath}/controller?command=${CommandType.ADD_USER_FINISH}"
                   id="register_form" align="center"
                   class="signup-content" method="post">
@@ -167,23 +166,6 @@
     </c:when>
     <c:when test="${sessionScope.teamId!=null && sessionScope.currentUser.role.equals(Role.TEAM_LEADER)
     ||sessionScope.currentUser.role.equals(Role.ADMIN)}">
-
-        <div class="container">
-            <div class="row">
-                <div class="col text-center">
-                    <ol class="alert-danger">
-                        <c:if test="${sessionScope.invalid_form.email!=null}">
-                            <div class="text-danger">
-                                    ${sessionScope.invalid_form.email}
-                            </div>
-                        </c:if>
-                    </ol>
-                    <br>
-                    <br>
-
-                </div>
-            </div>
-        </div>
 
         <div class="registerDiv card" id="registerDiv">
             <h1 class="signup-title"> Add User </h1>

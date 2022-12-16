@@ -167,12 +167,15 @@
         <h3>LogIn Here</h3>
 
         <div class="container">
+
+
             <c:if test="${requestScope.invalid_user!=null}">
                 <br>
                 <div style="color: red">
                         ${requestScope.invalid_user}
                 </div>
             </c:if>
+
         </div>
 
         <label>Email</label>
